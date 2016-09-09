@@ -1,12 +1,14 @@
 set( CMAKE_AUTOMOC ON )
 set( CMAKE_INCLUDE_CURRENT_DIR ON )
 
+find_package(Qt5Core REQUIRED)
 find_package(Qt5Widgets REQUIRED)
 
 
 set(CAMERAMARKER_INCLUDE_DIRS 
         ./include
-	${Qt5Widgets_INCLUDE_DIRS}
+        ${Qt5Core_INCLUDE_DIRS}
+        ${Qt5Widgets_INCLUDE_DIRS}
 )
 
 file(GLOB CAMERAMARKER_SOURCES ./source/*.cpp)
