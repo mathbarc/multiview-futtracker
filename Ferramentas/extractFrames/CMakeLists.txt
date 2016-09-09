@@ -1,6 +1,7 @@
 find_package(OpenCV 3 COMPONENTS core highgui videoio imgcodecs)
 
-if(${OpenCV_FOUND}==FALSE)
+if(${OpenCV_FOUND})
+else()
 	find_package(OpenCV 2 REQUIRED core highgui)
 endif()
 

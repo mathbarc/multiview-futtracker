@@ -7,7 +7,7 @@
 **************************/
 
 #include <stdio.h>
-#include <conio.h>
+#include <string.h>
 #include <math.h>
  
 #include "tsai3D.h"
@@ -125,7 +125,7 @@ int main( )
      };
 
      printf("\n\n");
-     getch();
+     scanf("%c");
    return 0;
 }
 
