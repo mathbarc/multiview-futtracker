@@ -2,7 +2,7 @@
 #define CONTROLLER_H
 
 #include "cameramarker.h"
-#include <QObject.h>
+#include <QObject>
 
 class controller : public QObject
 {
