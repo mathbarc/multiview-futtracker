@@ -1,5 +1,8 @@
-find_package(OpenCV REQUIRED core highgui videoio imgcodecs)
+find_package(OpenCV VERSION 3 REQUIRED core highgui videoio imgcodecs)
 
+if(${OpenCV_FOUND}==FALSE)
+	find_package(OpenCV VERSION 2 REQUIRED core highgui)
+endif()
 
 set(EXTRACTFRAMES_INCLUDE_DIRS 
 	${OpenCV_INCLUDE_DIRS}
