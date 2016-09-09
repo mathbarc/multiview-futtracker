@@ -1,0 +1,2 @@
+add_subdirectory(CameraMarker)
+add_subdirectory(extractFrames)

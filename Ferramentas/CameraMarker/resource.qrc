@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/CameraMarker">
+        <file>resources/logoPIIM.png</file>
+        <file>resources/logo63.png</file>
+    </qresource>
+</RCC>
