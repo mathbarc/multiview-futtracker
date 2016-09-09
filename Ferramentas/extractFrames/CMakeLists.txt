@@ -1,4 +1,4 @@
-find_package(OpenCV 3 REQUIRED core highgui videoio imgcodecs)
+find_package(OpenCV 3 COMPONENTS core highgui videoio imgcodecs)
 
 if(${OpenCV_FOUND}==FALSE)
 	find_package(OpenCV 2 REQUIRED core highgui)
@@ -13,3 +13,5 @@ include_directories(${EXTRACTFRAMES_INCLUDE_DIRS})
 
 add_executable(extractFrames ${EXTRACTFRAMES_SOURCES})
 target_link_libraries(extractFrames ${OpenCV_LIBS})
+
+install(TARGETS extractFrames DESTINATION bin)
