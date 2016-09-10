@@ -19,9 +19,10 @@ class CameraMarker : public QMainWindow
         void openVideo(QString path);
         void genCalibFile(QString path);
 
+    public slots:
+        void showImage(QImage img);
 
     private slots:
-        void showImage(QImage img);
         void on_actionAbrir_Video_triggered();
 
 private:

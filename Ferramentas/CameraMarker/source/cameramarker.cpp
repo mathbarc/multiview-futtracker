@@ -18,13 +18,14 @@ CameraMarker::~CameraMarker()
 
 void CameraMarker::on_actionAbrir_Video_triggered()
 {
-    QString path = QFileDialog::getOpenFileName(0,"Abrir Vídeo", "", "MP4 (*.mp4);;AVI (*.avi)");
-    std::cout<<path.toStdString()<<std::endl;
+    QString path = QFileDialog::getOpenFileName(0,"Abrir Vídeo", "", "MP4 (*.mp4);;MPEG (*.mpg *.mpeg *.MPG *.MPEG);;AVI (*.avi *.AVI)");
     emit openVideo(path);
 
 }
 
 void CameraMarker::showImage(QImage img)
 {
+
+    this->ui->label_frame->setPixmap(QPixmap::fromImage(img));
 
 }
