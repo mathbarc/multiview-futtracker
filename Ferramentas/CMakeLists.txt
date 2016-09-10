@@ -1,3 +1,5 @@
 add_subdirectory(CameraMarker)
 add_subdirectory(extractFrames)
 add_subdirectory(TsaiCalibration)
+add_subdirectory(vidInfo)
+add_subdirectory(vidSync)
