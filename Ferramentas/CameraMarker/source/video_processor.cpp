@@ -69,15 +69,14 @@ void VideoProcessor::run()
         while(this->pauseStream)
         {
             if(this->isInterruptionRequested()){
-                std::cout<<"End Thread"<<std::endl;
                 return;
             }
         }
         if(this->isInterruptionRequested()){
-            std::cout<<"End Thread"<<std::endl;
             return;
         }
     }
+
     return;
 
 }

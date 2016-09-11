@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>CameraMarker</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="../resource.qrc">
+    <normaloff>:/CameraMarker/resources/logo63.png</normaloff>:/CameraMarker/resources/logo63.png</iconset>
+  </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QScrollArea" name="scrollArea">
     <property name="geometry">
@@ -233,7 +237,7 @@
      <x>0</x>
      <y>0</y>
      <width>1198</width>
-     <height>27</height>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuArquivos">

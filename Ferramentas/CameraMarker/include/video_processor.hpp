@@ -23,7 +23,7 @@ class VideoProcessor : public QThread{
         void play();
         void next();
         void previous();
-        virtual void run();
+        void run();
 
     signals:
         void showImage(QImage img);
