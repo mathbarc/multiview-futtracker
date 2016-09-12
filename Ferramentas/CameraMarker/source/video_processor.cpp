@@ -84,3 +84,7 @@ void VideoProcessor::run()
 VideoProcessor::~VideoProcessor(){
     this->cap.release();
 }
+
+void VideoProcessor::playPauseVideo(){
+    this->pauseStream = !this->pauseStream;
+}

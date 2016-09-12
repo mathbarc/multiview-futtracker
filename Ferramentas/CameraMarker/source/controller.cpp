@@ -36,12 +36,14 @@ void Controller::openVideo(QString path)
         {
             this->video_thread->requestInterruption();
             this->video_thread->wait();
+            disconnect(this->window, SIGNAL(playPauseVideo()), this->video_thread, SLOT(playPauseVideo()));
             disconnect(this->video_thread,SIGNAL(showImage(QImage)),this->window,SLOT(showImage(QImage)));
             delete this->video_thread;
             this->video_thread=0;
         }
         this->video_thread = new VideoProcessor(pathVideo);
         connect(this->video_thread,SIGNAL(showImage(QImage)),this->window,SLOT(showImage(QImage)));
+        connect(this->window, SIGNAL(playPauseVideo()), this->video_thread, SLOT(playPauseVideo()));
         this->video_thread->start();
     }
     catch(std::string message){
@@ -59,6 +61,8 @@ void Controller::genCalibFile(QString path)
 
 void Controller::close(){
     if(this->video_thread!=0){
+//        disconnect(this->video_thread,SIGNAL(showImage(QImage)),this->window,SLOT(showImage(QImage)));
+//        disconnect(this->window, SIGNAL(playPauseVideo()), this->video_thread, SLOT(playPauseVideo()));
         this->video_thread->requestInterruption();
         this->video_thread->wait();
         delete this->video_thread;

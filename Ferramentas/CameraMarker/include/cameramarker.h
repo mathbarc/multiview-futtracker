@@ -18,6 +18,7 @@ class CameraMarker : public QMainWindow
     signals:
         void openVideo(QString path);
         void genCalibFile(QString path);
+        void playPauseVideo();
 
     public slots:
         void showImage(QImage img);
@@ -25,8 +26,13 @@ class CameraMarker : public QMainWindow
     private slots:
         void on_actionAbrir_Video_triggered();
 
-private:
-    Ui::CameraMarker* ui;
+    private:
+        Ui::CameraMarker* ui;
+
+    protected:
+        void keyPressEvent(QKeyEvent* event);
+        void mousePressEvent(QMouseEvent* event);
+        void mouseMoveEvent(QMouseEvent* event);
 
 };
 
