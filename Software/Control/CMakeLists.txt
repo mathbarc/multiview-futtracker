@@ -10,13 +10,12 @@ else()
         find_package(OpenCV 2 REQUIRED core highgui)
 endif()
 
-
+set(CONTROL_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include CACHE PATH "Control include dir")
 
 set(CONTROL_INCLUDE_DIRS 
-        ${CMAKE_CURRENT_SOURCE_DIR}/include
+        ${CONTROL_INCLUDE_DIR}
         ${Qt5Core_INCLUDE_DIRS}
-        ${OpenCV_INCLUDE_DIRS}
-)
+        ${OpenCV_INCLUDE_DIRS})
 
 file(GLOB CONTROL_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/source/*.cpp)
 file(GLOB CONTROL_HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/include/*.hpp ${CMAKE_CURRENT_SOURCE_DIR}/include/*.h)

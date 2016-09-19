@@ -10,13 +10,12 @@ else()
         find_package(OpenCV 2 REQUIRED core highgui)
 endif()
 
-
+set(PERSISTENCE_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include CACHE PATH "Persistence include dir")
 
 set(PERSISTENCE_INCLUDE_DIRS 
-        ${CMAKE_CURRENT_SOURCE_DIR}/include
+        ${PERSISTENCE_INCLUDE_DIR}
         ${Qt5Core_INCLUDE_DIRS}
-        ${OpenCV_INCLUDE_DIRS}
-)
+        ${OpenCV_INCLUDE_DIRS})
 
 file(GLOB PERSISTENCE_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/source/*.cpp)
 file(GLOB PERSISTENCE_HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/include/*.hpp ${CMAKE_CURRENT_SOURCE_DIR}/include/*.h)

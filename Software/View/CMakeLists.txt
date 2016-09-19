@@ -10,13 +10,12 @@ else()
         find_package(OpenCV 2 REQUIRED core highgui)
 endif()
 
-
+set(VIEW_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include CACHE PATH "View include dir")
 
 set(VIEW_INCLUDE_DIRS
-        ${CMAKE_CURRENT_SOURCE_DIR}/include
+        ${VIEW_INCLUDE_DIR}
         ${Qt5Widgets_INCLUDE_DIRS}
-        ${OpenCV_INCLUDE_DIRS}
-)
+        ${OpenCV_INCLUDE_DIRS})
 
 file(GLOB VIEW_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/source/*.cpp)
 file(GLOB VIEW_HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/include/*.hpp ${CMAKE_CURRENT_SOURCE_DIR}/include/*.h)
