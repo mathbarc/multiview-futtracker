@@ -1,13 +1,13 @@
-#include "multiview_futtracker_mainwindow.hpp"
+#include "multiview_futtracker_controller.hpp"
 #include <QtWidgets/QApplication>
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    MultiViewFuttrackerMainWindow w;
+    MultiViewFuttrackerController c;
 
-    w.show();
+    c.show();
 
     return a.exec();
 }

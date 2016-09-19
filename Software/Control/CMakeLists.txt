@@ -15,14 +15,15 @@ set(CONTROL_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include CACHE PATH "Control 
 set(CONTROL_INCLUDE_DIRS 
         ${CONTROL_INCLUDE_DIR}
         ${Qt5Core_INCLUDE_DIRS}
-        ${OpenCV_INCLUDE_DIRS})
+        ${OpenCV_INCLUDE_DIRS}
+        ${VIEW_INCLUDE_DIR})
 
 file(GLOB CONTROL_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/source/*.cpp)
 file(GLOB CONTROL_HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/include/*.hpp ${CMAKE_CURRENT_SOURCE_DIR}/include/*.h)
 
 include_directories(${CONTROL_INCLUDE_DIRS})
 
-#qt5_wrap_ui(CAMERAMARKER_WRAPPED_IUS ${CAMERAMARKER_FORMS})
+#qt5_wrap_cpp(CONTROL_WRAPPED_HEADERS ${CONTROL_HEADERS})
 #qt5_add_resources(CAMERAMARKER_RESOURCE ${CMAKE_CURRENT_SOURCE_DIR}/resource.qrc)
-add_library(Control STATIC ${CONTROL_SOURCES} ${CONTROL_HEADERS})
-target_link_libraries(Control Qt5::Core ${OpenCV_LIBS})
+add_library(Control STATIC ${CONTROL_SOURCES} ${CONTROL_HEADERS} ${CONTROL_WRAPPED_HEADERS})
+target_link_libraries(Control Qt5::Core ${OpenCV_LIBS} View)
