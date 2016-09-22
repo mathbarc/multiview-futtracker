@@ -14,7 +14,7 @@
    <bool>true</bool>
   </property>
   <property name="windowTitle">
-   <string>CameraMarker</string>
+   <string>Multiview FutTracker</string>
   </property>
   <property name="windowIcon">
    <iconset resource="../../../Ferramentas/CameraMarker/resource.qrc">
@@ -116,7 +116,7 @@
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap resource="../../../Ferramentas/CameraMarker/resource.qrc">:/CameraMarker/resources/logo63.png</pixmap>
+            <pixmap resource="../resource.qrc">:/View/resources/logo63.png</pixmap>
            </property>
            <property name="scaledContents">
             <bool>false</bool>
@@ -252,7 +252,7 @@
      <x>0</x>
      <y>0</y>
      <width>1198</width>
-     <height>26</height>
+     <height>27</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuArquivos">
@@ -287,6 +287,7 @@
  <layoutdefault spacing="6" margin="11"/>
  <resources>
   <include location="../../../Ferramentas/CameraMarker/resource.qrc"/>
+  <include location="../resource.qrc"/>
  </resources>
  <connections/>
 </ui>

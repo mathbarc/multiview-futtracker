@@ -60,7 +60,8 @@ void Controller::genCalibFile(QString path)
 }
 
 void Controller::close(){
-    if(this->video_thread!=0){
+    if(this->video_thread!=0)
+    {
 //        disconnect(this->video_thread,SIGNAL(showImage(QImage)),this->window,SLOT(showImage(QImage)));
 //        disconnect(this->window, SIGNAL(playPauseVideo()), this->video_thread, SLOT(playPauseVideo()));
         this->video_thread->requestInterruption();

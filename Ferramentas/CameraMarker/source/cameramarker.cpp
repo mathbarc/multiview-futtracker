@@ -1,5 +1,6 @@
 #include "cameramarker.h"
 #include "ui_cameramarker.h"
+#include "dialog_world_point.hpp"
 #include <QMessageBox>
 #include <QFileDialog>
 #include <iostream>
@@ -56,16 +57,17 @@ void CameraMarker::mousePressEvent(QMouseEvent* event)
 {
     QPoint p = this->ui->label_frame->mapFromParent(event->pos());
     QSize s = this->ui->label_frame->size();
-    if(p.x() >= 0 && p.y() >= 0 && p.x() < s.width() && p.y() < s.height()){
-        cv::Vec<int,5> point;
+    if(p.x() >= 0 && p.y() >= 0 && p.x() < s.width() && p.y() < s.height())
+    {
+        cv::Point2d imagePoint;
+        cv::Point3d worldPoint;
 
-        point[0] = p.x();
-        point[1] = p.y();
+        imagePoint.x = p.x();
+        imagePoint.y = p.y();
 
-        std::cout<<point<<std::endl;
+        worldPoint = DialogWorldPoint::getWorldPoint();
 
-
-
+        std::cout<<imagePoint<<" "<<worldPoint<<std::endl;
     }
 }
 
@@ -73,10 +75,9 @@ void CameraMarker::mouseMoveEvent(QMouseEvent* event)
 {
     QPoint p = this->ui->label_frame->mapFromParent(event->pos());
     QSize s = this->ui->label_frame->size();
-    std::cout<<p.x()<<", "<<p.y()<<std::endl;
-    if(p.x() >= 0 && p.y() >= 0 && p.x() < s.width() && p.y() < s.height()){
+    if(p.x() >= 0 && p.y() >= 0 && p.x() < s.width() && p.y() < s.height())
+    {
         std::stringstream ss;
-        ss << "["<<p.x()<<", "<<p.y()<<"]";
         this->ui->label_2->setText(ss.str().c_str());
     }
 }
