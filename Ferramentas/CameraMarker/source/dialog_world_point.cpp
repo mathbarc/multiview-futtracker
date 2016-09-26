@@ -2,9 +2,9 @@
 #include "ui_dialog_world_point.h"
 #include <iostream>
 
-DialogWorldPoint::DialogWorldPoint() :
-    QDialog(0),
-    ui(new Ui::DialogWorldPoint)
+DialogWorldPoint::DialogWorldPoint(QWidget* parent)
+    : QDialog(parent)
+    , ui(new Ui::DialogWorldPoint)
 {
     ui->setupUi(this);
 }
@@ -30,12 +30,20 @@ void DialogWorldPoint::on_buttonBox_accepted()
 
 }
 
-cv::Point3f DialogWorldPoint::getWorldPoint()
+void DialogWorldPoint::on_buttonBox_rejected()
 {
-    static DialogWorldPoint dWorldPoint;
-    dWorldPoint.exec();
-    dWorldPoint.ui->lineEdit_x->setText("X");
-    dWorldPoint.ui->lineEdit_y->setText("Y");
-    dWorldPoint.ui->lineEdit_z->setText("Z");
-    return dWorldPoint.worldPoint;
+    this->worldPoint.x = -1.0;
+    this->worldPoint.y = -1.0;
+    this->worldPoint.z = -1.0;
+}
+
+
+cv::Point3f DialogWorldPoint::getWorldPoint(QWidget* parent)
+{
+    DialogWorldPoint* dWorldPoint = new DialogWorldPoint(parent);
+    dWorldPoint->exec();
+
+    cv::Point3f point = dWorldPoint->worldPoint;
+    delete dWorldPoint;
+    return point;
 }

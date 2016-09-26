@@ -32,8 +32,6 @@ class CameraMarker : public QMainWindow
     protected:
         void keyPressEvent(QKeyEvent* event);
         void mousePressEvent(QMouseEvent* event);
-        void mouseMoveEvent(QMouseEvent* event);
-
 };
 
 #endif // CAMERAMARKER_H

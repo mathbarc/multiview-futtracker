@@ -15,14 +15,15 @@ class DialogWorldPoint : public QDialog
     public:
 
         ~DialogWorldPoint();
-        static cv::Point3f getWorldPoint(void);
+        static cv::Point3f getWorldPoint(QWidget* parent = 0);
 
 private slots:
         void on_buttonBox_accepted();
+        void on_buttonBox_rejected();
 
 private:
-        Ui::DialogWorldPoint *ui;
-        DialogWorldPoint();
+        Ui::DialogWorldPoint* ui;
+        DialogWorldPoint(QWidget* parent = 0);
 
 protected:
         cv::Point3f worldPoint;
