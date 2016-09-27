@@ -4,6 +4,7 @@
 #include "cameramarker.h"
 #include "video_processor.hpp"
 #include <QObject>
+#include <vector>
 
 class Controller : public QObject
 {
@@ -12,12 +13,17 @@ class Controller : public QObject
 	private:
 		CameraMarker* window;
         VideoProcessor* video_thread;
+        std::vector<CalibrationMarker> markers;
 
 
     private slots:
         void openVideo(QString path);
         void genCalibFile(QString path);
+        void addCalibrationMarker(CalibrationMarker cm);
         void close();
+
+    signals:
+        void insertOnTable(CalibrationMarker cm);
 
 	public:
         Controller();

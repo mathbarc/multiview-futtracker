@@ -2,6 +2,8 @@
 #define CAMERAMARKER_H
 
 #include <QtWidgets/QMainWindow>
+#include <opencv2/core/core.hpp>
+#include "data_types.hpp"
 
 namespace Ui{
     class CameraMarker;
@@ -19,9 +21,11 @@ class CameraMarker : public QMainWindow
         void openVideo(QString path);
         void genCalibFile(QString path);
         void playPauseVideo();
+        void addCalibrationMarker(CalibrationMarker cm);
 
     public slots:
         void showImage(QImage img);
+        void insertOnTable(CalibrationMarker cm);
 
     private slots:
         void on_actionAbrir_Video_triggered();

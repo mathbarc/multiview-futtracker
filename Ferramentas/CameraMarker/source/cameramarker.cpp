@@ -56,7 +56,7 @@ void CameraMarker::keyPressEvent(QKeyEvent *event)
 
 void CameraMarker::mousePressEvent(QMouseEvent* event)
 {
-    QPoint p = this->ui->label_frame->mapFromParent(event->pos());
+    QPoint p = this->ui->label_frame->mapFrom(this,event->pos());
     QSize s = this->ui->label_frame->size();
     if(p.x() >= 0 && p.y() >= 0 && p.x() < s.width() && p.y() < s.height())
     {
@@ -67,7 +67,25 @@ void CameraMarker::mousePressEvent(QMouseEvent* event)
         imagePoint.y = p.y();
 
         worldPoint = DialogWorldPoint::getWorldPoint(this);
-
-        std::cout<<imagePoint<<" "<<worldPoint<<std::endl;
+        CalibrationMarker cm(imagePoint, worldPoint);
+        emit addCalibrationMarker(cm);
     }
+}
+
+void CameraMarker::insertOnTable(CalibrationMarker cm)
+{
+    int lastRow = this->ui->tableWidget->rowCount();
+    this->ui->tableWidget->insertRow(lastRow);
+
+    this->ui->tableWidget->setItem(lastRow,0,
+                                   new QTableWidgetItem (QString::number(cm.imagePoint.x)));
+    this->ui->tableWidget->setItem(lastRow,1,
+                                   new QTableWidgetItem (QString::number(cm.imagePoint.y)));
+    this->ui->tableWidget->setItem(lastRow,2,
+                                   new QTableWidgetItem (QString::number(cm.worldPoint.x)));
+    this->ui->tableWidget->setItem(lastRow,3,
+                                   new QTableWidgetItem (QString::number(cm.worldPoint.y)));
+    this->ui->tableWidget->setItem(lastRow,4,
+                                   new QTableWidgetItem (QString::number(cm.worldPoint.z)));
+
 }

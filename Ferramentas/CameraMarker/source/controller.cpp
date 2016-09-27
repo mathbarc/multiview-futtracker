@@ -10,6 +10,8 @@ Controller::Controller()
     connect(this->window,SIGNAL(openVideo(QString)), this, SLOT(openVideo(QString)));
     connect(this->window, SIGNAL(genCalibFile(QString)),this, SLOT(genCalibFile(QString)));
     connect(this->window, SIGNAL(destroyed()), this, SLOT(close()));
+    connect(this->window, SIGNAL(addCalibrationMarker(CalibrationMarker)),this, SLOT(addCalibrationMarker(CalibrationMarker)));
+    connect(this, SIGNAL(insertOnTable(CalibrationMarker)), this->window, SLOT(insertOnTable(CalibrationMarker)));
 }
 
 
@@ -51,6 +53,17 @@ void Controller::openVideo(QString path)
         this->video_thread=0;
     }
 
+
+}
+
+void Controller::addCalibrationMarker(CalibrationMarker cm)
+{
+    cv::Point3d wP = cm.worldPoint;
+    if(wP.x != -1 && wP.y != -1 && wP.z != -1)
+    {
+        this->markers.push_back(cm);
+        emit insertOnTable(cm);
+    }
 
 }
 
