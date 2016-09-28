@@ -2,7 +2,6 @@ set( CMAKE_AUTOMOC ON )
 set( CMAKE_INCLUDE_CURRENT_DIR ON )
 
 find_package(Qt5Widgets REQUIRED)
-
 find_package(OpenCV 3 COMPONENTS core highgui videoio imgcodecs)
 
 if(${OpenCV_FOUND})

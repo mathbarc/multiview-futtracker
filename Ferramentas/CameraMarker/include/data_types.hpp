@@ -1,4 +1,6 @@
 #include <opencv2/core/core.hpp>
+#include <string>
+#include <sstream>
 
 struct CalibrationMarker
 {
@@ -8,6 +10,12 @@ struct CalibrationMarker
     {
         this->imagePoint=image;
         this->worldPoint=world;
+    }
+    std::string toString()
+    {
+        std::stringstream ss;
+        ss << this->imagePoint << ", " << this->worldPoint;
+        return ss.str();
     }
 };
 

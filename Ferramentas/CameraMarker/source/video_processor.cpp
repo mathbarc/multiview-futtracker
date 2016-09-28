@@ -78,11 +78,11 @@ void VideoProcessor::run()
     }
 
     return;
-
 }
 
 VideoProcessor::~VideoProcessor(){
     this->cap.release();
+    std::cout<<"Encerrando Thread de captura"<<std::endl;
 }
 
 void VideoProcessor::playPauseVideo(){

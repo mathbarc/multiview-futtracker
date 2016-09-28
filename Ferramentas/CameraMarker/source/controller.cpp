@@ -1,5 +1,6 @@
 #include "controller.h"
 #include <QMessageBox>
+#include <iostream>
 
 
 Controller::Controller()
@@ -62,9 +63,9 @@ void Controller::addCalibrationMarker(CalibrationMarker cm)
     if(wP.x != -1 && wP.y != -1 && wP.z != -1)
     {
         this->markers.push_back(cm);
+        std::cout<<cm.toString()<<std::endl;
         emit insertOnTable(cm);
     }
-
 }
 
 void Controller::genCalibFile(QString path)
