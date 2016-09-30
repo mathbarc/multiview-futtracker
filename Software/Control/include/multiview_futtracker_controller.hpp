@@ -6,7 +6,7 @@
 class MultiViewFuttrackerController : public QObject{
     Q_OBJECT
     private:
-       MultiViewFuttrackerMainWindow* w;
+       MultiviewFuttrackerMainWindow* w;
 
     public:
         MultiViewFuttrackerController();

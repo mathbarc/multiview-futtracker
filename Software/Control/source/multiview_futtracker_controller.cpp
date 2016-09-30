@@ -3,7 +3,7 @@
 MultiViewFuttrackerController::MultiViewFuttrackerController()
     : QObject(0)
 {
-    this->w = new MultiViewFuttrackerMainWindow(0);
+    this->w = new MultiviewFuttrackerMainWindow(0);
 }
 
 MultiViewFuttrackerController::~MultiViewFuttrackerController()

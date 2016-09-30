@@ -1,39 +1,22 @@
 #ifndef MULTIVIEW_FUTTRACKER_MAINWINDOW_HPP
 #define MULTIVIEW_FUTTRACKER_MAINWINDOW_HPP
 
-#include <QtWidgets/QMainWindow>
+#include <QMainWindow>
 
-namespace Ui{
-    class MultiViewFuttrackerMainWindow;
+namespace Ui {
+    class MultiviewFuttrackerMainWindow;
 }
 
-class MultiViewFuttrackerMainWindow : public QMainWindow
+class MultiviewFuttrackerMainWindow : public QMainWindow
 {
-	Q_OBJECT
+        Q_OBJECT
 
     public:
-        explicit MultiViewFuttrackerMainWindow(QWidget *parent = 0);
-        ~MultiViewFuttrackerMainWindow();
-
-    signals:
-        void openVideo(QString path);
-        void genCalibFile(QString path);
-        void playPauseVideo();
-
-    public slots:
-        void showImage(QImage img);
-
-    private slots:
-        void on_actionAbrir_Video_triggered();
+        explicit MultiviewFuttrackerMainWindow(QWidget *parent = 0);
+        ~MultiviewFuttrackerMainWindow();
 
     private:
-        Ui::MultiViewFuttrackerMainWindow* ui;
-
-    protected:
-        void keyPressEvent(QKeyEvent* event);
-        void mousePressEvent(QMouseEvent* event);
-        void mouseMoveEvent(QMouseEvent* event);
-
+        Ui::MultiviewFuttrackerMainWindow *ui;
 };
 
 #endif // MULTIVIEW_FUTTRACKER_MAINWINDOW_HPP
