@@ -16,6 +16,8 @@ class CameraMarker : public QMainWindow
     public:
         explicit CameraMarker(QWidget *parent = 0);
         ~CameraMarker();
+        std::vector<QPoint> points;
+
 
     signals:
         void openVideo(QString path);

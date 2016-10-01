@@ -30,7 +30,8 @@ void CameraMarker::on_actionAbrir_Video_triggered()
 
 void CameraMarker::showImage(QImage img)
 {
-
+    this->ui->scrollAreaWidgetContents->resize(img.width(),img.height());
+    this->ui->label_frame->resize(img.width(),img.height());
     this->ui->label_frame->setPixmap(QPixmap::fromImage(img));
 
 }
@@ -87,5 +88,6 @@ void CameraMarker::insertOnTable(CalibrationMarker cm)
                                    new QTableWidgetItem (QString::number(cm.worldPoint.y)));
     this->ui->tableWidget->setItem(lastRow,4,
                                    new QTableWidgetItem (QString::number(cm.worldPoint.z)));
+
 
 }

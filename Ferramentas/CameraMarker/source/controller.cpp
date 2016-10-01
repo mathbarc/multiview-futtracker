@@ -1,12 +1,14 @@
 #include "controller.h"
 #include <QMessageBox>
 #include <iostream>
+#include <opencv2/imgproc/imgproc.hpp>
 
 
 Controller::Controller()
     : window(new CameraMarker(0))
     , video_thread(0)
 {
+    qRegisterMetaType<cv::Mat>("cv::Mat");
     this->window->show();
     connect(this->window,SIGNAL(openVideo(QString)), this, SLOT(openVideo(QString)));
     connect(this->window, SIGNAL(genCalibFile(QString)),this, SLOT(genCalibFile(QString)));
@@ -15,6 +17,31 @@ Controller::Controller()
     connect(this, SIGNAL(insertOnTable(CalibrationMarker)), this->window, SLOT(insertOnTable(CalibrationMarker)));
 }
 
+
+QImage Controller::cvToQImage(cv::Mat img){
+
+    for (int i = 0; i < this->markers.size(); ++i) {
+        cv::circle(img,markers[i].imagePoint,3,cv::Scalar(0,255,0),CV_FILLED);
+    }
+
+    QImage to_show(img.cols, img.rows, QImage::Format_ARGB32);
+    cv::Vec3b* v;
+    QRgb* v_show;
+    for(int i = 0; i<img.rows; i++){
+        v = img.ptr<cv::Vec3b>(i);
+        v_show = (QRgb*)to_show.scanLine(i);
+        for(int j = 0; j<img.cols; j++){
+            v_show[j] = qRgba(v[j][2],v[j][1],v[j][0],255);
+        }
+    }
+    return to_show;
+}
+
+void Controller::showImage(cv::Mat img)
+{
+    img.copyTo(this->recentFrame);
+    emit showImage(cvToQImage(img));
+}
 
 Controller::~Controller()
 {
@@ -40,12 +67,15 @@ void Controller::openVideo(QString path)
             this->video_thread->requestInterruption();
             this->video_thread->wait();
             disconnect(this->window, SIGNAL(playPauseVideo()), this->video_thread, SLOT(playPauseVideo()));
-            disconnect(this->video_thread,SIGNAL(showImage(QImage)),this->window,SLOT(showImage(QImage)));
+            disconnect(this->video_thread,SIGNAL(showImage(cv::Mat)),this,SLOT(showImage(cv::Mat)));
+            disconnect(this,SIGNAL(showImage(QImage)),this->window,SLOT(showImage(QImage)));
+
             delete this->video_thread;
             this->video_thread=0;
         }
         this->video_thread = new VideoProcessor(pathVideo);
-        connect(this->video_thread,SIGNAL(showImage(QImage)),this->window,SLOT(showImage(QImage)));
+        connect(this->video_thread,SIGNAL(showImage(cv::Mat)),this,SLOT(showImage(cv::Mat)));
+        connect(this,SIGNAL(showImage(QImage)),this->window,SLOT(showImage(QImage)));
         connect(this->window, SIGNAL(playPauseVideo()), this->video_thread, SLOT(playPauseVideo()));
         this->video_thread->start();
     }
@@ -64,6 +94,7 @@ void Controller::addCalibrationMarker(CalibrationMarker cm)
     {
         this->markers.push_back(cm);
         std::cout<<cm.toString()<<std::endl;
+        emit showImage(this->recentFrame);
         emit insertOnTable(cm);
     }
 }
@@ -76,8 +107,6 @@ void Controller::genCalibFile(QString path)
 void Controller::close(){
     if(this->video_thread!=0)
     {
-//        disconnect(this->video_thread,SIGNAL(showImage(QImage)),this->window,SLOT(showImage(QImage)));
-//        disconnect(this->window, SIGNAL(playPauseVideo()), this->video_thread, SLOT(playPauseVideo()));
         this->video_thread->requestInterruption();
         this->video_thread->wait();
         delete this->video_thread;

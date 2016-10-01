@@ -26,7 +26,7 @@ class VideoProcessor : public QThread{
         void run();
 
     signals:
-        void showImage(QImage img);
+        void showImage(cv::Mat img);
 
     public slots:
         void playPauseVideo();
