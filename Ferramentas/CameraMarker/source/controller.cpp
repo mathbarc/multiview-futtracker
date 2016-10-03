@@ -24,7 +24,7 @@ QImage Controller::cvToQImage(cv::Mat img){
     for (int i = 0; i < this->markers.image.size(); i++)
     {
         cv::Vec3b cor = max-img.at<cv::Vec3b>(markers.image[i]);
-        cv::circle(img,markers.image[i],3,cor,CV_FILLED);
+        cv::circle(img,markers.image[i],3,cv::Scalar(cor),CV_FILLED);
     }
 
     QImage to_show(img.cols, img.rows, QImage::Format_ARGB32);

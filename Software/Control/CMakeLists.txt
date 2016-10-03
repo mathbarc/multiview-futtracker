@@ -1,7 +1,7 @@
 set( CMAKE_AUTOMOC ON )
 set( CMAKE_INCLUDE_CURRENT_DIR ON )
 
-find_package(Qt5Core REQUIRED)
+find_package(Qt5Widgets REQUIRED)
 
 find_package(OpenCV 3 COMPONENTS core highgui videoio imgcodecs)
 
@@ -14,7 +14,7 @@ set(CONTROL_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include CACHE PATH "Control 
 
 set(CONTROL_INCLUDE_DIRS 
         ${CONTROL_INCLUDE_DIR}
-        ${Qt5Core_INCLUDE_DIRS}
+        ${Qt5Widgets_INCLUDE_DIRS}
         ${OpenCV_INCLUDE_DIRS}
         ${VIEW_INCLUDE_DIR})
 
@@ -26,4 +26,5 @@ include_directories(${CONTROL_INCLUDE_DIRS})
 #qt5_wrap_cpp(CONTROL_WRAPPED_HEADERS ${CONTROL_HEADERS})
 #qt5_add_resources(CAMERAMARKER_RESOURCE ${CMAKE_CURRENT_SOURCE_DIR}/resource.qrc)
 add_library(Control STATIC ${CONTROL_SOURCES} ${CONTROL_HEADERS} ${CONTROL_WRAPPED_HEADERS})
-target_link_libraries(Control Qt5::Core ${OpenCV_LIBS} View)
+add_dependencies(Control View)
+target_link_libraries(Control Qt5::Widgets ${OpenCV_LIBS} View)
