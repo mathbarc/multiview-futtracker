@@ -2,6 +2,7 @@
 #define CONTROLLER_H
 
 #include "cameramarker.h"
+#include "data_types.hpp"
 #include "video_processor.hpp"
 #include <opencv2/core/core.hpp>
 #include <QObject>
@@ -14,7 +15,7 @@ class Controller : public QObject
 	private:
 		CameraMarker* window;
         VideoProcessor* video_thread;
-        std::vector<CalibrationMarker> markers;
+        CalibrationData markers;
         QImage cvToQImage(cv::Mat img);
         cv::Mat recentFrame;
 

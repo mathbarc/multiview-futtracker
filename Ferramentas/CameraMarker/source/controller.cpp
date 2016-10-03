@@ -19,18 +19,23 @@ Controller::Controller()
 
 
 QImage Controller::cvToQImage(cv::Mat img){
+    static const cv::Vec3b max(255,255,255);
 
-    for (int i = 0; i < this->markers.size(); ++i) {
-        cv::circle(img,markers[i].imagePoint,3,cv::Scalar(0,255,0),CV_FILLED);
+    for (int i = 0; i < this->markers.image.size(); i++)
+    {
+        cv::Vec3b cor = max-img.at<cv::Vec3b>(markers.image[i]);
+        cv::circle(img,markers.image[i],3,cor,CV_FILLED);
     }
 
     QImage to_show(img.cols, img.rows, QImage::Format_ARGB32);
     cv::Vec3b* v;
     QRgb* v_show;
-    for(int i = 0; i<img.rows; i++){
+    for(int i = 0; i<img.rows; i++)
+    {
         v = img.ptr<cv::Vec3b>(i);
         v_show = (QRgb*)to_show.scanLine(i);
-        for(int j = 0; j<img.cols; j++){
+        for(int j = 0; j<img.cols; j++)
+        {
             v_show[j] = qRgba(v[j][2],v[j][1],v[j][0],255);
         }
     }
@@ -92,15 +97,18 @@ void Controller::addCalibrationMarker(CalibrationMarker cm)
     cv::Point3d wP = cm.worldPoint;
     if(wP.x != -1 && wP.y != -1 && wP.z != -1)
     {
-        this->markers.push_back(cm);
-        std::cout<<cm.toString()<<std::endl;
-        emit showImage(this->recentFrame);
+        this->markers.image.push_back(cm.imagePoint);
+        this->markers.world.push_back(cm.worldPoint);
+        QImage to_show = cvToQImage(this->recentFrame);
+        emit showImage(to_show);
         emit insertOnTable(cm);
     }
 }
 
 void Controller::genCalibFile(QString path)
 {
+
+
 
 }
 

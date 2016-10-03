@@ -1,3 +1,5 @@
+#ifndef DATA_TYPES_HPP
+#define DATA_TYPES_HPP
 #include <opencv2/core/core.hpp>
 #include <string>
 #include <sstream>
@@ -19,3 +21,10 @@ struct CalibrationMarker
     }
 };
 
+struct CalibrationData
+{
+        std::vector<cv::Point2d> image;
+        std::vector<cv::Point3d> world;
+};
+
+#endif

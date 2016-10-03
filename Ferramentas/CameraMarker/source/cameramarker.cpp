@@ -30,7 +30,6 @@ void CameraMarker::on_actionAbrir_Video_triggered()
 
 void CameraMarker::showImage(QImage img)
 {
-    this->ui->scrollAreaWidgetContents->resize(img.width(),img.height());
     this->ui->label_frame->resize(img.width(),img.height());
     this->ui->label_frame->setPixmap(QPixmap::fromImage(img));
 
