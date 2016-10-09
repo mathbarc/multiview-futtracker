@@ -31,6 +31,7 @@ class CameraMarker : public QMainWindow
 
     private slots:
         void on_actionAbrir_Video_triggered();
+        void on_actionGerar_Calib_Arq_triggered();
 
     private:
         Ui::CameraMarker* ui;

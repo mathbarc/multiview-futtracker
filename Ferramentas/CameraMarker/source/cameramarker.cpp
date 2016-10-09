@@ -30,6 +30,19 @@ void CameraMarker::on_actionAbrir_Video_triggered()
 
 void CameraMarker::showImage(QImage img)
 {
+    int x = ((this->ui->scrollAreaWidgetContents->width() - img.width())/2);
+    int y = ((this->ui->scrollAreaWidgetContents->height() - img.height())/2);
+
+    if(x>0)
+    {
+        this->ui->label_frame->move(x,y);
+    }
+    else
+    {
+        this->ui->label_frame->move(0,0);
+    }
+
+
     this->ui->label_frame->resize(img.width(),img.height());
     this->ui->label_frame->setPixmap(QPixmap::fromImage(img));
 
@@ -88,5 +101,14 @@ void CameraMarker::insertOnTable(CalibrationMarker cm)
     this->ui->tableWidget->setItem(lastRow,4,
                                    new QTableWidgetItem (QString::number(cm.worldPoint.z)));
 
+
+}
+
+void CameraMarker::on_actionGerar_Calib_Arq_triggered()
+{
+
+    QString file = QFileDialog::getSaveFileName(0,"Salvar Arquivo", "", "XML (*.xml);;YML (*.yml)");
+    std::cout<<file.toStdString()<<std::endl;
+    emit genCalibFile(file);
 
 }

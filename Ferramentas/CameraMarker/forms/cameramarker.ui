@@ -173,7 +173,7 @@
      <string>Arquivos</string>
     </property>
     <addaction name="actionAbrir_Video"/>
-    <addaction name="actionGerar_arquivo_de_calibra_o"/>
+    <addaction name="actionGerar_Calib_Arq"/>
    </widget>
    <addaction name="menuArquivos"/>
   </widget>
@@ -191,7 +191,7 @@
     <string>Abrir Vídeo</string>
    </property>
   </action>
-  <action name="actionGerar_arquivo_de_calibra_o">
+  <action name="actionGerar_Calib_Arq">
    <property name="text">
     <string>Gerar arquivo de calibração</string>
    </property>
