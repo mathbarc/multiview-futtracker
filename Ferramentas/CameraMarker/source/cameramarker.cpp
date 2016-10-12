@@ -109,6 +109,8 @@ void CameraMarker::on_actionGerar_Calib_Arq_triggered()
 
     QString file = QFileDialog::getSaveFileName(0,"Salvar Arquivo", "", "XML (*.xml);;YML (*.yml)");
     std::cout<<file.toStdString()<<std::endl;
-    emit genCalibFile(file);
+
+    if(file!="")
+        emit genCalibFile(file);
 
 }

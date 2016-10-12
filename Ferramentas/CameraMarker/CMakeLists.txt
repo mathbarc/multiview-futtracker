@@ -9,8 +9,6 @@ else()
         find_package(OpenCV 2 REQUIRED core highgui)
 endif()
 
-
-
 set(CAMERAMARKER_INCLUDE_DIRS 
         ./include
         ${Qt5Widgets_INCLUDE_DIRS}
