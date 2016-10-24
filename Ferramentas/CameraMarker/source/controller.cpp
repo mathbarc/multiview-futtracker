@@ -13,6 +13,7 @@ Controller::Controller()
     this->window->show();
     connect(this->window,SIGNAL(openVideo(QString)), this, SLOT(openVideo(QString)));
     connect(this->window, SIGNAL(genCalibFile(QString)),this, SLOT(genCalibFile(QString)));
+    connect(this->window, SIGNAL(genHomoFile(QString)),this, SLOT(genHomoFile(QString)));
     connect(this->window, SIGNAL(destroyed()), this, SLOT(close()));
     connect(this->window, SIGNAL(addCalibrationMarker(CalibrationMarker)),this, SLOT(addCalibrationMarker(CalibrationMarker)));
     connect(this, SIGNAL(insertOnTable(CalibrationMarker)), this->window, SLOT(insertOnTable(CalibrationMarker)));
@@ -112,14 +113,14 @@ void Controller::genCalibFile(QString path)
                                CalibrationProcessor::ZHENG);
     calib.start();
     calib.wait();
-
 }
 
 void Controller::genHomoFile(QString path)
 {
-
-
-
+    CalibrationProcessor calib(path.toStdString(), this->markers, this->recentFrame.size(),
+                               CalibrationProcessor::HOMOGRAPHY);
+    calib.start();
+    calib.wait();
 }
 
 void Controller::close(){

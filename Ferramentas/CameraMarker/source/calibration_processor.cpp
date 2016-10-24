@@ -1,4 +1,5 @@
 #include "calibration_processor.hpp"
+#include <iostream>
 #include <opencv2/calib3d.hpp>
 
 const int CalibrationProcessor::HOMOGRAPHY = 0;
@@ -14,6 +15,7 @@ CalibrationProcessor::CalibrationProcessor(std::string path, CalibrationData inp
 void CalibrationProcessor::run()
 {
 
+    std::cout<<"Starting Calibration"<<std::endl;
     switch (method)
     {
         case CalibrationProcessor::ZHENG:
@@ -45,6 +47,7 @@ void CalibrationProcessor::zhengCalibration()
                         CV_CALIB_ZERO_TANGENT_DIST );
 
     cv::FileStorage file(path, cv::FileStorage::WRITE);
+    file<<"type"<<"zheng";
     file<<"calibration"<<calibrationMatrix;
     file<<"distortion_coefficients"<<distortionCoeff;
     file.release();
@@ -54,5 +57,11 @@ void CalibrationProcessor::zhengCalibration()
 
 void CalibrationProcessor::homography()
 {
-
+    cv::Mat mask;
+    cv::Mat homographyMatrix = cv::findHomography(this->input.image,this->input.world, mask);
+    cv::FileStorage file(path, cv::FileStorage::WRITE);
+    file<<"type"<<"homography";
+    file<<"homography"<<homographyMatrix;
+    file<<"mask"<<mask;
+    file.release();
 }
