@@ -15,4 +15,4 @@ include_directories(${VIDINFO_INCLUDE_DIRS})
 add_executable(vidInfo ${VIDINFO_SOURCES})
 target_link_libraries(vidInfo ${OpenCV_LIBS})
 
-install(TARGETS vidInfo RUNTIME DESTINATION bin COMPONENT tools)
+install(TARGETS vidInfo RUNTIME DESTINATION "." COMPONENT tools)

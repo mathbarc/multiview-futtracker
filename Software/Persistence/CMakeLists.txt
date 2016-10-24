@@ -10,6 +10,7 @@ else()
         find_package(OpenCV 2 REQUIRED core highgui)
 endif()
 
+
 set(PERSISTENCE_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include CACHE PATH "Persistence include dir")
 
 set(PERSISTENCE_INCLUDE_DIRS 
