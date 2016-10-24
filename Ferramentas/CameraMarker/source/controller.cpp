@@ -112,6 +112,13 @@ void Controller::genCalibFile(QString path)
 
 }
 
+void Controller::genHomoFile(QString path)
+{
+
+
+
+}
+
 void Controller::close(){
     if(this->video_thread!=0)
     {

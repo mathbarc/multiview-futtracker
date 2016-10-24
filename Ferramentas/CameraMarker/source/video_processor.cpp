@@ -62,8 +62,6 @@ void VideoProcessor::run()
             return;
         }
     }
-
-    return;
 }
 
 VideoProcessor::~VideoProcessor(){

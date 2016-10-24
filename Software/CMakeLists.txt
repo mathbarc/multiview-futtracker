@@ -2,7 +2,6 @@ add_subdirectory(Business)
 add_subdirectory(Control)
 add_subdirectory(Persistence)
 add_subdirectory(View)
-
 find_package(Qt5Widgets REQUIRED)
 
 set(MULTIVIEW_FUTTRACKER_INCLUDE_DIRS 
@@ -13,7 +12,6 @@ set(MULTIVIEW_FUTTRACKER_INCLUDE_DIRS
 file(GLOB MULTIVIEW_FUTTRACKER_SOURCES main.cpp)
 
 include_directories(${MULTIVIEW_FUTTRACKER_INCLUDE_DIRS})
-message("${MULTIVIEW_FUTTRACKER_INCLUDE_DIRS}")
 
 add_executable(FutTracker ${MULTIVIEW_FUTTRACKER_SOURCES})
 target_link_libraries(FutTracker Qt5::Core Control)

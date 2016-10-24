@@ -1,5 +1,7 @@
 project("MultiView FutTracker")
 cmake_minimum_required(VERSION 2.8)
-
+set(CMAKE_INSTALL_PREFIX ${CMAKE_CURRENT_BINARY_DIR}/install)
+cmake_policy(SET CMP0020 NEW)
+cmake_policy(SET CMP0054 NEW)
 add_subdirectory(Ferramentas)
 add_subdirectory(Software)

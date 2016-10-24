@@ -14,6 +14,8 @@ CameraMarker::CameraMarker(QWidget *parent)
 {
     ui->setupUi(this);
     this->setMouseTracking(true);
+    this->ui->scrollArea->setVisible(true);
+
 }
 
 CameraMarker::~CameraMarker()
@@ -107,10 +109,20 @@ void CameraMarker::insertOnTable(CalibrationMarker cm)
 void CameraMarker::on_actionGerar_Calib_Arq_triggered()
 {
 
-    QString file = QFileDialog::getSaveFileName(0,"Salvar Arquivo", "", "XML (*.xml);;YML (*.yml)");
+    QString file = QFileDialog::getSaveFileName(0,"Salvar Arquivo", "Calib", "XML (*.xml);;YML (*.yml)");
     std::cout<<file.toStdString()<<std::endl;
 
     if(file!="")
         emit genCalibFile(file);
 
+}
+
+
+void CameraMarker::on_actionGerar_Homo_Arq_triggered()
+{
+    QString file = QFileDialog::getSaveFileName(0,"Salvar Arquivo", "Homography", "XML (*.xml);;YML (*.yml)");
+    std::cout<<file.toStdString()<<std::endl;
+
+    if(file!="")
+        emit genHomoFile(file);
 }

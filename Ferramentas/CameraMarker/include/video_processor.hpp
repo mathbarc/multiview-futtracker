@@ -5,7 +5,8 @@
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
 
-class VideoProcessor : public QThread{
+class VideoProcessor : public QThread
+{
     Q_OBJECT
 
     private:
