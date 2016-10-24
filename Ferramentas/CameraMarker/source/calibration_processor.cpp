@@ -1,6 +1,6 @@
 #include "calibration_processor.hpp"
 #include <iostream>
-#include <opencv2/calib3d.hpp>
+#include <opencv2/calib3d/calib3d.hpp>
 
 const int CalibrationProcessor::HOMOGRAPHY = 0;
 const int CalibrationProcessor::ZHENG = 1;
