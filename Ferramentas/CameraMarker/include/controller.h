@@ -4,6 +4,7 @@
 #include "cameramarker.h"
 #include "data_types.hpp"
 #include "video_processor.hpp"
+#include "calibration_processor.hpp"
 #include <opencv2/core/core.hpp>
 #include <QObject>
 #include <vector>
@@ -18,6 +19,7 @@ class Controller : public QObject
         CalibrationData markers;
         QImage cvToQImage(cv::Mat img);
         cv::Mat recentFrame;
+        CalibrationProcessor* calib;
 
 
     private slots:

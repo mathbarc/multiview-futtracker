@@ -9,7 +9,7 @@ class CalibrationProcessor : public QThread
 {
     Q_OBJECT
     public:
-        CalibrationProcessor(std::string path, CalibrationData input, int method);
+        CalibrationProcessor(std::string path, CalibrationData input, cv::Size size, int method);
         static const int HOMOGRAPHY;
         static const int ZHENG;
 
@@ -17,6 +17,10 @@ class CalibrationProcessor : public QThread
         CalibrationData input;
         std::string path;
         int method;
+        cv::Size size;
+
+        void zhengCalibration();
+        void homography();
 
     public slots:
         void run();

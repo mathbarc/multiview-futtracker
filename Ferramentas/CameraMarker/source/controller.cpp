@@ -4,6 +4,7 @@
 #include <opencv2/imgproc/imgproc.hpp>
 
 
+
 Controller::Controller()
     : window(new CameraMarker(0))
     , video_thread(0)
@@ -107,8 +108,10 @@ void Controller::addCalibrationMarker(CalibrationMarker cm)
 
 void Controller::genCalibFile(QString path)
 {
-
-
+    CalibrationProcessor calib(path.toStdString(), this->markers, this->recentFrame.size(),
+                               CalibrationProcessor::ZHENG);
+    calib.start();
+    calib.wait();
 
 }
 

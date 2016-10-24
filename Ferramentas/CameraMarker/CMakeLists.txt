@@ -2,15 +2,15 @@ set( CMAKE_AUTOMOC ON )
 set( CMAKE_INCLUDE_CURRENT_DIR ON )
 
 find_package(Qt5Widgets REQUIRED)
-find_package(OpenCV 3 COMPONENTS core highgui videoio imgcodecs imgproc)
+find_package(OpenCV 3 COMPONENTS core highgui videoio imgcodecs imgproc calib3d)
 
 if(${OpenCV_FOUND})
 else()
-        find_package(OpenCV 2 REQUIRED core highgui)
+        find_package(OpenCV 2 REQUIRED core highgui calib3d)
 endif()
 
 set(CAMERAMARKER_INCLUDE_DIRS 
-        ./include
+        ${CMAKE_CURRENT_SOURCE_DIR}/include
         ${Qt5Widgets_INCLUDE_DIRS}
         ${OpenCV_INCLUDE_DIRS}
 )

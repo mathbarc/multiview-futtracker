@@ -6,9 +6,9 @@
 
 struct CalibrationMarker
 {
-    cv::Point2d imagePoint;
-    cv::Point3d worldPoint;
-    CalibrationMarker(cv::Point2d image, cv::Point3d world)
+    cv::Point2f imagePoint;
+    cv::Point3f worldPoint;
+    CalibrationMarker(cv::Point2f image, cv::Point3f world)
     {
         this->imagePoint=image;
         this->worldPoint=world;
@@ -23,8 +23,8 @@ struct CalibrationMarker
 
 struct CalibrationData
 {
-        std::vector<cv::Point2d> image;
-        std::vector<cv::Point3d> world;
+        std::vector<cv::Point2f> image;
+        std::vector<cv::Point3f> world;
 };
 
 #endif
