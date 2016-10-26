@@ -6,8 +6,9 @@
 
 
 Controller::Controller()
-    : window(new CameraMarker(0))
-    , video_thread(0)
+    : window(new CameraMarker(NULL))
+    , video_thread(NULL)
+    , calib(NULL)
 {
     qRegisterMetaType<cv::Mat>("cv::Mat");
     this->window->show();
@@ -52,11 +53,11 @@ void Controller::showImage(cv::Mat img)
 
 Controller::~Controller()
 {
-    if(this->window!=0)
+    if(this->window!=NULL)
     {
         delete this->window;
     }
-    if(this->video_thread!=0)
+    if(this->video_thread!=NULL)
     {
         this->video_thread->requestInterruption();
         this->video_thread->wait();
@@ -69,7 +70,7 @@ void Controller::openVideo(QString path)
 {
     std::string pathVideo = path.toStdString();
     try{
-        if(this->video_thread!=0)
+        if(this->video_thread!=NULL)
         {
             this->video_thread->requestInterruption();
             this->video_thread->wait();
@@ -78,7 +79,7 @@ void Controller::openVideo(QString path)
             disconnect(this,SIGNAL(showImage(QImage)),this->window,SLOT(showImage(QImage)));
 
             delete this->video_thread;
-            this->video_thread=0;
+            this->video_thread=NULL;
         }
         this->video_thread = new VideoProcessor(pathVideo);
         connect(this->video_thread,SIGNAL(showImage(cv::Mat)),this,SLOT(showImage(cv::Mat)));
@@ -88,7 +89,7 @@ void Controller::openVideo(QString path)
     }
     catch(std::string message){
         QMessageBox::warning(this->window,"Problema na abertura do vídeo",QString(message.c_str()));
-        this->video_thread=0;
+        this->video_thread=NULL;
     }
 
 
@@ -109,26 +110,43 @@ void Controller::addCalibrationMarker(CalibrationMarker cm)
 
 void Controller::genCalibFile(QString path)
 {
-    CalibrationProcessor calib(path.toStdString(), this->markers, this->recentFrame.size(),
-                               CalibrationProcessor::ZHENG);
-    calib.start();
-    calib.wait();
+    if(this->calib!=NULL)
+    {
+        this->calib->wait();
+        delete this->calib;
+    }
+
+    this->calib = new CalibrationProcessor(path.toStdString(), this->markers, this->recentFrame.size(),
+                                   CalibrationProcessor::ZHENG);
+
+    calib->start();
 }
 
 void Controller::genHomoFile(QString path)
 {
-    CalibrationProcessor calib(path.toStdString(), this->markers, this->recentFrame.size(),
+    if(this->calib!=NULL)
+    {
+        this->calib->wait();
+        delete this->calib;
+    }
+
+    this->calib = new CalibrationProcessor(path.toStdString(), this->markers, this->recentFrame.size(),
                                CalibrationProcessor::HOMOGRAPHY);
-    calib.start();
-    calib.wait();
+    this->calib->start();
 }
 
 void Controller::close(){
-    if(this->video_thread!=0)
+    if(this->video_thread!=NULL)
     {
         this->video_thread->requestInterruption();
         this->video_thread->wait();
         delete this->video_thread;
-        this->video_thread = 0;
+        this->video_thread = NULL;
+    }
+    if(this->calib!=NULL)
+    {
+        this->calib->wait();
+        delete this->calib;
+        this->calib=NULL;
     }
 }

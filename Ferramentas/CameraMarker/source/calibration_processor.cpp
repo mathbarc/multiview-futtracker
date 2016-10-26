@@ -1,9 +1,13 @@
 #include "calibration_processor.hpp"
 #include <iostream>
 #include <opencv2/calib3d/calib3d.hpp>
+#include <QMessageBox>
+
 
 const int CalibrationProcessor::HOMOGRAPHY = 0;
 const int CalibrationProcessor::ZHENG = 1;
+
+
 
 CalibrationProcessor::CalibrationProcessor(std::string path, CalibrationData input, cv::Size size, int method)
     : path(path)
@@ -32,6 +36,11 @@ void CalibrationProcessor::run()
 
 void CalibrationProcessor::zhengCalibration()
 {
+
+    if(this->input.image.size()<4){
+        return;
+    }
+
     std::vector< std::vector<cv::Point2f> > image;
     std::vector< std::vector<cv::Point3f> > world;
 
