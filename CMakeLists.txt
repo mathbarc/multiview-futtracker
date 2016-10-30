@@ -29,6 +29,11 @@ IF(UNIX)
     SET(CPACK_DEBIAN_PACKAGE_NAME "Multiview FutTracker")
     SET(CPACK_DEBIAN_PACKAGE_VERSION "1.0.0")
     SET(CPACK_DEBIAN_PACKAGE_MAINTAINER "Matheus Barcelos de Oliveira")
+    SET(CPACK_DEBIAN_PACKAGE_DEPENDS libopencv-core-dev)
+    SET(CPACK_DEBIAN_PACKAGE_DEPENDS libopencv-highgui-dev)
+    SET(CPACK_DEBIAN_PACKAGE_DEPENDS libopencv-calib3d-dev)
+    SET(CPACK_DEBIAN_PACKAGE_DEPENDS libopencv-imgproc-dev)
+    SET(CPACK_DEBIAN_PACKAGE_DEPENDS libqt5gui5)
 ENDIF()
 
 
