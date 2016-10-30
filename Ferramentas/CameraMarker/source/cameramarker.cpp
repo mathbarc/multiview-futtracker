@@ -109,20 +109,25 @@ void CameraMarker::insertOnTable(CalibrationMarker cm)
 void CameraMarker::on_actionGerar_Calib_Arq_triggered()
 {
 
-    QString file = QFileDialog::getSaveFileName(0,"Salvar Arquivo", "Calib", "XML (*.xml);;YML (*.yml)");
-    std::cout<<file.toStdString()<<std::endl;
+    if(this->ui->tableWidget->rowCount()!=0)
+    {
+        QString file = QFileDialog::getSaveFileName(0,"Salvar Arquivo", "Calib", "XML (*.xml);;YML (*.yml)");
+        std::cout<<file.toStdString()<<std::endl;
 
-    if(file!="")
-        emit genCalibFile(file);
-
+        if(file!="")
+            emit genCalibFile(file);
+    }
 }
 
 
 void CameraMarker::on_actionGerar_Homo_Arq_triggered()
 {
-    QString file = QFileDialog::getSaveFileName(0,"Salvar Arquivo", "Homography", "XML (*.xml);;YML (*.yml)");
-    std::cout<<file.toStdString()<<std::endl;
+    if(this->ui->tableWidget->rowCount()!=0)
+    {
+        QString file = QFileDialog::getSaveFileName(0,"Salvar Arquivo", "Homography", "XML (*.xml);;YML (*.yml)");
+        std::cout<<file.toStdString()<<std::endl;
 
-    if(file!="")
-        emit genHomoFile(file);
+        if(file!="" && this->ui->tableWidget->rowCount()!=0)
+            emit genHomoFile(file);
+    }
 }
