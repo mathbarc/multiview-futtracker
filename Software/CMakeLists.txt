@@ -5,9 +5,9 @@ add_subdirectory(View)
 find_package(Qt5Widgets REQUIRED)
 
 set(MULTIVIEW_FUTTRACKER_INCLUDE_DIRS 
-        ${Qt5Widgets_INCLUDE_DIRS}
         ${CONTROL_INCLUDE_DIR}
-        ${VIEW_INCLUDE_DIR})
+        ${VIEW_INCLUDE_DIR}
+        ${Qt5Widgets_INCLUDE_DIRS})
 
 file(GLOB MULTIVIEW_FUTTRACKER_SOURCES main.cpp)
 
