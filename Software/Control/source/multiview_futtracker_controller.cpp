@@ -4,6 +4,7 @@ MultiViewFuttrackerController::MultiViewFuttrackerController()
     : QObject(0)
 {
     this->w = new MultiviewFuttrackerMainWindow(0);
+
 }
 
 MultiViewFuttrackerController::~MultiViewFuttrackerController()
@@ -15,5 +16,5 @@ MultiViewFuttrackerController::~MultiViewFuttrackerController()
 
 void MultiViewFuttrackerController::show()
 {
-    this->w->show();
+    this->w->showFullScreen();
 }
