@@ -13,10 +13,10 @@ endif()
 set(CONTROL_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include CACHE PATH "Control include dir")
 
 set(CONTROL_INCLUDE_DIRS 
-        ${CONTROL_INCLUDE_DIR}
-        ${VIEW_INCLUDE_DIR}
         ${BUSINESS_INCLUDE_DIR}
         ${PERSISTENCE_INCLUDE_DIR}
+        ${VIEW_INCLUDE_DIR}
+        ${CONTROL_INCLUDE_DIR}
         ${Qt5Widgets_INCLUDE_DIRS}
         ${OpenCV_INCLUDE_DIRS})
 
