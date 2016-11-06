@@ -1,0 +1,8 @@
+%YAML:1.0
+
+database:
+    host:"127.0.0.1"
+    user:"futtracker"
+    pass:"futtracker"
+    db:"futtracker"
+    port:3306
