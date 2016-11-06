@@ -23,4 +23,4 @@ target_link_libraries(FutTracker Qt5::Core Control)
 
 
 install(TARGETS FutTracker RUNTIME DESTINATION "." COMPONENT application)
-install(FILES config.yml RUNTIME DESTINATION "." COMPONENT application)
+install(FILES config.yml DESTINATION "." COMPONENT application)
