@@ -6,7 +6,8 @@
 class DAOWrapper
 {
     public:
-        DAOWrapper(QString host, QString user, QString pass, QString db, int port);
+        DAOWrapper(QString host, QString user,
+                   QString pass, QString db, int port);
         DAOWrapper(cv::FileNode node);
         ~DAOWrapper();
 

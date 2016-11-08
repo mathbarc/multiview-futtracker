@@ -1,8 +1,10 @@
 #include "data_base.hpp"
+#include <QSqlError>
 #include <iostream>
 #include <sstream>
 
-DAOWrapper::DAOWrapper(QString host, QString user, QString pass, QString db, int port)
+DAOWrapper::DAOWrapper(QString host, QString user,
+                       QString pass, QString db, int port)
 {
     this->db = QSqlDatabase::addDatabase("QMYSQL");
     this->db.setHostName(host);
@@ -40,7 +42,7 @@ DAOWrapper::DAOWrapper(cv::FileNode node){
 
     if(!this->db.open())
     {
-        throw std::string("Erro ao estabelecer conecção com o banco.");
+        throw std::string(db.lastError().text().toStdString());
     }
 }
 
@@ -53,8 +55,10 @@ DAOWrapper::~DAOWrapper()
     }
 }
 
-void DAOWrapper::persistPlayer(const Player &player)
+void DAOWrapper::persistPlayer(const Player& player)
 {
 
 }
+
+
 
