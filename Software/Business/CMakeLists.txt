@@ -3,11 +3,11 @@ set( CMAKE_INCLUDE_CURRENT_DIR ON )
 
 find_package(Qt5Core REQUIRED)
 
-find_package(OpenCV 3 COMPONENTS core highgui videoio imgcodecs)
+find_package(OpenCV 3 COMPONENTS core highgui videoio imgcodecs video)
 
 if(${OpenCV_FOUND})
 else()
-        find_package(OpenCV 2 REQUIRED core highgui)
+        find_package(OpenCV 2 REQUIRED core highgui video)
 endif()
 
 set(BUSINESS_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include CACHE PATH "Business include dir")

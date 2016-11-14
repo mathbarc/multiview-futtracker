@@ -11,7 +11,7 @@ class DAOWrapper
         DAOWrapper(cv::FileNode node);
         ~DAOWrapper();
 
-        void persistPlayer(const Player& player);
+        void persistPlayer(Player& player);
 
     private:
         QSqlDatabase db;

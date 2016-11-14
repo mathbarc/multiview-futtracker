@@ -1,4 +1,5 @@
 #include "data_base.hpp"
+#include <QSqlQuery>
 #include <QSqlError>
 #include <iostream>
 #include <sstream>
@@ -27,12 +28,6 @@ DAOWrapper::DAOWrapper(cv::FileNode node){
     QString dbase(((std::string)node["db"]).c_str());
     int port = (int)node["port"];
 
-//    std::cout<<host.toStdString()<<std::endl;
-//    std::cout<<user.toStdString()<<std::endl;
-//    std::cout<<pass.toStdString()<<std::endl;
-//    std::cout<<dbase.toStdString()<<std::endl;
-//    std::cout<<port<<std::endl;
-
     this->db = QSqlDatabase::addDatabase("QMYSQL");
     this->db.setHostName(host);
     this->db.setUserName(user);
@@ -55,8 +50,17 @@ DAOWrapper::~DAOWrapper()
     }
 }
 
-void DAOWrapper::persistPlayer(const Player& player)
+void DAOWrapper::persistPlayer(Player& player)
 {
+    std::stringstream query;
+    query << "INSERT INTO PLAYERS(NAME,NUMBER) VALUES ("<<
+             player.getName() <<", "<<player.getShirtNumber()<<")";
+
+    QSqlQuery q(QString(query.str().c_str()));
+    if(!q.isActive())
+    {
+        std::cout<<q.lastError().text().toStdString()<<std::endl;
+    }
 
 }
 
