@@ -1,8 +1,8 @@
 #ifndef MULTIVIEW_FUTTRACKER_CONTROLLER
 #define MULTIVIEW_FUTTRACKER_CONTROLLER
 #include <QObject>
-#include "data_base.hpp"
 #include "multiview_futtracker_mainwindow.hpp"
+#include "data_base.hpp"
 
 class MultiViewFuttrackerController : public QObject{
     Q_OBJECT

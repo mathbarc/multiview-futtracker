@@ -1,7 +1,8 @@
 add_subdirectory(Business)
-add_subdirectory(Control)
 add_subdirectory(Persistence)
 add_subdirectory(View)
+add_subdirectory(Control)
+
 find_package(Qt5Widgets REQUIRED)
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config.yml ${CMAKE_CURRENT_BINARY_DIR}/config.yml COPYONLY)
