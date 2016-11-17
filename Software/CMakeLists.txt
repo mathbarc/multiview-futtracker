@@ -18,7 +18,11 @@ file(GLOB MULTIVIEW_FUTTRACKER_SOURCES main.cpp)
 
 include_directories(${MULTIVIEW_FUTTRACKER_INCLUDE_DIRS})
 
+if(WIN32)
+add_executable(FutTracker WIN32 ${MULTIVIEW_FUTTRACKER_SOURCES})
+else()
 add_executable(FutTracker ${MULTIVIEW_FUTTRACKER_SOURCES})
+endif()
 add_dependencies(FutTracker Control)
 target_link_libraries(FutTracker Qt5::Core Control)
 
