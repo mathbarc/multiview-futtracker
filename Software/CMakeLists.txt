@@ -1,5 +1,5 @@
 add_subdirectory(Business)
-add_subdirectory(Persistence)
+add_subdirectory(Communication)
 add_subdirectory(View)
 add_subdirectory(Control)
 
@@ -9,7 +9,7 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config.yml ${CMAKE_CURRENT_BINARY_DIR
 
 set(MULTIVIEW_FUTTRACKER_INCLUDE_DIRS 
     ${BUSINESS_INCLUDE_DIR}
-    ${PERSISTENCE_INCLUDE_DIR}
+    ${COMMUNICATION_INCLUDE_DIR}
     ${VIEW_INCLUDE_DIR}
     ${CONTROL_INCLUDE_DIR}
     ${Qt5Widgets_INCLUDE_DIRS})
