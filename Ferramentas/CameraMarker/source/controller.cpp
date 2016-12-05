@@ -26,8 +26,11 @@ QImage Controller::cvToQImage(cv::Mat img){
 
     for (int i = 0; i < this->markers.image.size(); i++)
     {
-        cv::Vec3b cor = max-img.at<cv::Vec3b>(markers.image[i]);
-        cv::circle(img,markers.image[i],3,cv::Scalar(cor),CV_FILLED);
+        cv::Vec3b cor = img.at<cv::Vec3b>(markers.image[i]);
+        if(cor[0] == 0 && cor[1] == 255 && cor[2] == 0)
+            cv::circle(img,markers.image[i],3,cv::Scalar(255,0,0),CV_FILLED);
+        else
+            cv::circle(img,markers.image[i],3,cv::Scalar(0,255,0),CV_FILLED);
     }
 
     QImage to_show(img.cols, img.rows, QImage::Format_ARGB32);

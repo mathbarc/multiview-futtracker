@@ -14,7 +14,7 @@ set(CONTROL_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include CACHE PATH "Control 
 
 set(CONTROL_INCLUDE_DIRS 
         ${BUSINESS_INCLUDE_DIR}
-        ${PERSISTENCE_INCLUDE_DIR}
+        ${COMMUNICATION_INCLUDE_DIR}
         ${VIEW_INCLUDE_DIR}
         ${CONTROL_INCLUDE_DIR}
         ${Qt5Widgets_INCLUDE_DIRS}
@@ -28,6 +28,6 @@ include_directories(${CONTROL_INCLUDE_DIRS})
 #qt5_wrap_cpp(CONTROL_WRAPPED_HEADERS ${CONTROL_HEADERS})
 #qt5_add_resources(CAMERAMARKER_RESOURCE ${CMAKE_CURRENT_SOURCE_DIR}/resource.qrc)
 add_library(Control STATIC ${CONTROL_SOURCES} ${CONTROL_HEADERS} ${CONTROL_WRAPPED_HEADERS})
-add_dependencies(Control Qt5::Widgets ${OpenCV_LIBS} View Business Persistence)
-target_link_libraries(Control Qt5::Widgets ${OpenCV_LIBS} View Business Persistence)
+add_dependencies(Control Qt5::Widgets ${OpenCV_LIBS} View Business Communication)
+target_link_libraries(Control Qt5::Widgets ${OpenCV_LIBS} View Business Communication)
 
