@@ -10,13 +10,13 @@ class VideoProcessor : public QThread
 {
     Q_OBJECT
     public:
-        VideoProcessor();
+        VideoProcessor(int history, float threshold);
 
     private:
-        cv::BackgroundSubtractor* bgs;
-        QQueue<cv::Mat3b> to_process;
-        QQueue queue;
+        cv::Ptr<cv::BackgroundSubtractor> bgs;
+        QQueue<cv::Mat3b> queue;
         QMutex mutex;
+        void run();
 
     public slots:
         void queueFrame(const cv::Mat3b& frame);

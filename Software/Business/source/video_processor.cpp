@@ -4,7 +4,7 @@
 
 VideoProcessor::VideoProcessor(int history, float threshold )
 {
-    this->bgs = new cv::BackgroundSubtractorMOG2(history, threshold);
+    this->bgs = cv::createBackgroundSubtractorMOG2(history, threshold);
 }
 
 void VideoProcessor::run()
