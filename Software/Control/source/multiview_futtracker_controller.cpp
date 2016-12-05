@@ -20,7 +20,8 @@ MultiViewFuttrackerController::MultiViewFuttrackerController()
     }
     catch(std::string ex)
     {
-        QMessageBox::warning(this->w,"Erro", tr(ex.c_str()));
+        QMessageBox::warning(NULL,"Erro", tr(ex.c_str()));
+        configFile.release();
         exit(-1);
     }
     configFile.release();

@@ -1,5 +1,6 @@
 #ifndef MULTIVIEW_FUTTRACKER_CONTROLLER
 #define MULTIVIEW_FUTTRACKER_CONTROLLER
+
 #include <QObject>
 #include "multiview_futtracker_mainwindow.hpp"
 #include "data_base.hpp"

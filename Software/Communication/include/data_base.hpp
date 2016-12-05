@@ -1,3 +1,6 @@
+#ifndef DATA_BASE_HPP
+#define DATA_BASE_HPP
+
 #include <QSqlDatabase>
 #include <string>
 
@@ -16,3 +19,5 @@ class DAOWrapper
     private:
         QSqlDatabase db;
 };
+
+#endif

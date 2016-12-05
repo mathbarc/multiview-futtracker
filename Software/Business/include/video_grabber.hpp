@@ -1,5 +1,5 @@
-#ifndef VIDEO_GRABBER
-#define VIDEO_GRABBER
+#ifndef VIDEO_GRABBER_HPP
+#define VIDEO_GRABBER_HPP
 
 #include <QThread>
 #include <opencv2/highgui/highgui.hpp>

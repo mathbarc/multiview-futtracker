@@ -1,3 +1,5 @@
+#ifndef VIDEO_PROCESSOR_HPP
+#define VIDEO_PROCESSOR_HPP
 #include <opencv2/core/core.hpp>
 #include <QThread>
 #include <QQueue>
@@ -19,3 +21,4 @@ class VideoProcessor : public QThread
 
 };
 
+#endif

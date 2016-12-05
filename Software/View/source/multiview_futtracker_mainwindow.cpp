@@ -1,4 +1,4 @@
-#include "include/multiview_futtracker_mainwindow.hpp"
+#include "multiview_futtracker_mainwindow.hpp"
 #include "ui_multiview_futtracker_mainwindow.h"
 
 MultiviewFuttrackerMainWindow::MultiviewFuttrackerMainWindow(QWidget *parent) :
