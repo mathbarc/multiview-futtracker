@@ -14,7 +14,11 @@ VideoProcessor::VideoProcessor(int history, float threshold )
     #if(WITH_CUDA)
         this->bgs = cv::cuda::createBackgroundSubtractorMOG2(history,threshold);
     #else
+    #if(OPENCV_VERSION==3)
         this->bgs = cv::createBackgroundSubtractorMOG2(history, threshold);
+    #elif(OPENCV_VERSION==2)
+        this->bgs = new cv::BackgroundSubtractorMOG2(history, threshold);
+    #endif
     #endif
 }
 
@@ -33,7 +37,11 @@ void VideoProcessor::run()
         mutex.unlock();
         if(!img.empty())
         {
+            #if(OPENCV_VERSION==3)
             this->bgs->apply(img,fgmask,0.2);
+            #elif(OPENCV_VERSION==2)
+            this->bgs->operator ()(img,fgmask,0.2);
+            #endif
             emit resultFrame(img,fgmask);
         }
     }

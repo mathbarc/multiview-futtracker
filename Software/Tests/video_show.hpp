@@ -15,13 +15,10 @@ class VideoShow : public QObject
             ,vgrab(new VideoGrabber(0))
             ,vpros(new VideoProcessor(50,16))
         {
-            qRegisterMetaType<cv::Mat3b>("cv::Mat3b");
-            qRegisterMetaType<cv::Mat1b>("cv::Mat1b");
-
             cv::namedWindow("image", cv::WINDOW_NORMAL);
             cv::namedWindow("fore", cv::WINDOW_NORMAL);
-            connect(vgrab,SIGNAL(nextFrame(cv::Mat3b)),vpros,SLOT(queueFrame(cv::Mat3b)));
-            connect(vpros,SIGNAL(resultFrame(cv::Mat3b,cv::Mat1b)),this,SLOT(showFrames(cv::Mat3b,cv::Mat1b)));
+            connect(vgrab,SIGNAL(nextFrame(const cv::Mat3b&)),vpros,SLOT(queueFrame(const cv::Mat3b&)));
+            connect(vpros,SIGNAL(resultFrame(const cv::Mat3b&, const cv::Mat1b&)),this,SLOT(showFrames(const cv::Mat3b&,const cv::Mat1b&)));
         }
 
         void go()
