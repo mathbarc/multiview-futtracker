@@ -3,8 +3,9 @@
 #include <opencv2/core/core.hpp>
 #include <QThread>
 #include <QQueue>
-#include <opencv2/video/video.hpp>
+#include <opencv2/video/background_segm.hpp>
 #include <QMutex>
+
 
 class VideoProcessor : public QThread
 {
@@ -22,7 +23,7 @@ class VideoProcessor : public QThread
         void queueFrame(const cv::Mat3b& frame);
 
     signals:
-        void resultFrame(const cv::Mat3b& frame);
+        void resultFrame(const cv::Mat3b& frame, const cv::Mat1b& fgmask);
 
 };
 

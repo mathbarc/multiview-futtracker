@@ -3,7 +3,11 @@ set( CMAKE_INCLUDE_CURRENT_DIR ON )
 
 find_package(Qt5Core REQUIRED)
 
-find_package(OpenCV 3 COMPONENTS core highgui videoio imgcodecs video)
+if(${WITH_CUDA})
+    find_package(OpenCV 3 COMPONENTS core highgui videoio imgcodecs video cudabgsegm)
+else()
+    find_package(OpenCV 3 COMPONENTS core highgui videoio imgcodecs video)
+endif()
 
 if(${OpenCV_FOUND})
 else()
@@ -19,10 +23,10 @@ set(BUSINESS_INCLUDE_DIRS
 
 file(GLOB BUSINESS_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/source/*.cpp)
 file(GLOB BUSINESS_HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/include/*.hpp ${CMAKE_CURRENT_SOURCE_DIR}/include/*.h)
-
+add_definitions(-DWITH_CUDA=${WITH_CUDA})
 include_directories(${BUSINESS_INCLUDE_DIRS})
-
 #qt5_wrap_ui(CAMERAMARKER_WRAPPED_IUS ${CAMERAMARKER_FORMS})
+#qt5_wrap_cpp(BUSINESS_WRAPPED_HEADERS ${BUSINESS_HEADERS})
 #qt5_add_resources(CAMERAMARKER_RESOURCE ${CMAKE_CURRENT_SOURCE_DIR}/resource.qrc)
 add_library(Business STATIC ${BUSINESS_SOURCES} ${BUSINESS_HEADERS})
 target_link_libraries(Business Qt5::Core ${OpenCV_LIBS})

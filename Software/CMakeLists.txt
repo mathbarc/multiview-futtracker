@@ -1,7 +1,9 @@
+set(WITH_CUDA 0 CACHE VALUE "WITH CUDA")
 add_subdirectory(Business)
 add_subdirectory(Communication)
 add_subdirectory(View)
 add_subdirectory(Control)
+add_subdirectory(Tests)
 
 find_package(Qt5Widgets REQUIRED)
 
