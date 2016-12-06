@@ -4,11 +4,16 @@
 #include "video_grabber.hpp"
 #include "video_processor.hpp"
 
+#include <iostream>
 #include <QObject>
 
 class VideoShow : public QObject
 {
         Q_OBJECT
+    private:
+        VideoGrabber* vgrab;
+        VideoProcessor* vpros;
+
     public:
         VideoShow()
             :QObject()
@@ -17,8 +22,8 @@ class VideoShow : public QObject
         {
             cv::namedWindow("image", cv::WINDOW_NORMAL);
             cv::namedWindow("fore", cv::WINDOW_NORMAL);
-            connect(vgrab,SIGNAL(nextFrame(const cv::Mat3b&)),vpros,SLOT(queueFrame(const cv::Mat3b&)));
-            connect(vpros,SIGNAL(resultFrame(const cv::Mat3b&, const cv::Mat1b&)),this,SLOT(showFrames(const cv::Mat3b&,const cv::Mat1b&)));
+            connect(this->vgrab,SIGNAL(nextFrame(const cv::Mat3b&)),this->vpros,SLOT(queueFrame(const cv::Mat3b&)));
+            connect(this->vpros,SIGNAL(resultFrame(const cv::Mat3b&, const cv::Mat1b&)),this,SLOT(showFrames(const cv::Mat3b&,const cv::Mat1b&)));
         }
 
         void go()
@@ -36,10 +41,6 @@ class VideoShow : public QObject
             delete vgrab;
             delete vpros;
         }
-
-    private:
-        VideoGrabber* vgrab;
-        VideoProcessor* vpros;
 
     public slots:
         void showFrames(const cv::Mat3b& frame, const cv::Mat1b& fgmask)

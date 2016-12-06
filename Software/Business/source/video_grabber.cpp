@@ -34,7 +34,8 @@ void VideoGrabber::run()
     {
         std::cout<<frame.cols<<", "<<frame.rows<<std::endl;
         emit nextFrame(frame);
-        this->sleep(1);
+//        cv::imshow("i",frame);
+        this->msleep(30);
         this->cap >> frame;
     }
 }
