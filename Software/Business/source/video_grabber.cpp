@@ -30,12 +30,11 @@ void VideoGrabber::run()
 {
     cv::Mat3b frame;
     this->cap >> frame;
-    std::cout<<frame.cols<<", "<<frame.rows<<std::endl;
     while(!this->isInterruptionRequested() && !frame.empty())
     {
         std::cout<<frame.cols<<", "<<frame.rows<<std::endl;
         emit nextFrame(frame);
-        QThread::msleep(30);
+        this->sleep(1);
         this->cap >> frame;
     }
 }

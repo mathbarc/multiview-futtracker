@@ -16,7 +16,7 @@ set(MULTIVIEW_FUTTRACKER_INCLUDE_DIRS
     ${COMMUNICATION_INCLUDE_DIR}
     ${VIEW_INCLUDE_DIR}
     ${CONTROL_INCLUDE_DIR}
-    ${Qt5Widgets_INCLUDE_DIRS})
+    ${Qt5Core_INCLUDE_DIRS})
 
 file(GLOB VIDEO_PROCESSOR_TEST_SOURCES main_video_processor.cpp video_show.hpp)
 file(GLOB TEST_HEADERS *.hpp)
@@ -29,7 +29,7 @@ else()
 add_executable(VideoProcessor ${VIDEO_PROCESSOR_TEST_SOURCES} ${TEST_HEADERS} ${TEST_WRAPPED_HEADERS})
 endif()
 add_dependencies(VideoProcessor Control)
-target_link_libraries(VideoProcessor Qt5::Core Control ${OPENCV_LIBS})
+target_link_libraries(VideoProcessor Qt5::Core Business ${OPENCV_LIBS})
 
 
 install(TARGETS VideoProcessor RUNTIME DESTINATION "." COMPONENT tests)

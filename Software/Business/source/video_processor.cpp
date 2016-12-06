@@ -9,6 +9,7 @@
 #include <iostream>
 
 VideoProcessor::VideoProcessor(int history, float threshold )
+    :QThread()
 {
     #if(WITH_CUDA)
         this->bgs = cv::cuda::createBackgroundSubtractorMOG2(history,threshold);
