@@ -3,7 +3,6 @@
 #include <opencv2/core/core.hpp>
 #include <QThread>
 #include <QQueue>
-#include <opencv2/video/background_segm.hpp>
 #include <QMutex>
 
 
@@ -11,14 +10,12 @@ class VideoProcessor : public QThread
 {
     Q_OBJECT
     public:
-        VideoProcessor(int history, float threshold, double learningRate);
+        VideoProcessor();
 
-    private:
-        cv::Ptr<cv::BackgroundSubtractor> bgs;
+    protected:
         QQueue<cv::Mat3b> queue;
         QMutex mutex;
-        double learningRate;
-        void run();
+        virtual void run() = 0;
 
     public slots:
         void queueFrame(const cv::Mat3b& frame);

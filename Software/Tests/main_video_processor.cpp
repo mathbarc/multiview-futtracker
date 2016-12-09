@@ -1,5 +1,3 @@
-#include "video_grabber.hpp"
-#include "video_processor.hpp"
 #include "video_show.hpp"
 
 #include <QCoreApplication>
