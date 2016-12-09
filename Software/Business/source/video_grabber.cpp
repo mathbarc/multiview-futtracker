@@ -32,7 +32,6 @@ void VideoGrabber::run()
     this->cap >> frame;
     while(!this->isInterruptionRequested() && !frame.empty())
     {
-        std::cout<<frame.cols<<", "<<frame.rows<<std::endl;
         emit nextFrame(frame);
 //        cv::imshow("i",frame);
         this->msleep(30);

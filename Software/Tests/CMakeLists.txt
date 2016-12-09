@@ -1,14 +1,15 @@
 find_package(Qt5Core REQUIRED)
 
+
 if(${WITH_CUDA})
-    find_package(OpenCV 3 COMPONENTS core highgui videoio imgcodecs video cudabgsegm)
+    find_package(OpenCV 3 COMPONENTS core highgui videoio imgcodecs video cudabgsegm imgproc)
 else()
-    find_package(OpenCV 3 COMPONENTS core highgui videoio imgcodecs video)
+    find_package(OpenCV 3 COMPONENTS core highgui videoio imgcodecs video imgproc)
 endif()
 
 if(${OpenCV_FOUND})
 else()
-        find_package(OpenCV 2 REQUIRED core highgui video)
+        find_package(OpenCV 2 REQUIRED core highgui video imgproc)
 endif()
 
 set(MULTIVIEW_FUTTRACKER_INCLUDE_DIRS
