@@ -30,6 +30,7 @@ class VideoShow : public QObject
             cv::namedWindow("fore", cv::WINDOW_NORMAL);
             QObject::connect(this->vgrab,SIGNAL(nextFrame(const cv::Mat3b&)),this->vpros,SLOT(queueFrame(const cv::Mat3b&)));
             QObject::connect(this->vpros,SIGNAL(resultFrame(const cv::Mat3b&, const cv::Mat1b&)),this,SLOT(showFrames(const cv::Mat3b&,const cv::Mat1b&)));
+            std::cout<<"Created"<<std::endl;
         }
         VideoShow(int c)
             :QObject()
@@ -44,8 +45,11 @@ class VideoShow : public QObject
 
         void go()
         {
-            vgrab->start();
+            std::cout<<"Starting"<<std::endl;
             vpros->start();
+            std::cout<<"Started Video Processor"<<std::endl;
+            vgrab->start();
+            std::cout<<"Started Video Grabber"<<std::endl;
 
         }
         ~VideoShow()

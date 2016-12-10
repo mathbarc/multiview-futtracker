@@ -41,11 +41,10 @@ void VideoProcessorBGS::run()
         {
             cv::GaussianBlur(img,img,cv::Size(3,3),1.2);
             #if(OPENCV_VERSION==3)
-
                 #if(WITH_CUDA)
-                    cv::cuda::GpuMat d_im,d_fgmask;
                     d_im.upload(img);
                     this->bgs->apply(d_im,d_fgmask,this->learningRate);
+                    if(!d_fgmask.empty())
                     d_fgmask.download(fgmask);
                 #else
                     this->bgs->apply(img,fgmask,this->learningRate);
@@ -56,4 +55,15 @@ void VideoProcessorBGS::run()
             emit resultFrame(img,fgmask);
         }
     }
+}
+
+VideoProcessorBGS::~VideoProcessorBGS()
+{
+    #if(WITH_CUDA)
+        if(!this->d_im.empty())
+            this->d_im.release();
+        if(!this->d_fgmask.empty())
+            this->d_fgmask.release();
+    #endif
+
 }
