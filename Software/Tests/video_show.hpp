@@ -21,7 +21,7 @@ class VideoShow : public QObject
         VideoShow(std::string path)
             :QObject()
             ,vgrab(new VideoGrabber(path))
-            ,vpros(new VideoProcessorBGS(100,40,2e-3))
+            ,vpros(new VideoProcessorBGS(100,40,2e-3, cv::Size(3,3), 1.2))
             ,count(0)
         {
             this->write.open("result.avi", CV_FOURCC('D','I','V','X'), 33, cv::Size(1440,480));
@@ -35,7 +35,7 @@ class VideoShow : public QObject
         VideoShow(int c)
             :QObject()
             ,vgrab(new VideoGrabber(c))
-            ,vpros(new VideoProcessorBGS(70,30,0.0002))
+            ,vpros(new VideoProcessorBGS(70,30,0.0002, cv::Size(3,3), 1.2))
         {
             cv::namedWindow("image", cv::WINDOW_NORMAL);
             cv::namedWindow("fore", cv::WINDOW_NORMAL);

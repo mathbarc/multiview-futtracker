@@ -17,7 +17,7 @@ class VideoProcessorOpticalFlow : public VideoProcessor
         VideoProcessorOpticalFlow();
 
     private:
-        cv::Mat3b before;
+        cv::Mat1b before;
         void run();
 };
 

@@ -15,12 +15,15 @@ class VideoProcessorBGS : public VideoProcessor
 {
     Q_OBJECT
     public:
-        VideoProcessorBGS(int history, float threshold, double learningRate);
+        VideoProcessorBGS(int history, float threshold, double learningRate,
+                          cv::Size gaussianKernelSize, double gaussianStdDev);
         ~VideoProcessorBGS();
 
     private:
         cv::Ptr<cv::BackgroundSubtractor> bgs;
         double learningRate;
+        cv::Size gaussianKernelSize;
+        double gaussianStdDev;
         void run();
         #if WITH_CUDA
             cv::cuda::GpuMat d_im,d_fgmask;

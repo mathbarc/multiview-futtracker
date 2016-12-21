@@ -9,9 +9,12 @@
 #include <opencv2/imgproc/imgproc.hpp>
 #include <iostream>
 
-VideoProcessorBGS::VideoProcessorBGS(int history, float threshold, double learningRate)
+VideoProcessorBGS::VideoProcessorBGS(int history, float threshold, double learningRate,
+                                     cv::Size gaussianKernelSize, double gaussianStdDev)
     :VideoProcessor()
     ,learningRate(learningRate)
+    ,gaussianKernelSize(gaussianKernelSize)
+    ,gaussianStdDev(gaussianStdDev)
 {
     #if(WITH_CUDA)
         this->bgs = cv::cuda::createBackgroundSubtractorMOG2(history,threshold);
@@ -26,7 +29,7 @@ VideoProcessorBGS::VideoProcessorBGS(int history, float threshold, double learni
 
 void VideoProcessorBGS::run()
 {
-    cv::Mat3b img;
+    cv::Mat3b img, bg;
     cv::Mat1b fgmask;
 
     while(!this->isInterruptionRequested())
@@ -39,7 +42,7 @@ void VideoProcessorBGS::run()
         mutex.unlock();
         if(!img.empty())
         {
-            cv::GaussianBlur(img,img,cv::Size(3,3),1.2);
+            cv::GaussianBlur(img,img,gaussianKernelSize,gaussianStdDev);
             #if(OPENCV_VERSION==3)
                 #if(WITH_CUDA)
                     d_im.upload(img);
@@ -48,11 +51,16 @@ void VideoProcessorBGS::run()
                     d_fgmask.download(fgmask);
                 #else
                     this->bgs->apply(img,fgmask,this->learningRate);
+                    this->bgs->getBackgroundImage(bg);
                 #endif
             #elif(OPENCV_VERSION==2)
                 this->bgs->operator ()(img,fgmask,this->learningRate);
+                this->bgs->getBackgroundImage(bg);
             #endif
-            emit resultFrame(img,fgmask);
+            cv::threshold(fgmask,fgmask, 170, 255, cv::THRESH_BINARY);
+            cv::erode(fgmask, fgmask, cv::Mat(), cv::Point(), 1);
+            cv::dilate(fgmask, fgmask, cv::Mat(), cv::Point(), 1);
+            emit resultFrame(bg,fgmask);
         }
     }
 }
