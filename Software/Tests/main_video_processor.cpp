@@ -14,6 +14,10 @@ int main(int argc, char* argv[])
 
     QString file = QFileDialog::getOpenFileName(nullptr,"Open File", ".", "*.mpg(MPG);;*.mp4(MP4)");
     std::cout<<file.toStdString()<<std::endl;
+    if(file == ""){
+        a.exit(-1);
+        return -1;
+    }
     VideoShow vs(file.toStdString());
     vs.go();
 
