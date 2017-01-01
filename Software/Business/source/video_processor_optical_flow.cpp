@@ -1,9 +1,16 @@
 #include "video_processor_optical_flow.hpp"
 #include <iostream>
 
-VideoProcessorOpticalFlow::VideoProcessorOpticalFlow()
+VideoProcessorOpticalFlow::VideoProcessorOpticalFlow(double pyr_scale, int level, int winsize,
+                                                     int iterations, int poly_n, double poly_sigma)
     : VideoProcessor()
     , before()
+    , pyr_scale(pyr_scale)
+    , level(level)
+    , winsize(winsize)
+    , iterations(iterations)
+    , poly_n(poly_n)
+    , poly_sigma(poly_sigma)
 {}
 
 void VideoProcessorOpticalFlow::run()
@@ -34,7 +41,8 @@ void VideoProcessorOpticalFlow::run()
             }
             else
             {
-                cv::calcOpticalFlowFarneback(this->before, tmp, interResult, 0.5, 4, 21, 5, 5, 1.5, cv::OPTFLOW_FARNEBACK_GAUSSIAN);
+                cv::calcOpticalFlowFarneback(this->before, tmp, interResult, this->pyr_scale, this->level, this->winsize,
+                                             this->iterations, this->poly_n, this->poly_sigma, cv::OPTFLOW_FARNEBACK_GAUSSIAN);
                 cv::split(interResult,tmpr);
                 cv::magnitude(tmpr[0], tmpr[1], r);
                 cv::normalize(r, r, 0, 255, cv::NORM_L2);

@@ -14,10 +14,13 @@ class VideoProcessorOpticalFlow : public VideoProcessor
 {
     Q_OBJECT
     public:
-        VideoProcessorOpticalFlow();
+        VideoProcessorOpticalFlow(double pyr_scale, int level, int winsize, int iterations, int poly_n, double poly_sigma);
 
     private:
         cv::Mat1b before;
+        double pyr_scale;
+        int level, winsize, iterations, poly_n;
+        double poly_sigma;
         void run();
 };
 
