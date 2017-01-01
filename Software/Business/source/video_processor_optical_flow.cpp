@@ -50,6 +50,7 @@ void VideoProcessorOpticalFlow::run()
 
                 emit resultFrame(img,result);
             }
+            this->before = tmp;
         }
     }
     return;

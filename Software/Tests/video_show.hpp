@@ -23,7 +23,7 @@ class VideoShow : public QObject
             :QObject()
             ,vgrab(new VideoGrabber(path))
             ,vpros(new VideoProcessorBGS(100,40,2e-3, cv::Size(3,3), 1.2))
-//            ,vpros(new VideoProcessorOpticalFlow(0.2, 5, 11, 5, 20, 3.5))
+//            ,vpros(new VideoProcessorOpticalFlow( 0.5, 3, 15, 3, 5, 1.2))
             ,count(0)
         {
             this->write.open("result.avi", CV_FOURCC('D','I','V','X'), 33, cv::Size(1440,480));
