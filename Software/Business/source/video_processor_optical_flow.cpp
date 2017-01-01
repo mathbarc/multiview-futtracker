@@ -10,8 +10,10 @@ void VideoProcessorOpticalFlow::run()
 {
     cv::Mat3b img;
     cv::Mat1b result;
-    cv::Mat1b interResult;
+    cv::Mat2f interResult;
     cv::Mat1b tmp;
+    cv::Mat1b tmpr[2];
+    cv::Mat1f r;
 
     while(!this->isInterruptionRequested())
     {
@@ -33,14 +35,16 @@ void VideoProcessorOpticalFlow::run()
             else
             {
                 cv::calcOpticalFlowFarneback(this->before, tmp, interResult, 0.5, 4, 21, 5, 5, 1.5, cv::OPTFLOW_FARNEBACK_GAUSSIAN);
-                std::cout<<"Ok"<<std::endl;
-                cv::normalize(interResult, interResult, 0, 255, cv::NORM_L2);
-                interResult.convertTo(result,CV_8U);
+                cv::split(interResult,tmpr);
+                cv::magnitude(tmpr[0], tmpr[1], r);
+                cv::normalize(r, r, 0, 255, cv::NORM_L2);
+                r.convertTo(result,CV_8U);
+
                 emit resultFrame(img,result);
             }
         }
     }
-
+    return;
 
 
 }

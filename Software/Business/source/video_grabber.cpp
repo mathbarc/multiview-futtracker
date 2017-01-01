@@ -37,4 +37,5 @@ void VideoGrabber::run()
         this->msleep(30);
         this->cap >> frame;
     }
+    return;
 }

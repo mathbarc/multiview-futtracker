@@ -63,6 +63,7 @@ void VideoProcessorBGS::run()
             emit resultFrame(bg,fgmask);
         }
     }
+    return;
 }
 
 VideoProcessorBGS::~VideoProcessorBGS()
