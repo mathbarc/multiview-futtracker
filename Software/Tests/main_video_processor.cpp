@@ -3,6 +3,7 @@
 #include <QApplication>
 
 #include <QMetaType>
+#include <QFileDialog>
 
 int main(int argc, char* argv[])
 {
@@ -11,10 +12,10 @@ int main(int argc, char* argv[])
     qRegisterMetaType<cv::Mat1b>("cv::Mat1b");
     qRegisterMetaType<cv::Mat>("cv::Mat");
 
-
-    VideoShow vs("teste.mpg");
+    QString file = QFileDialog::getOpenFileName(nullptr,"Open File", ".", "*.mpg(MPG);;*.mp4(MP4)");
+    std::cout<<file.toStdString()<<std::endl;
+    VideoShow vs(file.toStdString());
     vs.go();
-
 
     return a.exec();
 }

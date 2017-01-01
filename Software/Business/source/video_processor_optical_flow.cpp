@@ -41,8 +41,14 @@ void VideoProcessorOpticalFlow::run()
             }
             else
             {
+                #if WITH_CUDA
+
+
+
+                #else
                 cv::calcOpticalFlowFarneback(this->before, tmp, interResult, this->pyr_scale, this->level, this->winsize,
                                              this->iterations, this->poly_n, this->poly_sigma, cv::OPTFLOW_FARNEBACK_GAUSSIAN);
+                #endif
                 cv::split(interResult,tmpr);
                 cv::magnitude(tmpr[0], tmpr[1], r);
                 cv::normalize(r, r, 0, 255, cv::NORM_L2);
