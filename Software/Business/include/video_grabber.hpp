@@ -10,6 +10,7 @@ class VideoGrabber : public QThread{
         VideoGrabber(std::string path);
         VideoGrabber(int id);
         ~VideoGrabber();
+        cv::Size getFrameSize();
 
     private:
         cv::VideoCapture cap;

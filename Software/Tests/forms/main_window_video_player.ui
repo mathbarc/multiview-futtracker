@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>493</width>
-    <height>340</height>
+    <width>904</width>
+    <height>420</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -25,12 +25,21 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>55</width>
-      <height>16</height>
+      <width>901</width>
+      <height>361</height>
      </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
     </property>
     <property name="text">
      <string/>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
     </property>
    </widget>
   </widget>
@@ -39,18 +48,24 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>493</width>
+     <width>904</width>
      <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuAbrir">
     <property name="title">
-     <string>Abrir</string>
+     <string>Arquivo</string>
     </property>
+    <addaction name="actionAbrir"/>
    </widget>
    <addaction name="menuAbrir"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionAbrir">
+   <property name="text">
+    <string>Abrir</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>

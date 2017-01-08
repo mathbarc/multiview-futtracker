@@ -34,8 +34,18 @@ void VideoGrabber::run()
     {
         emit nextFrame(frame);
 //        cv::imshow("i",frame);
-        this->msleep(30);
+        this->msleep(33);
         this->cap >> frame;
     }
     return;
+}
+
+cv::Size VideoGrabber::getFrameSize()
+{
+    cv::Size fs;
+
+    fs.width = this->cap.get(CV_CAP_PROP_FRAME_WIDTH);
+    fs.height = this->cap.get(CV_CAP_PROP_FRAME_HEIGHT);
+
+    return fs;
 }
