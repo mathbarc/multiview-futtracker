@@ -55,7 +55,7 @@ void MainWindowVideoPlayer::on_actionAbrir_triggered()
 
         cv::Size fs = this->grabber->getFrameSize();
         std::cout<<fs<<std::endl;
-        writer.open(std::to_string(nVideo)+".mp4",CV_FOURCC('H','2','6','4'),30,cv::Size(fs.width*2, fs.height),true);
+        writer.open(std::to_string(nVideo)+".avi",CV_FOURCC('D','I','V','X'),30,cv::Size(fs.width*2, fs.height),true);
         nVideo++;
         this->grabber->start();
     }
