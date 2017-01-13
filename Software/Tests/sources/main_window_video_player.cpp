@@ -54,7 +54,7 @@ void MainWindowVideoPlayer::on_actionAbrir_triggered()
         connect(this->grabber,SIGNAL(nextFrame(cv::Mat3b)),this->processor,SLOT(queueFrame(cv::Mat3b)));
 
         cv::Size fs = this->grabber->getFrameSize();
-        std::cout<<fs<<std::endl;
+//        std::cout<<fs<<std::endl;
         writer.open(std::to_string(nVideo)+".mpeg",CV_FOURCC('M','P','E','G'),30,cv::Size(fs.width*2, fs.height),true);
         nVideo++;
         this->grabber->start();

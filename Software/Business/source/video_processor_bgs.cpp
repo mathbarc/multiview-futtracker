@@ -40,15 +40,25 @@ void VideoProcessorBGS::run()
         else
             img = cv::Mat();
         mutex.unlock();
+
         if(!img.empty())
         {
+            std::cout<<img.size()<<std::endl;
             cv::GaussianBlur(img,img,gaussianKernelSize,gaussianStdDev);
             #if(OPENCV_VERSION==3)
                 #if(WITH_CUDA)
-                    d_im.upload(img);
-                    this->bgs->apply(d_im,d_fgmask,this->learningRate);
+//                    std::cout<<"Gaussian applyed"<<std::endl;
+                    d_im.upload(img,this->stream);
+//                    std::cout<<"CPU ---> GPU wait"<<std::endl;
+                    this->stream.waitForCompletion();
+//                    std::cout<<"CPU ---> GPU"<<std::endl;
+                    this->bgs->apply(d_im,d_fgmask,this->learningRate,this->stream);
+                    this->stream.waitForCompletion();
                     if(!d_fgmask.empty())
-                    d_fgmask.download(fgmask);
+                    {
+                        d_fgmask.download(fgmask,this->stream);
+                        this->stream.waitForCompletion();
+                    }
                 #else
                     this->bgs->apply(img,fgmask,this->learningRate);
                 #endif
@@ -67,6 +77,7 @@ void VideoProcessorBGS::run()
 VideoProcessorBGS::~VideoProcessorBGS()
 {
     #if(WITH_CUDA)
+        this->stream.waitForCompletion();
         if(!this->d_im.empty())
             this->d_im.release();
         if(!this->d_fgmask.empty())
@@ -74,3 +85,4 @@ VideoProcessorBGS::~VideoProcessorBGS()
     #endif
 
 }
+

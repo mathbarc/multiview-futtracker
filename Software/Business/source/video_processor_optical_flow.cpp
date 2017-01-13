@@ -1,4 +1,5 @@
 #include "video_processor_optical_flow.hpp"
+#include <opencv2/imgproc/imgproc.hpp>
 #include <iostream>
 
 VideoProcessorOpticalFlow::VideoProcessorOpticalFlow(double pyr_scale, int level, int winsize,

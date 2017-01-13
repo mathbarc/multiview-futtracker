@@ -20,13 +20,17 @@ class VideoProcessorBGS : public VideoProcessor
         ~VideoProcessorBGS();
 
     private:
-        cv::Ptr<cv::BackgroundSubtractor> bgs;
+
         double learningRate;
         cv::Size gaussianKernelSize;
         double gaussianStdDev;
         void run();
         #if WITH_CUDA
-            cv::cuda::GpuMat d_im,d_fgmask;
+            cv::Ptr<cv::cuda::BackgroundSubtractorMOG2> bgs;
+            cv::cuda::GpuMat d_im, d_fgmask;
+            cv::cuda::Stream stream;
+        #else
+            cv::Ptr<cv::BackgroundSubtractor> bgs;
         #endif
 };
 
