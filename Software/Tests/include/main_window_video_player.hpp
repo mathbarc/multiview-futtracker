@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QImage>
+#include <QResizeEvent>
 #include <opencv2/highgui/highgui.hpp>
 #include "video_grabber.hpp"
 #include "video_processor_bgs.hpp"
@@ -33,6 +34,9 @@ class MainWindowVideoPlayer : public QMainWindow
 
         void inline interruptVideoGrabber();
         void cvToQImage(const cv::Mat3b &img);
+
+    protected:
+        void resizeEvent(QResizeEvent* event);
 
     private slots:
         void showResult(const cv::Mat3b& img);

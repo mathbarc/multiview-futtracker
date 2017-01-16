@@ -19,7 +19,6 @@ MainWindowVideoPlayer::MainWindowVideoPlayer(QWidget *parent) :
 
 MainWindowVideoPlayer::~MainWindowVideoPlayer()
 {
-    std::cout<<"~MainWindowVideoPlayer ... ";
     interruptVideoGrabber();
     if(this->processor!=nullptr)
     {
@@ -30,7 +29,6 @@ MainWindowVideoPlayer::~MainWindowVideoPlayer()
     }
 
     delete ui;
-    std::cout<<"done"<<std::endl;
 }
 
 void MainWindowVideoPlayer::on_actionAbrir_triggered()
@@ -96,4 +94,11 @@ void MainWindowVideoPlayer::cvToQImage(const cv::Mat3b& img)
         }
     }
     this->ui->label->setPixmap(QPixmap::fromImage(to_show));
+}
+
+void MainWindowVideoPlayer::resizeEvent(QResizeEvent *event)
+{
+    QMainWindow::resizeEvent(event);
+    this->ui->centralwidget->resize(event->size());
+    this->ui->label->resize(event->size());
 }
