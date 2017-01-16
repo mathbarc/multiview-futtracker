@@ -6,6 +6,7 @@
 #include <opencv2/highgui/highgui.hpp>
 #include "video_grabber.hpp"
 #include "video_processor_bgs.hpp"
+#include "imagebuffer.hpp"
 
 namespace Ui {
     class MainWindowVideoPlayer;
@@ -26,14 +27,15 @@ class MainWindowVideoPlayer : public QMainWindow
         Ui::MainWindowVideoPlayer *ui;
         VideoProcessor* processor;
         VideoGrabber* grabber;
-        cv::VideoWriter writer;
+        ImageBuffer* imb;
+
         int nVideo;
 
         void inline interruptVideoGrabber();
-        void cvToQImage(cv::Mat3b img);
+        void cvToQImage(const cv::Mat3b &img);
 
     private slots:
-        void showResult(cv::Mat3b img, cv::Mat1b result);
+        void showResult(const cv::Mat3b& img);
 };
 
 #endif // MAIN_WINDOW_VIDEO_PLAYER_HPP
