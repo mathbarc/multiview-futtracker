@@ -10,6 +10,14 @@ else()
         find_package(OpenCV 2 REQUIRED core highgui)
 endif()
 
+set(Boost_USE_STATIC_LIBS    OFF) # only find static libs
+set(Boost_USE_MULTITHREADED  ON)
+set(Boost_USE_STATIC_RUNTIME OFF)
+find_package(Boost REQUIRED date_time filesystem system)
+if(Boost_FOUND)
+  include_directories(${Boost_INCLUDE_DIRS})
+endif()
+
 set(CONTROL_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include CACHE PATH "Control include dir")
 
 set(CONTROL_INCLUDE_DIRS 
@@ -29,5 +37,5 @@ include_directories(${CONTROL_INCLUDE_DIRS})
 #qt5_add_resources(CAMERAMARKER_RESOURCE ${CMAKE_CURRENT_SOURCE_DIR}/resource.qrc)
 add_library(Control STATIC ${CONTROL_SOURCES} ${CONTROL_HEADERS} ${CONTROL_WRAPPED_HEADERS})
 add_dependencies(Control Qt5::Widgets ${OpenCV_LIBS} View Business Communication)
-target_link_libraries(Control Qt5::Widgets ${OpenCV_LIBS} View Business Communication)
+target_link_libraries(Control Qt5::Widgets ${OpenCV_LIBS} ${Boost_LIBRARIES} View Business Communication)
 

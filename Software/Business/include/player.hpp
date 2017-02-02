@@ -22,7 +22,7 @@ class Player
         const std::vector<cv::Point2i> getOccupation();
         const int getShirtNumber();
         const std::string getName();
-        double checkApperance(cv::Mat3b im);
+        double checkApperance(const cv::Mat3d& hist);
 
 
 };

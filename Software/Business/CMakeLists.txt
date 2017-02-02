@@ -9,6 +9,13 @@ else()
     find_package(OpenCV 3 COMPONENTS core highgui videoio imgcodecs video)
 endif()
 
+if(WIN32)
+    set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} "/arch:AVX")
+else()
+    set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} "-mavx")
+endif()
+
+
 if(${OpenCV_FOUND})
 else()
         find_package(OpenCV 2 REQUIRED core highgui video)

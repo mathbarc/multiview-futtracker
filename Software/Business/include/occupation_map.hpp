@@ -9,7 +9,7 @@ class OccupationMap
         OccupationMap(cv::Size floorSize);
 
     private:
-        cv::Size floorSize;
+        cv::Mat1d floor;
 
 
 };

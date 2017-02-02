@@ -1,4 +1,5 @@
 #include "multiview_futtracker_controller.hpp"
+#include "player.hpp"
 #include <QtWidgets/QApplication>
 
 int main(int argc, char *argv[])

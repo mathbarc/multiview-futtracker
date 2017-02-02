@@ -1,7 +1,9 @@
 #include "occupation_map.hpp"
 
 OccupationMap::OccupationMap(cv::Size floorSize)
-    : floorSize(floorSize)
+    : floor(cv::Mat1d::zeros(floorSize))
 {
+
+
 
 }
