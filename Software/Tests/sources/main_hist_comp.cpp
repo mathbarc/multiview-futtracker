@@ -73,12 +73,13 @@ int main()
     calcHistogram(im1,h1);
     calcHistogram(im2,h2);
 
-    std::cout<<h1<<std::endl<<h2<<std::endl;
     double v;
+    std::cout<<h1<<std::endl<<h2<<std::endl;
+
     std::chrono::high_resolution_clock::time_point t = std::chrono::high_resolution_clock::now();
     v = checkApperance(h1,h2);
-
     std::cout<<v<<" t = "<<std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::high_resolution_clock::now() - t).count()<<std::endl;
+
 
     cv::imshow("i1",im1);
     cv::imshow("i2",im2);
