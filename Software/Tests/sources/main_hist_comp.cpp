@@ -5,85 +5,95 @@
 #include <iostream>
 #include <chrono>
 
-double checkApperance(cv::Mat3d hist, cv::Mat3d histogram)
+double compHistogram(const cv::Mat1d& h1, const cv::Mat1d& h2)
 {
-    if(hist.cols!=256)
-    {
-        throw new std::string("Histogram of wrong size");
-    }
+    const double* hist1;
+    const double* hist2;
+    hist1 = (const double*) h1.ptr();
+    hist2 = (const double*) h2.ptr();
 
-
-    const cv::Vec3d* in;
-    cv::Vec3d* loc;
-
-    in = (const cv::Vec3d*)hist.ptr(0);
-    loc = (cv::Vec3d*)histogram.ptr(0);
-
-    double tmp;
-    cv::Vec3d result(0,0,0);
+    double mean1 = 0, mean2 = 0;
 
     for(int i = 0; i<256; i++)
     {
-        tmp = in[i][0]-loc[i][0];
-        result[0] += tmp*tmp;
-
-        tmp = in[i][1]-loc[i][1];
-        result[1] += tmp*tmp;
-
-        tmp = in[i][2]-loc[i][2];
-        result[2] += tmp*tmp;
+        mean1 += hist1[i];
+        mean2 += hist2[i];
     }
+    mean1/=256.0;
+    mean2/=256.0;
 
-    result[0] = sqrt(result[0]);
-    result[1] = sqrt(result[1]);
-    result[2] = sqrt(result[2]);
+    double r1=0,r2=0,r3=0;
+    double t1,t2;
+    for(int i = 0; i<256; i++)
+    {
+        t1 = hist1[i]-mean1;
+        t2 = hist2[i]-mean2;
 
+        r1+=t1*t1;
+        r2+=t2*t2;
+        r3+=t1*t2;
+    }
+    return r3/sqrt(r1*r2);
 
-    return sqrt(result[0]*result[0]+result[1]*result[1]+result[2]*result[2]);
 }
 
-void calcHistogram(const cv::Mat3b& im, cv::Mat3d& hist)
+void calcHistogram(const cv::Mat1b& im, cv::Mat1d& hist)
 {
-    hist.setTo(cv::Scalar::all(0));
-    cv::Vec3d* result = (cv::Vec3d*)hist.ptr(0);
-    const cv::Vec3b* imt;
+    hist.create(1,256);
+    hist.setTo(0);
+
+    const uchar* img;
+    double* his = (double*)hist.ptr();
 
     for(int i = 0; i<im.rows; i++)
     {
-        imt = (const cv::Vec3b*)im.ptr(i);
+        img = im.ptr(i);
         for(int j = 0; j<im.cols; j++)
         {
-            result[imt[j][0]][0]++;
-            result[imt[j][1]][1]++;
-            result[imt[j][2]][2]++;
+            his[img[j]]++;
         }
     }
-    hist *= (1.0/(im.cols*im.rows));
+
+    hist/=255.0*(double)(im.cols*im.rows);
+
 }
 
-int main()
+
+int main(int argc, char** argv)
 {
-    cv::Mat3b im1,im2;
+    cv::Mat3b im1 = cv::imread(argv[1]);
+    cv::Mat3b im2 = cv::imread(argv[2]);
 
-    im1 = cv::imread("katana.jpg");
-    im2 = cv::imread("t.jpg");
+    cv::cvtColor(im1,im1,CV_BGR2HSV);
+    cv::cvtColor(im2,im2,CV_BGR2HSV);
 
-    cv::Mat3d h1(1,256),h2(1,256);
+    cv::Mat1b im1c[3];
+    cv::Mat1b im2c[3];
 
-    calcHistogram(im1,h1);
-    calcHistogram(im2,h2);
+
+    cv::split(im1,im1c);
+    cv::split(im2,im2c);
+
+
+
+    cv::imshow("im1",im1c[0]);
+    cv::imshow("im2",im2c[0]);
+
+
+    cv::Mat1d h1,h2;
+    std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
+    calcHistogram(im1c[0],h1);
+    calcHistogram(im2c[0],h2);
+    std::chrono::high_resolution_clock::time_point t2 = std::chrono::high_resolution_clock::now();
+
+    std::cout<<std::chrono::duration_cast<std::chrono::microseconds>(t2-t1).count()/2<<" us"<<std::endl;
 
     double v;
-    std::cout<<h1<<std::endl<<h2<<std::endl;
 
-    std::chrono::high_resolution_clock::time_point t = std::chrono::high_resolution_clock::now();
-    v = checkApperance(h1,h2);
-    std::cout<<v<<" t = "<<std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::high_resolution_clock::now() - t).count()<<std::endl;
-
-
-    cv::imshow("i1",im1);
-    cv::imshow("i2",im2);
-
+    t1 = std::chrono::high_resolution_clock::now();
+    v = compHistogram(h1,h2);
+    t2 = std::chrono::high_resolution_clock::now();
+    std::cout<<v<<" "<<std::chrono::duration_cast<std::chrono::microseconds>(t2-t1).count()/2<<" us"<<std::endl;
     cv::waitKey(0);
 
     return 0;

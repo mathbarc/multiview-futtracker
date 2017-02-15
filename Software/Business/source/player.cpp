@@ -16,7 +16,7 @@ const int Player::getShirtNumber()
     return this->shirtNumber;
 }
 
-double Player::checkApperance(const cv::Mat3d& hist)
+double Player::checkApperance(const cv::Mat1d& hist)
 {
     if(hist.cols!=256)
     {
@@ -24,30 +24,36 @@ double Player::checkApperance(const cv::Mat3d& hist)
     }
 
 
-    const cv::Vec3d* in;
-    cv::Vec3d* loc;
+    const double* hist1;
+    const double* hist2;
+    hist1 = (double*) this->histogram.ptr();
+    hist2 = (const double*) hist.ptr();
 
-    in = (const cv::Vec3d*)hist.ptr(0);
-    loc = (cv::Vec3d*)histogram.ptr(0);
-
-    double tmp;
-    cv::Vec3d result(0,0,0);
+    double mean1 = 0, mean2 = 0;
 
     for(int i = 0; i<256; i++)
     {
-        tmp = in[i][0]-loc[i][0];
-        result[0] += tmp*tmp;
-
-        tmp = in[i][1]-loc[i][1];
-        result[1] += tmp*tmp;
-
-        tmp = in[i][2]-loc[i][2];
-        result[2] += tmp*tmp;
+        mean1 += hist1[i];
+        mean2 += hist2[i];
     }
+    mean1/=256.0;
+    mean2/=256.0;
 
-    result[0] = sqrt(result[0]);
-    result[1] = sqrt(result[1]);
-    result[2] = sqrt(result[2]);
+    double r1=0,r2=0,r3=0;
+    double t1,t2;
+    for(int i = 0; i<256; i++)
+    {
+        t1 = hist1[i]-mean1;
+        t2 = hist2[i]-mean2;
 
-    return sqrt(result[0]*result[0]+result[1]*result[1]+result[2]*result[2]);
+        r1+=t1*t1;
+        r2+=t2*t2;
+        r3+=t1*t2;
+    }
+    return r3/sqrt(r1*r2);
+}
+
+const cv::Mat1d& Player::getHistogram() const
+{
+    return this->histogram;
 }
