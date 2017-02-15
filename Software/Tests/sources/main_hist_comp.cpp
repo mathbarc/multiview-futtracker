@@ -93,7 +93,7 @@ int main(int argc, char** argv)
     t1 = std::chrono::high_resolution_clock::now();
     v = compHistogram(h1,h2);
     t2 = std::chrono::high_resolution_clock::now();
-    std::cout<<v<<" "<<std::chrono::duration_cast<std::chrono::microseconds>(t2-t1).count()/2<<" us"<<std::endl;
+    std::cout<<v<<" "<<std::chrono::duration_cast<std::chrono::nanoseconds>(t2-t1).count()/2<<" ns"<<std::endl;
     cv::waitKey(0);
 
     return 0;
