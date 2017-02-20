@@ -4,5 +4,6 @@ CapturePool::CapturePool(const boost::property_tree::ptree& config)
 {
 
 
+
 }
 

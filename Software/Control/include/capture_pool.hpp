@@ -1,8 +1,11 @@
 #include <QThread>
-#include <boost/property_tree/ptree.hpp>
 #include <QList>
+#include <QSharedPointer>
+
+#include <boost/property_tree/ptree.hpp>
 
 #include "video_grabber.hpp"
+#include "video_processor.hpp"
 
 class CapturePool : public QThread
 {
@@ -11,8 +14,8 @@ class CapturePool : public QThread
         void run();
 
     private:
-        QList<VideoGrabber*> pool;
-
+        QList< QSharedPointer<VideoGrabber> > grabberPool;
+        QList< QSharedPointer<VideoProcessor> > videoProcessorPool;
 
 
 

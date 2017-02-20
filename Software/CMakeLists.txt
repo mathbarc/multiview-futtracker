@@ -7,6 +7,14 @@ add_subdirectory(Tests)
 
 find_package(Qt5Widgets REQUIRED)
 
+set(Boost_USE_STATIC_LIBS    OFF) # only find static libs
+set(Boost_USE_MULTITHREADED  ON)
+set(Boost_USE_STATIC_RUNTIME OFF)
+find_package(Boost REQUIRED date_time filesystem system)
+if(Boost_FOUND)
+  include_directories(${Boost_INCLUDE_DIRS})
+endif()
+
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config.yml ${CMAKE_CURRENT_BINARY_DIR}/config.yml COPYONLY)
 
 set(MULTIVIEW_FUTTRACKER_INCLUDE_DIRS 
@@ -14,11 +22,13 @@ set(MULTIVIEW_FUTTRACKER_INCLUDE_DIRS
     ${COMMUNICATION_INCLUDE_DIR}
     ${VIEW_INCLUDE_DIR}
     ${CONTROL_INCLUDE_DIR}
-    ${Qt5Widgets_INCLUDE_DIRS})
+    ${Qt5Widgets_INCLUDE_DIRS}
+    ${Boost_INCLUDE_DIRS})
 
 file(GLOB MULTIVIEW_FUTTRACKER_SOURCES main.cpp)
 
 include_directories(${MULTIVIEW_FUTTRACKER_INCLUDE_DIRS})
+link_directories(${Boost_LIBRARY_DIRS})
 
 if(WIN32)
 add_executable(FutTracker WIN32 ${MULTIVIEW_FUTTRACKER_SOURCES})
@@ -26,7 +36,7 @@ else()
 add_executable(FutTracker ${MULTIVIEW_FUTTRACKER_SOURCES})
 endif()
 add_dependencies(FutTracker Control)
-target_link_libraries(FutTracker Qt5::Core Control)
+target_link_libraries(FutTracker Qt5::Core Control ${Boost_LIBRARIES})
 
 
 install(TARGETS FutTracker RUNTIME DESTINATION "." COMPONENT application)
