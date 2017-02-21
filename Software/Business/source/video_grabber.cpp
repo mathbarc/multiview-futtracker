@@ -6,7 +6,7 @@ VideoGrabber::VideoGrabber(std::string path)
 {
     this->cap.open(path);
     if(!this->cap.isOpened()){
-        throw std::string("Erro ao abrir o arquivo");
+        throw std::string("Erro ao abrir o arquivo "+path);
     }
     std::cout<<"Video Grabber"<<std::endl;
     std::cout<<"-----------------------------"<<std::endl;
