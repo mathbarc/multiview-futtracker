@@ -17,6 +17,7 @@ MultiViewFuttrackerController::MultiViewFuttrackerController()
     try
     {
         this->database = new DAOWrapper(configFile["database"]);
+        this->cappool = new CapturePool(configFile["captures"]);
     }
     catch(std::string ex)
     {

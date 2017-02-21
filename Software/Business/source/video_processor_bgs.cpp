@@ -9,6 +9,42 @@
 #include <opencv2/imgproc/imgproc.hpp>
 #include <iostream>
 
+VideoProcessorBGS::VideoProcessorBGS(const cv::FileNode& settings)
+    :VideoProcessor()
+    ,learningRate((double)settings["learning_rate"])
+    ,gaussianStdDev((double)settings["gaussian_stddev"])
+{
+
+    cv::FileNode kernelsize = settings["gaussian_kernel_size"];
+
+    this->gaussianKernelSize.width = (int)kernelsize["w"];
+    this->gaussianKernelSize.height = (int)kernelsize["h"];
+
+    int history = (int)settings["history"];
+    int threshold = (int)settings["threshold"];
+
+    std::cout<<"Algorithm BGS"<<std::endl;
+    std::cout<<"-----------------------------"<<std::endl;
+    std::cout<<"history: "<<history<<std::endl;
+    std::cout<<"threshold: "<<threshold<<std::endl;
+    std::cout<<"learning rate: "<<this->learningRate<<std::endl;
+    std::cout<<"gaussian stddev: "<<this->gaussianStdDev<<std::endl;
+    std::cout<<"gaussian kernel size: "<<this->gaussianKernelSize<<std::endl;
+    std::cout<<"-----------------------------"<<std::endl<<std::endl;
+
+    #if(WITH_CUDA)
+        this->bgs = cv::cuda::createBackgroundSubtractorMOG2(history,threshold);
+    #else
+    #if(OPENCV_VERSION==3)
+        this->bgs = cv::createBackgroundSubtractorMOG2(history, threshold);
+    #elif(OPENCV_VERSION==2)
+        this->bgs = new cv::BackgroundSubtractorMOG2(history, threshold);
+    #endif
+    #endif
+
+}
+
+
 VideoProcessorBGS::VideoProcessorBGS(int history, float threshold, double learningRate,
                                      cv::Size gaussianKernelSize, double gaussianStdDev)
     :VideoProcessor()

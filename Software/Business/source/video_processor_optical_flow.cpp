@@ -14,6 +14,18 @@ VideoProcessorOpticalFlow::VideoProcessorOpticalFlow(double pyr_scale, int level
     , poly_sigma(poly_sigma)
 {}
 
+
+VideoProcessorOpticalFlow::VideoProcessorOpticalFlow(const cv::FileNode& settings)
+    : VideoProcessor()
+    , before()
+    , pyr_scale((double)settings["pyr_scale"])
+    , level((int)settings["level"])
+    , winsize((int)settings["winsize"])
+    , iterations((int)settings["iterations"])
+    , poly_n((int)settings["poly_n"])
+    , poly_sigma((double)settings["poly_sigma"])
+{}
+
 void VideoProcessorOpticalFlow::run()
 {
     cv::Mat3b img;

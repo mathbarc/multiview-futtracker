@@ -5,14 +5,13 @@
 #include <QQueue>
 #include <QMutex>
 #include <QSharedPointer>
-#include <boost/property_tree/ptree.hpp>
 
 class VideoProcessor : public QThread
 {
     Q_OBJECT
     public:
         VideoProcessor();
-        QSharedPointer<VideoProcessor> getInstance(const boost::property_tree::ptree& settings);
+        static QSharedPointer<VideoProcessor> getInstance(const cv::FileNode& settings);
 
     protected:
         QQueue<cv::Mat3b> queue;

@@ -8,6 +8,10 @@ VideoGrabber::VideoGrabber(std::string path)
     if(!this->cap.isOpened()){
         throw std::string("Erro ao abrir o arquivo");
     }
+    std::cout<<"Video Grabber"<<std::endl;
+    std::cout<<"-----------------------------"<<std::endl;
+    std::cout<<path<<std::endl;
+    std::cout<<"-----------------------------"<<std::endl<<std::endl;
 }
 
 
@@ -32,6 +36,7 @@ void VideoGrabber::run()
     this->cap >> frame;
     while(!this->isInterruptionRequested() && !frame.empty())
     {
+        std::cout<<frame.size()<<std::endl;
         emit nextFrame(frame);
 //        cv::imshow("i",frame);
         this->msleep(33);

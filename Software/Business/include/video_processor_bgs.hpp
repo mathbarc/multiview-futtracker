@@ -17,10 +17,10 @@ class VideoProcessorBGS : public VideoProcessor
     public:
         VideoProcessorBGS(int history, float threshold, double learningRate,
                           cv::Size gaussianKernelSize, double gaussianStdDev);
+        VideoProcessorBGS(const cv::FileNode& settings);
         ~VideoProcessorBGS();
 
     private:
-
         double learningRate;
         cv::Size gaussianKernelSize;
         double gaussianStdDev;

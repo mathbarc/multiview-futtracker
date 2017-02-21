@@ -15,6 +15,7 @@ class VideoProcessorOpticalFlow : public VideoProcessor
     Q_OBJECT
     public:
         VideoProcessorOpticalFlow(double pyr_scale, int level, int winsize, int iterations, int poly_n, double poly_sigma);
+        VideoProcessorOpticalFlow(const cv::FileNode& settings);
 
     private:
         cv::Mat1b before;

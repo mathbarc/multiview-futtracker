@@ -6,3 +6,13 @@ database:
     pass:"futtracker"
     db:"futtracker"
     port:3306
+    
+captures:
+   - { type:file, path:"0.avi", video_processor:{ type:bgs, history:100,
+       threshold:40, learning_rate:2.0000000000000000e-03,
+       gaussian_kernel_size:{ w:3, h:3 },
+       gaussian_stddev:1.2000000000000000e+00 } }
+   - { type:file, path:"1.avi", video_processor:{ type:bgs, history:100,
+       threshold:40, learning_rate:2.0000000000000000e-03,
+       gaussian_kernel_size:{ w:3, h:3 },
+       gaussian_stddev:1.2000000000000000e+00 } }
