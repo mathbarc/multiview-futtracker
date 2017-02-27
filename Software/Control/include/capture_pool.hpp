@@ -7,6 +7,7 @@
 
 #include "video_grabber.hpp"
 #include "video_processor.hpp"
+#include "frame_widget.hpp"
 
 class CapturePool : public QObject
 {
@@ -14,10 +15,12 @@ class CapturePool : public QObject
     public:
         CapturePool(const cv::FileNode& config);
         void start();
+        QList< QSharedPointer<FrameWidget> > getWidgets();
 
     private:
         QList< QSharedPointer<VideoGrabber> > grabberPool;
         QList< QSharedPointer<VideoProcessor> > videoProcessorPool;
+        QList< QSharedPointer<FrameWidget> > widgets;
 };
 
 #endif

@@ -2,7 +2,7 @@
 #include "capture_pool.hpp"
 #include <opencv2/core/core.hpp>
 #include <iostream>
-
+#include "frame_widget.hpp"
 
 
 int main(int argc, char** argv)
@@ -15,6 +15,11 @@ int main(int argc, char** argv)
     cv::FileStorage conf("alg_config.yml", cv::FileStorage::READ);
     CapturePool pool(conf["captures"]);
     conf.release();
+
+
+
+
+
     pool.start();
 
     return a.exec();

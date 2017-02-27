@@ -2,6 +2,7 @@ set( CMAKE_AUTOMOC ON )
 set( CMAKE_INCLUDE_CURRENT_DIR ON )
 
 find_package(Qt5Core REQUIRED)
+find_package(Qt5Widgets REQUIRED)
 
 set(OPENCV_VERSION 3)
 if(${WITH_CUDA})
@@ -28,6 +29,7 @@ set(BUSINESS_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include CACHE PATH "Busines
 set(BUSINESS_INCLUDE_DIRS 
         ${BUSINESS_INCLUDE_DIR}
         ${Qt5Core_INCLUDE_DIRS}
+        ${Qt5Widgets_INCLUDE_DIRS}
         ${OpenCV_INCLUDE_DIRS})
 
 
@@ -37,4 +39,4 @@ add_definitions(-DWITH_CUDA=${WITH_CUDA} -DOPENCV_VERSION=${OPENCV_VERSION})
 include_directories(${BUSINESS_INCLUDE_DIRS})
 
 add_library(Business STATIC ${BUSINESS_SOURCES} ${BUSINESS_HEADERS})
-target_link_libraries(Business Qt5::Core ${OpenCV_LIBS})
+target_link_libraries(Business Qt5::Core Qt5::Widgets ${OpenCV_LIBS})
