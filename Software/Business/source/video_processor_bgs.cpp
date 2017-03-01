@@ -80,7 +80,7 @@ void VideoProcessorBGS::run()
 
         if(!img.empty())
         {
-//            std::cout<<img.size()<<std::endl;
+//            std::cout<<this<<" frame"<<std::endl;
             cv::GaussianBlur(img,img,gaussianKernelSize,gaussianStdDev);
             #if(OPENCV_VERSION==3)
                 #if(WITH_CUDA)
