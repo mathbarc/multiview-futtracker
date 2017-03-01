@@ -16,6 +16,7 @@ CapturePool::CapturePool(const cv::FileNode& config)
         QObject::connect(this,SIGNAL(setFlag(bool)),widget.data(),SLOT(setFlag(bool)));
         this->grabberPool.push_back(grabber);
         this->videoProcessorPool.push_back(processor);
+        this->widgets.push_back(widget);
     }
 }
 

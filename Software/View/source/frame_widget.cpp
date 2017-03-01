@@ -23,7 +23,10 @@ void FrameWidget::showFrame(const cv::Mat3b& frame, const cv::Mat1b& bgs)
         img = cvMat3bToQImage(frame);
     else
         img = cvMat1bToQImage(bgs);
-    this->ui->label_frame->setPixmap(QPixmap::fromImage(img));
+
+    QGraphicsScene scene;
+    scene.addPixmap(QPixmap::fromImage(img));
+    this->ui->graphicsView->setScene(&scene);
 }
 
 void FrameWidget::setFlag(bool flag)

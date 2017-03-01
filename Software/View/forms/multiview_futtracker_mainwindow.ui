@@ -77,17 +77,17 @@
       <x>10</x>
       <y>10</y>
       <width>761</width>
-      <height>521</height>
+      <height>531</height>
      </rect>
     </property>
-    <property name="verticalScrollBarPolicy">
-     <enum>Qt::ScrollBarAsNeeded</enum>
-    </property>
-    <property name="horizontalScrollBarPolicy">
-     <enum>Qt::ScrollBarAsNeeded</enum>
-    </property>
-    <property name="viewMode">
-     <enum>QMdiArea::SubWindowView</enum>
+    <property name="background">
+     <brush brushstyle="SolidPattern">
+      <color alpha="255">
+       <red>200</red>
+       <green>200</green>
+       <blue>200</blue>
+      </color>
+     </brush>
     </property>
    </widget>
   </widget>

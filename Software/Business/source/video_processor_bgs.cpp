@@ -23,6 +23,16 @@ VideoProcessorBGS::VideoProcessorBGS(const cv::FileNode& settings)
     int history = (int)settings["history"];
     int threshold = (int)settings["threshold"];
 
+    #if(WITH_CUDA)
+        this->bgs = cv::cuda::createBackgroundSubtractorMOG2(history,threshold);
+    #else
+        #if(OPENCV_VERSION==3)
+            this->bgs = cv::createBackgroundSubtractorMOG2(history, threshold);
+        #elif(OPENCV_VERSION==2)
+            this->bgs = new cv::BackgroundSubtractorMOG2(history, threshold);
+        #endif
+    #endif
+
     std::cout<<"Algorithm BGS"<<std::endl;
     std::cout<<"-----------------------------"<<std::endl;
     std::cout<<"history: "<<history<<std::endl;
@@ -32,15 +42,6 @@ VideoProcessorBGS::VideoProcessorBGS(const cv::FileNode& settings)
     std::cout<<"gaussian kernel size: "<<this->gaussianKernelSize<<std::endl;
     std::cout<<"-----------------------------"<<std::endl<<std::endl;
 
-    #if(WITH_CUDA)
-        this->bgs = cv::cuda::createBackgroundSubtractorMOG2(history,threshold);
-    #else
-    #if(OPENCV_VERSION==3)
-        this->bgs = cv::createBackgroundSubtractorMOG2(history, threshold);
-    #elif(OPENCV_VERSION==2)
-        this->bgs = new cv::BackgroundSubtractorMOG2(history, threshold);
-    #endif
-    #endif
 
 }
 
@@ -67,7 +68,7 @@ void VideoProcessorBGS::run()
 {
     cv::Mat3b img;
     cv::Mat1b fgmask;
-    std::cout<<"Beginning BGS Thread"<<std::endl;
+
     while(!this->isInterruptionRequested())
     {
         mutex.lock();

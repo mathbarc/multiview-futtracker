@@ -50,6 +50,6 @@ MultiViewFuttrackerController::~MultiViewFuttrackerController()
 
 void MultiViewFuttrackerController::show()
 {
-    this->w->show();
-//    this->cappool->start();
+    this->w->showFullScreen();
+    this->cappool->start();
 }
