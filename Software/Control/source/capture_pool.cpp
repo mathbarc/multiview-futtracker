@@ -4,16 +4,17 @@
 CapturePool::CapturePool(const cv::FileNode& config)
     :QObject(0)
 {
-    int i = 0;
+
     for(cv::FileNodeIterator it = config.begin(); it!=config.end(); ++it)
     {
         QSharedPointer<VideoGrabber> grabber(new VideoGrabber((std::string)(*it)["path"]));
         QSharedPointer<VideoProcessor> processor(VideoProcessor::getInstance((*it)["video_processor"]));
-        QSharedPointer<FrameWidget> widget(new FrameWidget(QString::fromStdString(std::to_string((long)i))));
-        i++;
+        QSharedPointer<FrameWidget> widget(new FrameWidget(QString::fromStdString((std::string)(*it)["path"])));
+
         QObject::connect(grabber.data(),SIGNAL(nextFrame(cv::Mat3b)),processor.data(),SLOT(queueFrame(cv::Mat3b)));
         QObject::connect(processor.data(),SIGNAL(resultFrame(cv::Mat3b,cv::Mat1b)),widget.data(),SLOT(showFrame(cv::Mat3b,cv::Mat1b)));
         QObject::connect(this,SIGNAL(setFlag(bool)),widget.data(),SLOT(setFlag(bool)));
+
         this->grabberPool.push_back(grabber);
         this->videoProcessorPool.push_back(processor);
         this->widgets.push_back(widget);
