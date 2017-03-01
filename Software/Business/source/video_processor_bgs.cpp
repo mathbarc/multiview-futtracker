@@ -67,7 +67,7 @@ void VideoProcessorBGS::run()
 {
     cv::Mat3b img;
     cv::Mat1b fgmask;
-
+    std::cout<<"Beginning BGS Thread"<<std::endl;
     while(!this->isInterruptionRequested())
     {
         mutex.lock();

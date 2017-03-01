@@ -18,9 +18,11 @@ class FrameWidget : public QWidget
 
     private:
         Ui::FrameWidget *ui;
+        bool showGray;
 
     public slots:
-        void showFrame(const cv::Mat3b& frame);
+        void showFrame(const cv::Mat3b& frame, const cv::Mat1b& bgs);
+        void setFlag(bool flag);
 
 };
 

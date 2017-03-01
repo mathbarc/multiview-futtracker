@@ -5,7 +5,7 @@
 MultiViewFuttrackerController::MultiViewFuttrackerController()
     : QObject(0)
 {
-    this->w = new MultiviewFuttrackerMainWindow(0);
+
     cv::FileStorage configFile("config.yml",cv::FileStorage::READ);
 
     if(!configFile.isOpened())
@@ -16,8 +16,11 @@ MultiViewFuttrackerController::MultiViewFuttrackerController()
 
     try
     {
-        this->database = new DAOWrapper(configFile["database"]);
+//        this->database = new DAOWrapper(configFile["database"]);
+        this->w = new MultiviewFuttrackerMainWindow();
         this->cappool = new CapturePool(configFile["captures"]);
+        this->w->addSubWindows(this->cappool->getWidgets());
+        QObject::connect(this->w,SIGNAL(setViewFlag(bool)),this->cappool,SLOT(showColorBGS(bool)));
     }
     catch(std::string ex)
     {
@@ -30,12 +33,23 @@ MultiViewFuttrackerController::MultiViewFuttrackerController()
 
 MultiViewFuttrackerController::~MultiViewFuttrackerController()
 {
-    if(this->w!=0){
+    this->cappool->interrupt();
+    if(this->w!=0)
+    {
         delete this->w;
+    }
+    if(this->cappool!=0)
+    {
+        delete this->cappool;
+    }
+    if(this->database!=0)
+    {
+        delete this->database;
     }
 }
 
 void MultiViewFuttrackerController::show()
 {
-    this->w->showFullScreen();
+    this->w->show();
+//    this->cappool->start();
 }

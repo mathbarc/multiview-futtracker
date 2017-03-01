@@ -1,6 +1,7 @@
 #include "frame_widget.hpp"
 #include "ui_frame_widget.h"
 #include "util.hpp"
+#include <iostream>
 
 FrameWidget::FrameWidget(QString widgetName, QWidget *parent) :
     QWidget(parent),
@@ -15,13 +16,18 @@ FrameWidget::~FrameWidget()
     delete ui;
 }
 
-void FrameWidget::showFrame(const cv::Mat3b& frame)
+void FrameWidget::showFrame(const cv::Mat3b& frame, const cv::Mat1b& bgs)
 {
+    QImage img;
+    if(this->showGray)
+        img = cvMat3bToQImage(frame);
+    else
+        img = cvMat1bToQImage(bgs);
+    this->ui->label_frame->setPixmap(QPixmap::fromImage(img));
+}
 
-    QImage img = cvMatToQImage(frame);
-
-    QGraphicsScene scene;
-    scene.addPixmap(QPixmap::fromImage(img));
-    this->ui->graphicsView->setScene(&scene);
-
+void FrameWidget::setFlag(bool flag)
+{
+    std::cout<<flag<<std::endl;
+    this->showGray = flag;
 }

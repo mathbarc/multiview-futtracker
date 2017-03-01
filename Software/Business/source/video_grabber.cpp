@@ -33,10 +33,12 @@ VideoGrabber::~VideoGrabber()
 void VideoGrabber::run()
 {
     cv::Mat3b frame;
+    std::cout<<"Beginning Capture Thread"<<std::endl;
     this->cap >> frame;
+
     while(!this->isInterruptionRequested() && !frame.empty())
     {
-        std::cout<<frame.size()<<std::endl;
+//        std::cout<<frame.size()<<std::endl;
         emit nextFrame(frame);
 //        cv::imshow("i",frame);
         this->msleep(33);

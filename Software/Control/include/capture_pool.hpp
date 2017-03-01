@@ -14,13 +14,20 @@ class CapturePool : public QObject
     Q_OBJECT
     public:
         CapturePool(const cv::FileNode& config);
-        void start();
-        QList< QSharedPointer<FrameWidget> > getWidgets();
+        QList< QSharedPointer<FrameWidget> > getWidgets() const;
 
     private:
         QList< QSharedPointer<VideoGrabber> > grabberPool;
         QList< QSharedPointer<VideoProcessor> > videoProcessorPool;
         QList< QSharedPointer<FrameWidget> > widgets;
+
+    signals:
+        void setFlag(bool flag);
+
+    public slots:
+        void start();
+        void showColorBGS(bool flag);
+        void interrupt();
 };
 
 #endif
