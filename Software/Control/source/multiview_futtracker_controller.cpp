@@ -33,14 +33,14 @@ MultiViewFuttrackerController::MultiViewFuttrackerController()
 
 MultiViewFuttrackerController::~MultiViewFuttrackerController()
 {
-    this->cappool->interrupt();
-    if(this->w!=0)
-    {
-        delete this->w;
-    }
+    QObject::disconnect(this->w,SIGNAL(setViewFlag(bool)),this->cappool,SLOT(showColorBGS(bool)));
     if(this->cappool!=0)
     {
         delete this->cappool;
+    }
+    if(this->w!=0)
+    {
+        delete this->w;
     }
     if(this->database!=0)
     {
@@ -50,6 +50,6 @@ MultiViewFuttrackerController::~MultiViewFuttrackerController()
 
 void MultiViewFuttrackerController::show()
 {
-    this->w->showFullScreen();
+    this->w->show();
     this->cappool->start();
 }

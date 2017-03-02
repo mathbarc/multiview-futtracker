@@ -13,12 +13,14 @@ class FrameWidget : public QWidget
     Q_OBJECT
 
     public:
-        explicit FrameWidget(QString widgetName, QWidget *parent = 0);
+        explicit FrameWidget(QString windowName, QWidget *parent = 0);
         ~FrameWidget();
+        QString getWindowName() const;
 
     private:
         Ui::FrameWidget *ui;
         bool showGray;
+        QString windowName;
 
     public slots:
         void showFrame(const cv::Mat3b& frame, const cv::Mat1b& bgs);

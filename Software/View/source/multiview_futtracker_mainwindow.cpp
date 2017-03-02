@@ -17,14 +17,15 @@ MultiviewFuttrackerMainWindow::~MultiviewFuttrackerMainWindow()
 
 void MultiviewFuttrackerMainWindow::addSubWindows(const QList<QSharedPointer<FrameWidget> > &widgets)
 {
-//    QMdiSubWindow* sub;
+    QMdiSubWindow* sub;
     for(int i = 0; i<widgets.size();i++)
     {
-//        sub = new QMdiSubWindow(this->ui->mdiArea);
-//        widgets[i]->setParent(sub);
-//        sub->setWidget(widgets[i].data());
-//        sub->setAttribute(Qt::WA_DeleteOnClose);
-        this->ui->mdiArea->addSubWindow(widgets[i].data());
+        sub = new QMdiSubWindow(this->ui->mdiArea);
+        widgets[i]->setParent(sub);
+        sub->setWidget(widgets[i].data());
+        sub->setWindowTitle(widgets[i]->getWindowName());
+        sub->setAttribute(Qt::WA_DeleteOnClose);
+        this->ui->mdiArea->addSubWindow(sub);
     }
 }
 

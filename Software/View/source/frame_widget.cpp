@@ -3,12 +3,13 @@
 #include "util.hpp"
 #include <iostream>
 
-FrameWidget::FrameWidget(QString widgetName, QWidget *parent) :
+FrameWidget::FrameWidget(QString windowName, QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::FrameWidget)
+    ui(new Ui::FrameWidget),
+    windowName(windowName),
+    showGray(true)
 {
     ui->setupUi(this);
-    this->ui->groupBox->setTitle(widgetName);
 }
 
 FrameWidget::~FrameWidget()
@@ -24,13 +25,20 @@ void FrameWidget::showFrame(const cv::Mat3b& frame, const cv::Mat1b& bgs)
     else
         img = cvMat1bToQImage(bgs);
 
-    QGraphicsScene scene;
-    scene.addPixmap(QPixmap::fromImage(img));
-    this->ui->graphicsView->setScene(&scene);
+//    QGraphicsScene scene;
+//    scene.addPixmap(QPixmap::fromImage(img));
+//    this->ui->graphicsView->setScene(&scene);
+
+    this->ui->label_frame->setPixmap(QPixmap::fromImage(img));
 }
 
 void FrameWidget::setFlag(bool flag)
 {
-    std::cout<<flag<<std::endl;
+//    std::cout<<flag<<std::endl;
     this->showGray = flag;
+}
+
+QString FrameWidget::getWindowName() const
+{
+    return this->windowName;
 }

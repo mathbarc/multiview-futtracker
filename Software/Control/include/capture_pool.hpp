@@ -14,6 +14,7 @@ class CapturePool : public QObject
     Q_OBJECT
     public:
         CapturePool(const cv::FileNode& config);
+        ~CapturePool();
         QList< QSharedPointer<FrameWidget> > getWidgets() const;
 
     private:

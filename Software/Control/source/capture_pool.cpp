@@ -23,7 +23,7 @@ CapturePool::CapturePool(const cv::FileNode& config)
 
 void CapturePool::start()
 {
-    for(int i = 0; this->grabberPool.size(); i++)
+    for(int i = 0; i<this->grabberPool.size(); i++)
     {
         this->grabberPool[i]->start();
         this->videoProcessorPool[i]->start();
@@ -44,8 +44,13 @@ void CapturePool::interrupt()
 {
     for(int i = 0; i<this->grabberPool.size(); i++)
     {
-        QObject::disconnect(this->videoProcessorPool[i].data(),SIGNAL(resultFrame(cv::Mat3b,cv::Mat1b)),this->widgets[i].data(),SLOT(showFrame(cv::Mat3b,cv::Mat1b)));
-        QObject::disconnect(this,SIGNAL(setFlag(bool)),this->widgets[i].data(),SLOT(setFlag(bool)));
+        QObject::disconnect(this->grabberPool[i].data(),SIGNAL(nextFrame(cv::Mat3b)),
+                            this->videoProcessorPool[i].data(),SLOT(queueFrame(cv::Mat3b)));
+        QObject::disconnect(this->videoProcessorPool[i].data(),SIGNAL(resultFrame(cv::Mat3b,cv::Mat1b)),
+                            this->widgets[i].data(), SLOT(showFrame(cv::Mat3b,cv::Mat1b)));
+        QObject::disconnect(this,SIGNAL(setFlag(bool)),
+                            this->widgets[i].data(),SLOT(setFlag(bool)));
+
         this->grabberPool[i]->requestInterruption();
         this->videoProcessorPool[i]->requestInterruption();
     }
@@ -56,3 +61,7 @@ void CapturePool::interrupt()
     }
 }
 
+CapturePool::~CapturePool()
+{
+    this->interrupt();
+}
