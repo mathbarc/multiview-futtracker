@@ -22,11 +22,12 @@ void MultiviewFuttrackerMainWindow::addSubWindows(const QList<QSharedPointer<Fra
     QMdiSubWindow* sub;
     for(int i = 0; i<widgets.size();i++)
     {
-        sub = new QMdiSubWindow(this->ui->mdiArea);
+        sub = new QMdiSubWindow(this->ui->mdiArea, Qt::Window | Qt::CustomizeWindowHint |
+                                Qt::WindowSystemMenuHint | Qt::WindowMinMaxButtonsHint);
         widgets[i]->setParent(sub);
         sub->setWidget(widgets[i].data());
         sub->setWindowTitle(widgets[i]->getWindowName());
-        sub->setAttribute(Qt::WA_DeleteOnClose);
+//        sub->setAttribute(Qt::WA_LaidOut);
         this->ui->mdiArea->addSubWindow(sub);
     }
 }
