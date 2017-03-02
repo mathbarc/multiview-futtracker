@@ -63,5 +63,7 @@ void CapturePool::interrupt()
 
 CapturePool::~CapturePool()
 {
+    std::cout<<"~CapturePool"<<std::endl;
     this->interrupt();
+    std::cout<<"~CapturePool done"<<std::endl;
 }

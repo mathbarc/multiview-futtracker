@@ -43,11 +43,13 @@ DAOWrapper::DAOWrapper(cv::FileNode node){
 
 DAOWrapper::~DAOWrapper()
 {
+    std::cout<<"~DAOWrapper"<<std::endl;
     if(this->db.isOpen())
     {
         this->db.commit();
         this->db.close();
     }
+    std::cout<<"~DAOWrapper done"<<std::endl;
 }
 
 void DAOWrapper::persistPlayer(Player& player)

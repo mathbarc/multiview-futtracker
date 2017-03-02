@@ -12,7 +12,9 @@ MultiviewFuttrackerMainWindow::MultiviewFuttrackerMainWindow(QWidget *parent) :
 
 MultiviewFuttrackerMainWindow::~MultiviewFuttrackerMainWindow()
 {
+    std::cout<<"~MultiviewFuttrackerMainWindow"<<std::endl;
     delete ui;
+    std::cout<<"~MultiviewFuttrackerMainWindow done"<<std::endl;
 }
 
 void MultiviewFuttrackerMainWindow::addSubWindows(const QList<QSharedPointer<FrameWidget> > &widgets)

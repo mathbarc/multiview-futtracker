@@ -1,5 +1,6 @@
 #include "multiview_futtracker_controller.hpp"
 #include <QMessageBox>
+#include <iostream>
 
 
 MultiViewFuttrackerController::MultiViewFuttrackerController()
@@ -16,7 +17,7 @@ MultiViewFuttrackerController::MultiViewFuttrackerController()
 
     try
     {
-//        this->database = new DAOWrapper(configFile["database"]);
+        this->database = new DAOWrapper(configFile["database"]);
         this->w = new MultiviewFuttrackerMainWindow();
         this->cappool = new CapturePool(configFile["captures"]);
         this->w->addSubWindows(this->cappool->getWidgets());
@@ -33,6 +34,7 @@ MultiViewFuttrackerController::MultiViewFuttrackerController()
 
 MultiViewFuttrackerController::~MultiViewFuttrackerController()
 {
+    std::cout<<"~MultiViewFuttrackerController"<<std::endl;
     QObject::disconnect(this->w,SIGNAL(setViewFlag(bool)),this->cappool,SLOT(showColorBGS(bool)));
     if(this->cappool!=0)
     {
@@ -46,6 +48,7 @@ MultiViewFuttrackerController::~MultiViewFuttrackerController()
     {
         delete this->database;
     }
+    std::cout<<"~MultiViewFuttrackerController done"<<std::endl;
 }
 
 void MultiViewFuttrackerController::show()
