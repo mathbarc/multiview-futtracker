@@ -17,7 +17,7 @@ MultiViewFuttrackerController::MultiViewFuttrackerController()
 
     try
     {
-        this->database = new DAOWrapper(configFile["database"]);
+        this->database = /*new DAOWrapper(configFile["database"])*/0;
         this->w = new MultiviewFuttrackerMainWindow();
         this->cappool = new CapturePool(configFile["captures"]);
         this->w->addSubWindows(this->cappool->getWidgets());

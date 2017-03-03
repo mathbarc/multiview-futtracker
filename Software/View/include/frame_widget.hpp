@@ -16,6 +16,7 @@ class FrameWidget : public QWidget
         explicit FrameWidget(QString windowName, QWidget *parent = 0);
         ~FrameWidget();
         QString getWindowName() const;
+        void resize(const QSize& size);
 
     private:
         Ui::FrameWidget *ui;
@@ -25,6 +26,8 @@ class FrameWidget : public QWidget
     public slots:
         void showFrame(const cv::Mat3b& frame, const cv::Mat1b& bgs);
         void setFlag(bool flag);
+
+
 
 };
 
