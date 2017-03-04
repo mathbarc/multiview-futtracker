@@ -6,10 +6,18 @@
 class OccupationMap
 {
     public:
-        OccupationMap(cv::Size floorSize);
+        OccupationMap(cv::Size floorSize, double threshold);
+        std::vector<cv::Point2i> getPeaks();
 
     private:
         cv::Mat1d floor;
+        double threshold;
+
+
+
+
+
+
 
 
 };

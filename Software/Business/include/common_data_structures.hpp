@@ -1,0 +1,6 @@
+#ifndef COMMON_DATA_STRUCTURES_HPP
+#define COMMON_DATA_STRUCTURES_HPP
+
+
+
+#endif
