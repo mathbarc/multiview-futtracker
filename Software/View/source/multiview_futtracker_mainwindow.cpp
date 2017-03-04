@@ -1,6 +1,7 @@
 #include "multiview_futtracker_mainwindow.hpp"
 #include "ui_multiview_futtracker_mainwindow.h"
 #include <QMdiSubWindow>
+#include <QResizeEvent>
 #include <iostream>
 
 MultiviewFuttrackerMainWindow::MultiviewFuttrackerMainWindow(QWidget *parent) :
