@@ -8,9 +8,11 @@ VideoGrabber::VideoGrabber(std::string path)
     if(!this->cap.isOpened()){
         throw std::string("Erro ao abrir o arquivo "+path);
     }
+    this->period = 1000.0/this->cap.get(CV_CAP_PROP_FPS);
     std::cout<<"Video Grabber"<<std::endl;
     std::cout<<"-----------------------------"<<std::endl;
     std::cout<<path<<std::endl;
+    std::cout<<"fps: "<<(int)this->cap.get(CV_CAP_PROP_FPS)<<std::endl;
     std::cout<<"-----------------------------"<<std::endl<<std::endl;
 }
 
@@ -40,7 +42,7 @@ void VideoGrabber::run()
 //        std::cout<<frame.size()<<std::endl;
         emit nextFrame(frame);
 //        cv::imshow("i",frame);
-        this->msleep(40);
+        this->msleep(this->period);
         this->cap >> frame;
     }
     return;

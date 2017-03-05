@@ -14,6 +14,7 @@ class VideoGrabber : public QThread{
 
     private:
         cv::VideoCapture cap;
+        int period;
         void run();
 
     signals:
