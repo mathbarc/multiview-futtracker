@@ -21,7 +21,7 @@
     <property name="geometry">
      <rect>
       <x>780</x>
-      <y>10</y>
+      <y>170</y>
       <width>120</width>
       <height>90</height>
      </rect>
@@ -51,7 +51,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>Color</string>
+      <string>Cor</string>
      </property>
      <property name="checked">
       <bool>true</bool>
@@ -67,7 +67,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>Foreground</string>
+      <string>B&amp;GS</string>
      </property>
     </widget>
    </widget>
@@ -90,6 +90,48 @@
      </brush>
     </property>
    </widget>
+   <widget class="QPushButton" name="pushButton">
+    <property name="geometry">
+     <rect>
+      <x>780</x>
+      <y>80</y>
+      <width>121</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset resource="../resource.qrc">
+      <normaloff>:/View/resources/power.png</normaloff>:/View/resources/power.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>64</width>
+      <height>64</height>
+     </size>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>778</x>
+      <y>10</y>
+      <width>121</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap resource="../resource.qrc">:/View/resources/logo63.png</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -97,7 +139,7 @@
      <x>0</x>
      <y>0</y>
      <width>908</width>
-     <height>26</height>
+     <height>30</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -106,6 +148,8 @@
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
- <resources/>
+ <resources>
+  <include location="../resource.qrc"/>
+ </resources>
  <connections/>
 </ui>

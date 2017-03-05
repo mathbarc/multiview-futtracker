@@ -30,6 +30,8 @@ class MultiviewFuttrackerMainWindow : public QMainWindow
         void on_radioButton_color_clicked();
         void on_radioButton_foreground_clicked();
 
+        void on_pushButton_clicked();
+
     private:
         Ui::MultiviewFuttrackerMainWindow *ui;
 

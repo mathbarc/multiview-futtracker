@@ -115,6 +115,8 @@ void MultiviewFuttrackerMainWindow::resizeEvent(QResizeEvent *event)
     QSize groupSize = this->ui->groupBox->size();
     this->ui->mdiArea->resize(mdiAreaSize);
     this->ui->groupBox->setGeometry(mdiAreaSize.width()+20, this->ui->groupBox->y(), groupSize.width(), groupSize.height());
+    this->ui->label->setGeometry(mdiAreaSize.width()+20, this->ui->label->y(), this->ui->label->width(), this->ui->label->height());
+    this->ui->pushButton->setGeometry(mdiAreaSize.width()+20, this->ui->pushButton->y(), this->ui->pushButton->width(), this->ui->pushButton->height());
 
     QList<QMdiSubWindow*> subWindows = this->ui->mdiArea->subWindowList();
 
@@ -142,9 +144,14 @@ void MultiviewFuttrackerMainWindow::resizeEvent(QResizeEvent *event)
     {
         subWindows[i]->setGeometry((i%ncols)*sw.width(),(i/ncols)*sw.height(),sw.width(),sw.height());
         wf = (FrameWidget*)subWindows[i]->widget();
-        wf->resize(QSize(sw.width()-15,sw.height()-40));
+        wf->resize(QSize(sw.width()-15,sw.height()-30));
     }
 
 
     QMainWindow::resizeEvent(event);
+}
+
+void MultiviewFuttrackerMainWindow::on_pushButton_clicked()
+{
+    this->close();
 }
