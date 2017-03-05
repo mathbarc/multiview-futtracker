@@ -136,9 +136,9 @@ void MultiviewFuttrackerMainWindow::resizeEvent(QResizeEvent *event)
     }
 
 
-    QSize sw(size.width()/ncols, size.height()/nrows);
-    float winc = size.width() / (ncols);
-    float hinc = size.height() / (nrows);
+    QSize sw(mdiAreaSize.width()/ncols, mdiAreaSize.height()/nrows);
+    float winc = mdiAreaSize.width() / (ncols);
+    float hinc = mdiAreaSize.height() / (nrows);
 
     for(int i = 0; i<subWindows.size(); i++)
     {
