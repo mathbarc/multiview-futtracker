@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QScopedPointer>
 #include <QList>
+#include <QResizeEvent>
 #include "frame_widget.hpp"
 
 

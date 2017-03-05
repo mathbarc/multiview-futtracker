@@ -1,7 +1,6 @@
 #include "multiview_futtracker_mainwindow.hpp"
 #include "ui_multiview_futtracker_mainwindow.h"
 #include <QMdiSubWindow>
-#include <QResizeEvent>
 #include <iostream>
 
 MultiviewFuttrackerMainWindow::MultiviewFuttrackerMainWindow(QWidget *parent) :
@@ -137,14 +136,13 @@ void MultiviewFuttrackerMainWindow::resizeEvent(QResizeEvent *event)
     }
 
 
-    QSize sw(mdiAreaSize.width()/ncols, mdiAreaSize.height()/nrows);
-    float winc = mdiAreaSize.width() / (ncols);
-    float hinc = mdiAreaSize.height() / (nrows);
-
+    QSize sw(mdiAreaSize.width()/ncols, (mdiAreaSize.height()-26)/nrows);
+    FrameWidget* wf;
     for(int i = 0; i<subWindows.size(); i++)
     {
-        subWindows[i]->setGeometry((i%ncols)*winc,(i/ncols)*hinc,sw.width(),sw.height());
-        subWindows[i]->widget()->resize(QSize(sw.width()-15,sw.height()-40));
+        subWindows[i]->setGeometry((i%ncols)*sw.width(),(i/ncols)*sw.height(),sw.width(),sw.height());
+        wf = (FrameWidget*)subWindows[i]->widget();
+        wf->resize(QSize(sw.width()-15,sw.height()-40));
     }
 
 

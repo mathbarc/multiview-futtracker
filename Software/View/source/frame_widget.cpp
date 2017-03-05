@@ -47,4 +47,3 @@ void FrameWidget::resize(const QSize &size)
 {
     this->ui->label_frame->resize(size.width()-20, size.height()-20);
 }
-
