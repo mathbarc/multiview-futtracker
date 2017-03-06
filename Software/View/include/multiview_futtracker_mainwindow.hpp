@@ -20,8 +20,6 @@ class MultiviewFuttrackerMainWindow : public QMainWindow
         explicit MultiviewFuttrackerMainWindow(QWidget *parent = 0);
         void addSubWindows(const QList< QSharedPointer<FrameWidget> >& widgets);
         ~MultiviewFuttrackerMainWindow();
-        void resize(const QSize& size);
-        void resizeEvent(QResizeEvent* event);
 
     signals:
         void setViewFlag(bool flag);
@@ -34,6 +32,9 @@ class MultiviewFuttrackerMainWindow : public QMainWindow
 
     private:
         Ui::MultiviewFuttrackerMainWindow *ui;
+
+    protected:
+        void resizeEvent(QResizeEvent* event);
 
 
 

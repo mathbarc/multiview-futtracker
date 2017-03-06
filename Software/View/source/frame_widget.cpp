@@ -43,7 +43,9 @@ QString FrameWidget::getWindowName() const
     return this->windowName;
 }
 
-void FrameWidget::resize(const QSize &size)
+void FrameWidget::resizeEvent(QResizeEvent* event)
 {
+    QSize size = event->size();
     this->ui->label_frame->resize(size.width()-20, size.height()-20);
+    QWidget::resizeEvent(event);
 }
