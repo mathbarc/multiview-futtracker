@@ -9,6 +9,7 @@ VideoGrabber::VideoGrabber(std::string path)
         throw std::string("Erro ao abrir o arquivo "+path);
     }
     this->period = 1000.0/this->cap.get(CV_CAP_PROP_FPS);
+    std::cout<<"-----------------------------"<<std::endl;
     std::cout<<"Video Grabber"<<std::endl;
     std::cout<<"-----------------------------"<<std::endl;
     std::cout<<path<<std::endl;

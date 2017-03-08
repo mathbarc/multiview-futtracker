@@ -33,6 +33,35 @@ VideoProcessorBGS::VideoProcessorBGS(const cv::FileNode& settings)
         #endif
     #endif
 
+    std::string bgModel = "N/A";
+    if(!settings["bg_model"].empty())
+    {
+        bgModel = (std::string)settings["bg_model"];
+        cv::Mat3b img = cv::imread(bgModel, CV_LOAD_IMAGE_COLOR);
+
+       #if(OPENCV_VERSION==3)
+           #if(WITH_CUDA)
+//             std::cout<<"Gaussian applyed"<<std::endl;
+               this->d_im.upload(img,this->stream);
+//             std::cout<<"CPU ---> GPU wait"<<std::endl;
+               this->stream.waitForCompletion();
+//             std::cout<<"CPU ---> GPU"<<std::endl;
+               this->bgs->apply(this->d_im, this->d_fgmask,1, this->stream);
+               this->stream.waitForCompletion();
+               if(!d_fgmask.empty())
+               {
+                   d_fgmask.download(fgmask,this->stream);
+                   this->stream.waitForCompletion();
+               }
+           #else
+               this->bgs->apply(img,cv::Mat1b(),1);
+           #endif
+           #elif(OPENCV_VERSION==2)
+               this->bgs->operator ()(img,cv::Mat1b(img.size()),1);
+           #endif
+    }
+
+    std::cout<<"-----------------------------"<<std::endl;
     std::cout<<"Algorithm BGS"<<std::endl;
     std::cout<<"-----------------------------"<<std::endl;
     std::cout<<"history: "<<history<<std::endl;
@@ -40,8 +69,8 @@ VideoProcessorBGS::VideoProcessorBGS(const cv::FileNode& settings)
     std::cout<<"learning rate: "<<this->learningRate<<std::endl;
     std::cout<<"gaussian stddev: "<<this->gaussianStdDev<<std::endl;
     std::cout<<"gaussian kernel size: "<<this->gaussianKernelSize<<std::endl;
+    std::cout<<"backgrond model: "<<bgModel<<std::endl;
     std::cout<<"-----------------------------"<<std::endl<<std::endl;
-
 
 }
 
