@@ -131,7 +131,7 @@ void VideoProcessorBGS::run()
             #elif(OPENCV_VERSION==2)
                 this->bgs->operator ()(img,fgmask,this->learningRate);
             #endif
-            cv::threshold(fgmask,fgmask, 170, 255, cv::THRESH_BINARY);
+            cv::threshold(fgmask,fgmask, 250, 255, cv::THRESH_BINARY);
             cv::erode(fgmask, fgmask, cv::Mat(), cv::Point(), 1);
             cv::dilate(fgmask, fgmask, cv::Mat(), cv::Point(), 1);
             emit resultFrame(img,fgmask);

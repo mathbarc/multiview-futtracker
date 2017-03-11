@@ -2,5 +2,6 @@
     <qresource prefix="/View">
         <file>resources/logo63.png</file>
         <file>resources/power.png</file>
+        <file>resources/play.png</file>
     </qresource>
 </RCC>

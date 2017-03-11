@@ -81,6 +81,8 @@ void MultiviewFuttrackerMainWindow::resizeEvent(QResizeEvent *event)
                                  this->ui->label->width(), this->ui->label->height());
     this->ui->pushButton->setGeometry(mdiAreaSize.width()+20, this->ui->pushButton->y(), this->ui->pushButton->width(),
                                       this->ui->pushButton->height());
+    this->ui->pushButton_play->setGeometry(mdiAreaSize.width()+20, this->ui->pushButton_play->y(),
+                                           this->ui->pushButton_play->width(), this->ui->pushButton_play->height());
 
     QList<QMdiSubWindow*> subWindows = this->ui->mdiArea->subWindowList();
 
@@ -120,4 +122,9 @@ void MultiviewFuttrackerMainWindow::resizeEvent(QResizeEvent *event)
 void MultiviewFuttrackerMainWindow::on_pushButton_clicked()
 {
     this->close();
+}
+
+void MultiviewFuttrackerMainWindow::on_pushButton_play_clicked()
+{
+    emit startExecution();
 }
