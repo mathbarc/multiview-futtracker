@@ -8,6 +8,7 @@
 #include "video_grabber.hpp"
 #include "video_processor.hpp"
 #include "frame_widget.hpp"
+#include "sync_queue.hpp"
 
 class CapturePool : public QObject
 {
@@ -21,6 +22,8 @@ class CapturePool : public QObject
         QList< QSharedPointer<VideoGrabber> > grabberPool;
         QList< QSharedPointer<VideoProcessor> > videoProcessorPool;
         QList< QSharedPointer<FrameWidget> > widgets;
+        QList< QSharedPointer<SyncQueue> > queues;
+
 
     signals:
         void setFlag(bool flag);
