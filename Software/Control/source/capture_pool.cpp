@@ -1,8 +1,9 @@
 #include "capture_pool.hpp"
 #include <iostream>
+#include <chrono>
 
 CapturePool::CapturePool(const cv::FileNode& config)
-    :QObject(0)
+    :QThread(0)
 {
 
     for(cv::FileNodeIterator it = config.begin(); it!=config.end(); ++it)
@@ -23,12 +24,52 @@ CapturePool::CapturePool(const cv::FileNode& config)
     }
 }
 
-void CapturePool::start()
+void CapturePool::run()
 {
     for(int i = 0; i<this->grabberPool.size(); i++)
     {
         this->grabberPool[i]->start();
         this->videoProcessorPool[i]->start();
+    }
+
+    bool getImages;
+    cv::Mat3b im;
+    cv::Mat1b fore;
+
+    while(!this->isInterruptionRequested())
+    {
+        getImages = true;
+        for(int i = 0; i<this->queues.size(); i++)
+        {
+            getImages &= this->queues[i]->hasImage();
+        }
+        if(getImages)
+        {
+
+            for(int i = 0; i<this->queues.size(); i++)
+            {
+                this->queues[i]->dequeue(im, fore);
+                this->widgets[i]->showFrame(im, fore);
+            }
+        }
+    }
+
+    for(int i = 0; i<this->grabberPool.size(); i++)
+    {
+//        QObject::disconnect(this->grabberPool[i].data(),SIGNAL(nextFrame(cv::Mat3b)),
+//                            this->videoProcessorPool[i].data(),SLOT(queueFrame(cv::Mat3b)));
+//        QObject::disconnect(this->videoProcessorPool[i].data(),SIGNAL(resultFrame(cv::Mat3b,cv::Mat1b)),
+//                            this->widgets[i].data(), SLOT(showFrame(cv::Mat3b,cv::Mat1b)));
+//        QObject::disconnect(this,SIGNAL(setFlag(bool)),
+//                            this->widgets[i].data(),SLOT(setFlag(bool)));
+
+        this->grabberPool[i]->requestInterruption();
+        this->videoProcessorPool[i]->requestInterruption();
+    }
+    for(int i = 0; i<this->grabberPool.size(); i++)
+    {
+        this->grabberPool[i]->wait();
+        this->videoProcessorPool[i]->wait();
     }
 }
 
@@ -42,30 +83,13 @@ void CapturePool::showColorBGS(bool flag)
     emit setFlag(flag);
 }
 
-void CapturePool::interrupt()
-{
-    for(int i = 0; i<this->grabberPool.size(); i++)
-    {
-        QObject::disconnect(this->grabberPool[i].data(),SIGNAL(nextFrame(cv::Mat3b)),
-                            this->videoProcessorPool[i].data(),SLOT(queueFrame(cv::Mat3b)));
-        QObject::disconnect(this->videoProcessorPool[i].data(),SIGNAL(resultFrame(cv::Mat3b,cv::Mat1b)),
-                            this->widgets[i].data(), SLOT(showFrame(cv::Mat3b,cv::Mat1b)));
-        QObject::disconnect(this,SIGNAL(setFlag(bool)),
-                            this->widgets[i].data(),SLOT(setFlag(bool)));
-
-        this->grabberPool[i]->requestInterruption();
-        this->videoProcessorPool[i]->requestInterruption();
-    }
-    for(int i = 0; i<this->grabberPool.size(); i++)
-    {
-        this->grabberPool[i]->wait();
-        this->videoProcessorPool[i]->wait();
-    }
-}
-
 CapturePool::~CapturePool()
 {
     std::cout<<"~CapturePool"<<std::endl;
-    this->interrupt();
+    if(this->isRunning())
+    {
+        this->requestInterruption();
+        this->wait();
+    }
     std::cout<<"~CapturePool done"<<std::endl;
 }

@@ -10,7 +10,7 @@
 #include "frame_widget.hpp"
 #include "sync_queue.hpp"
 
-class CapturePool : public QObject
+class CapturePool : public QThread
 {
     Q_OBJECT
     public:
@@ -23,15 +23,15 @@ class CapturePool : public QObject
         QList< QSharedPointer<VideoProcessor> > videoProcessorPool;
         QList< QSharedPointer<FrameWidget> > widgets;
         QList< QSharedPointer<SyncQueue> > queues;
+        void run();
 
 
     signals:
         void setFlag(bool flag);
 
     public slots:
-        void start();
         void showColorBGS(bool flag);
-        void interrupt();
+//        void interrupt();
 };
 
 #endif
