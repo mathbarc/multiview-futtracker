@@ -29,9 +29,6 @@ class FrameWidget : public QWidget
 
     protected:
         void resizeEvent(QResizeEvent* event);
-
-
-
 };
 
 #endif // FRAME_WIDGET_HPP

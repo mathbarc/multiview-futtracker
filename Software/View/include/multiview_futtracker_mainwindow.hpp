@@ -33,9 +33,6 @@ class MultiviewFuttrackerMainWindow : public QMainWindow
     private:
         Ui::MultiviewFuttrackerMainWindow *ui;
 
-    protected:
-        void resizeEvent(QResizeEvent* event);
-
 
 
 };
