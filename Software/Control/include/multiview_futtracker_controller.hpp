@@ -17,9 +17,6 @@ class MultiViewFuttrackerController : public QObject{
         MultiViewFuttrackerController();
         ~MultiViewFuttrackerController();
         void show();
-
-    private slots:
-        void startExecution();
 };
 
 

@@ -30,7 +30,6 @@ MultiViewFuttrackerController::MultiViewFuttrackerController()
         exit(-1);
     }
     configFile.release();
-    connect(this->w, SIGNAL(startExecution()), this, SLOT(startExecution()));
 }
 
 MultiViewFuttrackerController::~MultiViewFuttrackerController()
@@ -55,9 +54,5 @@ MultiViewFuttrackerController::~MultiViewFuttrackerController()
 void MultiViewFuttrackerController::show()
 {
     this->w->showFullScreen();
-}
-
-void MultiViewFuttrackerController::startExecution()
-{
     this->cappool->start();
 }

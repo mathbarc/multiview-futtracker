@@ -23,15 +23,12 @@ class MultiviewFuttrackerMainWindow : public QMainWindow
 
     signals:
         void setViewFlag(bool flag);
-        void startExecution();
 
     private slots:
         void on_radioButton_color_clicked();
         void on_radioButton_foreground_clicked();
 
         void on_pushButton_clicked();
-
-        void on_pushButton_play_clicked();
 
     private:
         Ui::MultiviewFuttrackerMainWindow *ui;
