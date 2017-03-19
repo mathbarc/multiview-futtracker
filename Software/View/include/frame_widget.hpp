@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QResizeEvent>
+#include <QGraphicsScene>
 #include <opencv2/core/core.hpp>
 
 namespace Ui {
@@ -22,6 +23,7 @@ class FrameWidget : public QWidget
         Ui::FrameWidget *ui;
         bool showGray;
         QString windowName;
+        QGraphicsScene scene;
 
     public slots:
         void showFrame(const cv::Mat3b& frame, const cv::Mat1b& bgs);

@@ -16,7 +16,7 @@ class VideoProcessor : public QThread
     protected:
         QQueue<cv::Mat3b> queue;
         QMutex mutex;
-        virtual void run() = 0;
+        virtual void run();
 
     public slots:
         void queueFrame(const cv::Mat3b& frame);

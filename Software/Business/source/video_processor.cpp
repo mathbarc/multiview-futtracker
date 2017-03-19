@@ -28,5 +28,33 @@ QSharedPointer<VideoProcessor> VideoProcessor::getInstance(const cv::FileNode &s
     {
         return QSharedPointer<VideoProcessor>(new VideoProcessorOpticalFlow(settings));
     }
+    else if(type == "dummy")
+    {
+        return QSharedPointer<VideoProcessor>(new VideoProcessor());
+    }
     throw std::string("Invalid segmentation algorithm "+type+".");
+}
+
+void VideoProcessor::run()
+{
+    cv::Mat3b img;
+    cv::Mat1b gray;
+
+    while(!this->isInterruptionRequested())
+    {
+        mutex.lock();
+        if(!this->queue.empty())
+            img = this->queue.dequeue();
+        else
+            img = cv::Mat();
+        mutex.unlock();
+
+        if(!img.empty())
+        {
+            cv::cvtColor(img,gray,CV_BGR2GRAY);
+            emit resultFrame(img, gray);
+        }
+    }
+
+
 }

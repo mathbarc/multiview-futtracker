@@ -7,7 +7,8 @@ FrameWidget::FrameWidget(QString windowName, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::FrameWidget),
     windowName(windowName),
-    showGray(true)
+    showGray(true),
+    scene(this)
 {
     ui->setupUi(this);
     this->ui->groupBox->setTitle(windowName);
@@ -26,7 +27,12 @@ void FrameWidget::showFrame(const cv::Mat3b& frame, const cv::Mat1b& bgs)
     else
         img = cvMat1bToQImage(bgs);
 
-    this->ui->label_frame->setPixmap(QPixmap::fromImage(img));
+    this->scene.clear();
+
+    this->scene.addPixmap(QPixmap::fromImage(img));
+
+    this->ui->graphicsView_image->setScene(&this->scene);
+
 }
 
 void FrameWidget::setFlag(bool flag)
@@ -44,5 +50,6 @@ void FrameWidget::resizeEvent(QResizeEvent* event)
     QSize size = event->size();
     this->ui->groupBox->setGeometry(this->ui->groupBox->x(), this->ui->groupBox->y(),
                                     size.width()-20, size.height()-10);
+
     QWidget::resizeEvent(event);
 }
