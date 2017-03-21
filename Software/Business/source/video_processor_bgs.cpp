@@ -1,9 +1,4 @@
 #include "video_processor_bgs.hpp"
-#if(WITH_CUDA)
-#include <opencv2/cudabgsegm.hpp>
-#else
-#include <opencv2/video/background_segm.hpp>
-#endif
 
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>

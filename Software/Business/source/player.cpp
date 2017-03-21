@@ -1,5 +1,4 @@
 #include "player.hpp"
-#include <immintrin.h>
 
 Player::Player()
 {

@@ -30,7 +30,7 @@ void CapturePool::start()
     }
 }
 
-QList<QSharedPointer<FrameWidget> > CapturePool::getWidgets() const
+QList< QSharedPointer<FrameWidget> > CapturePool::getWidgets() const
 {
     return this->widgets;
 }

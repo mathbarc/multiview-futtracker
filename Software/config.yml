@@ -8,20 +8,20 @@ database:
     port:3306
     
 captures:
-   - { type:file, path:"/home/matheus/Dataset/Sync/0.avi", video_processor:{ type:dummy, history:100,
+   - { type:file, path:"/home/matheus/Dataset/Sync/0.avi", video_processor:{ type:bgs, history:100,
        threshold:40, learning_rate:2.0000000000000000e-03,
        gaussian_kernel_size:{ w:3, h:3 },
        gaussian_stddev:1.2000000000000000e+00,
        bg_model:"/home/matheus/Dataset/Sync/0.png"}}
-   - { type:file, path:"/home/matheus/Dataset/Sync/1.avi", video_processor:{ type:dummy, history:100,
+   - { type:file, path:"/home/matheus/Dataset/Sync/1.avi", video_processor:{ type:bgs, history:100,
        threshold:40, learning_rate:2.0000000000000000e-03,
        gaussian_kernel_size:{ w:3, h:3 },
        gaussian_stddev:1.2000000000000000e+00 } }
-   - { type:file, path:"/home/matheus/Dataset/Sync/2.avi", video_processor:{ type:dummy, history:100,
+   - { type:file, path:"/home/matheus/Dataset/Sync/2.avi", video_processor:{ type:bgs, history:100,
        threshold:40, learning_rate:2.0000000000000000e-03,
        gaussian_kernel_size:{ w:3, h:3 },
        gaussian_stddev:1.2000000000000000e+00 } }
-   - { type:file, path:"/home/matheus/Dataset/Sync/3.avi", video_processor:{ type:dummy, history:100,
+   - { type:file, path:"/home/matheus/Dataset/Sync/3.avi", video_processor:{ type:bgs, history:100,
        threshold:40, learning_rate:2.0000000000000000e-03,
        gaussian_kernel_size:{ w:3, h:3 },
        gaussian_stddev:1.2000000000000000e+00 } }

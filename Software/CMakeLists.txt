@@ -8,6 +8,7 @@ add_subdirectory(Tests)
 find_package(Qt5Widgets REQUIRED)
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config.yml ${CMAKE_CURRENT_BINARY_DIR}/config.yml COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config.yml ${CMAKE_CURRENT_BINARY_DIR}/Tests/config.yml COPYONLY)
 
 set(MULTIVIEW_FUTTRACKER_INCLUDE_DIRS 
     ${BUSINESS_INCLUDE_DIR}

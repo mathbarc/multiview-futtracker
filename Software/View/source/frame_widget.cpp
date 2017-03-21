@@ -33,6 +33,8 @@ void FrameWidget::showFrame(const cv::Mat3b& frame, const cv::Mat1b& bgs)
 
     this->ui->graphicsView_image->setScene(&this->scene);
 
+    this->ui->graphicsView_image->fitInView(0,0,img.width(),img.height(),Qt::KeepAspectRatio);
+
 }
 
 void FrameWidget::setFlag(bool flag)
