@@ -1,6 +1,7 @@
 #include "video_processor.hpp"
 #include "video_processor_bgs.hpp"
 #include "video_processor_optical_flow.hpp"
+#include "video_processor_bgs_selectivity.hpp"
 
 VideoProcessor::VideoProcessor()
     :QThread()
@@ -18,21 +19,29 @@ void VideoProcessor::queueFrame(const cv::Mat3b &frame)
 
 QSharedPointer<VideoProcessor> VideoProcessor::getInstance(const cv::FileNode &settings)
 {
-
+    QSharedPointer<VideoProcessor> ptr;
     std::string type = settings["type"];
-    if(type=="bgs")
+    if(type=="bgs_selectivity")
     {
-        return QSharedPointer<VideoProcessor>(new VideoProcessorBGS(settings));
+        ptr.reset(new VideoProcessorBGSSelectivity(settings));
+    }
+    else if(type=="bgs")
+    {
+        ptr.reset(new VideoProcessorBGS(settings));
     }
     else if(type=="opticalflow")
     {
-        return QSharedPointer<VideoProcessor>(new VideoProcessorOpticalFlow(settings));
+        ptr.reset(new VideoProcessorOpticalFlow(settings));
     }
     else if(type == "dummy")
     {
-        return QSharedPointer<VideoProcessor>(new VideoProcessor());
+        ptr.reset(new VideoProcessor());
     }
-    throw std::string("Invalid segmentation algorithm "+type+".");
+    else
+    {
+        throw std::string("Invalid segmentation algorithm "+type+".");
+    }
+    return ptr;
 }
 
 void VideoProcessor::run()
