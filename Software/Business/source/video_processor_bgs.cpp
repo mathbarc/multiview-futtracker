@@ -49,7 +49,7 @@ VideoProcessorBGS::VideoProcessorBGS(const cv::FileNode& settings)
                    this->stream.waitForCompletion();
                }
            #else
-               this->bgs->apply(img,cv::Mat1b(),1);
+               this->bgs->apply(img,cv::Mat1b(img.size()),1);
            #endif
            #elif(OPENCV_VERSION==2)
                this->bgs->operator ()(img,cv::Mat1b(img.size()),1);

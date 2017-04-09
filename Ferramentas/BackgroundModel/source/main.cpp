@@ -33,6 +33,9 @@ int main(int argc, char** argv)
     acumulator /= count;
     acumulator.convertTo(f,CV_8UC3);
 
+    cv::namedWindow("result",cv::WINDOW_AUTOSIZE);
     cv::imwrite("bg.png",f);
+    cv::imshow("result",f);
+    cv::waitKey(0);
     return 0;
 }

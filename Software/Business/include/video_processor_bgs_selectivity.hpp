@@ -6,10 +6,11 @@
 class VideoProcessorBGSSelectivity : public VideoProcessor
 {
     public:
-        VideoProcessorBGSSelectivity(const cv::FileNode& config);
+        VideoProcessorBGSSelectivity(const cv::FileNode& settings);
     private:
-        cv::Mat3b backgroundModel;
-        double learningRate;
+        cv::Mat1b backgroundModel;
+        double learningRateBG, learningRateFG;
+        uchar threshold;
         void run();
 };
 
