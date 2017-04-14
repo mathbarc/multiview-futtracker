@@ -6,7 +6,7 @@
 #include <QResizeEvent>
 #include <opencv2/highgui/highgui.hpp>
 #include "video_grabber.hpp"
-#include "video_processor_bgs.hpp"
+#include "video_processor_bgs_gmm.hpp"
 #include "imagebuffer.hpp"
 
 namespace Ui {

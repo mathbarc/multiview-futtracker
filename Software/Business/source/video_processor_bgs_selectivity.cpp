@@ -1,6 +1,7 @@
 #include "video_processor_bgs_selectivity.hpp"
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
+#include <iostream>
 
 VideoProcessorBGSSelectivity::VideoProcessorBGSSelectivity(const cv::FileNode& settings)
     :VideoProcessor()
@@ -8,7 +9,16 @@ VideoProcessorBGSSelectivity::VideoProcessorBGSSelectivity(const cv::FileNode& s
     ,learningRateFG((double)settings["learning_rate_foreground"])
     ,threshold((int)settings["threshold"])
 {
-    this->backgroundModel = cv::imread((std::string)settings["bg_model"], CV_LOAD_IMAGE_GRAYSCALE);
+    std::string bgModel = (std::string)settings["bg_model"];
+    this->backgroundModel = cv::imread(bgModel, CV_LOAD_IMAGE_GRAYSCALE);
+    std::cout<<"-----------------------------"<<std::endl;
+    std::cout<<"Algorithm BGS Selectivity"<<std::endl;
+    std::cout<<"-----------------------------"<<std::endl;
+    std::cout<<"learning rate Background: "<<this->learningRateBG<<std::endl;
+    std::cout<<"learning rate Foreground: "<<this->learningRateFG<<std::endl;
+    std::cout<<"threshold: "<<this->threshold<<std::endl;
+    std::cout<<"backgrond model: "<<bgModel<<std::endl;
+    std::cout<<"-----------------------------"<<std::endl<<std::endl;
 }
 
 void VideoProcessorBGSSelectivity::run()

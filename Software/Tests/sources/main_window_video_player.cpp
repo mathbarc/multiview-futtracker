@@ -9,7 +9,7 @@ MainWindowVideoPlayer::MainWindowVideoPlayer(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindowVideoPlayer),
     grabber(nullptr),
-    processor(new VideoProcessorBGS(100,40,2e-3, cv::Size(3,3), 1.2)),
+    processor(new VideoProcessorBGSGMM(100,40,2e-3, cv::Size(3,3), 1.2)),
     imb(nullptr)
 {
     ui->setupUi(this);

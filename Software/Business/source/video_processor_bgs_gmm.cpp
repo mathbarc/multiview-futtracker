@@ -1,10 +1,10 @@
-#include "video_processor_bgs.hpp"
+#include "video_processor_bgs_gmm.hpp"
 
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <iostream>
 
-VideoProcessorBGS::VideoProcessorBGS(const cv::FileNode& settings)
+VideoProcessorBGSGMM::VideoProcessorBGSGMM(const cv::FileNode& settings)
     :VideoProcessor()
     ,learningRate((double)settings["learning_rate"])
     ,gaussianStdDev((double)settings["gaussian_stddev"])
@@ -57,7 +57,7 @@ VideoProcessorBGS::VideoProcessorBGS(const cv::FileNode& settings)
     }
 
     std::cout<<"-----------------------------"<<std::endl;
-    std::cout<<"Algorithm BGS"<<std::endl;
+    std::cout<<"Algorithm BGS GMM"<<std::endl;
     std::cout<<"-----------------------------"<<std::endl;
     std::cout<<"history: "<<history<<std::endl;
     std::cout<<"threshold: "<<threshold<<std::endl;
@@ -70,7 +70,7 @@ VideoProcessorBGS::VideoProcessorBGS(const cv::FileNode& settings)
 }
 
 
-VideoProcessorBGS::VideoProcessorBGS(int history, float threshold, double learningRate,
+VideoProcessorBGSGMM::VideoProcessorBGSGMM(int history, float threshold, double learningRate,
                                      cv::Size gaussianKernelSize, double gaussianStdDev)
     :VideoProcessor()
     ,learningRate(learningRate)
@@ -88,7 +88,7 @@ VideoProcessorBGS::VideoProcessorBGS(int history, float threshold, double learni
     #endif
 }
 
-void VideoProcessorBGS::run()
+void VideoProcessorBGSGMM::run()
 {
     cv::Mat3b img;
     cv::Mat1b fgmask;
@@ -126,16 +126,16 @@ void VideoProcessorBGS::run()
             #elif(OPENCV_VERSION==2)
                 this->bgs->operator ()(img,fgmask,this->learningRate);
             #endif
-            cv::threshold(fgmask,fgmask, 170, 255, cv::THRESH_BINARY);
-            cv::erode(fgmask, fgmask, cv::Mat(), cv::Point(), 1);
-            cv::dilate(fgmask, fgmask, cv::Mat(), cv::Point(), 1);
+            cv::threshold(fgmask,fgmask, 250, 255, cv::THRESH_BINARY);
+//            cv::erode(fgmask, fgmask, cv::Mat(), cv::Point(-1,-1), 1);
+//            cv::dilate(fgmask, fgmask, cv::Mat(), cv::Point(-1,-1), 1);
             emit resultFrame(img,fgmask);
         }
     }
     return;
 }
 
-VideoProcessorBGS::~VideoProcessorBGS()
+VideoProcessorBGSGMM::~VideoProcessorBGSGMM()
 {
     #if(WITH_CUDA)
         this->stream.waitForCompletion();

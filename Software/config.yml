@@ -8,14 +8,24 @@ database:
     port:3306
     
 captures:
-    - { type:file, path:"C:/Users/Matheus/Datasets/Dataset/21-01/Sync/Treino1/0.avi", video_processor:{ type:bgs_selectivity,
-        learning_rate_background:4.0000000000000000e-02,learning_rate_foreground:3.5000000000000000e-02, threshold:30,
-        bg_model:"C:/Users/Matheus/Datasets/Dataset/21-01/Sync/Treino1/bg.png"}}
-   #- { type:file, path:"C:/Users/Matheus/Datasets/Dataset/21-01/Sync/Treino1/0.avi", video_processor:{ type:bgs, history:50,
-       #threshold:100, learning_rate:2.0000000000000000e-03,
+    #- { type:file, path:"/home/matheus/Datasets/Futtracker/21-01/Sync/Treino1/0.avi", video_processor:{ type:bgs_selectivity,
+        #learning_rate_background:7.0000000000000000e-02,learning_rate_foreground:5.5000000000000000e-02, threshold:40,
+        #bg_model:"/home/matheus/Datasets/Futtracker/21-01/Sync/Treino1/0.png"}}
+   - { type:file, path:"/home/matheus/Datasets/Futtracker/21-01/Sync/Treino1/0.avi", video_processor:{ type:bgs_gmm, history:50,
+       threshold:25, learning_rate:2.0000000000000000e-03,
+       gaussian_kernel_size:{ w:3, h:3 },
+       gaussian_stddev:1.2000000000000000e+00,
+       bg_model:"/home/matheus/Datasets/Futtracker/21-01/Sync/Treino1/0.png"}}
+   #- { type:file, path:"/home/matheus/Datasets/Futtracker/21-01/Sync/Treino1/1.avi", video_processor:{ type:bgs_gmm, history:50,
+       #threshold:30, learning_rate:2.0000000000000000e-03,
        #gaussian_kernel_size:{ w:3, h:3 },
        #gaussian_stddev:1.2000000000000000e+00,
-       #bg_model:"C:/Users/Matheus/Datasets/Dataset/21-01/Sync/Treino1/bg.png"}}
+       #bg_model:"/home/matheus/Datasets/Futtracker/21-01/Sync/Treino1/1.png"}}
+   #- { type:file, path:"/home/matheus/Datasets/Futtracker/21-01/Sync/Treino1/2.avi", video_processor:{ type:bgs_gmm, history:50,
+       #threshold:30, learning_rate:2.0000000000000000e-03,
+       #gaussian_kernel_size:{ w:3, h:3 },
+       #gaussian_stddev:1.2000000000000000e+00,
+       #bg_model:"/home/matheus/Datasets/Futtracker/21-01/Sync/Treino1/2.png"}}
    #- { type:file, path:"C:/Users/Matheus/Datasets/Dataset/21-01/Sync/Treino1/1.avi", video_processor:{ type:bgs, history:100,
        #threshold:40, learning_rate:2.0000000000000000e-03,
        #gaussian_kernel_size:{ w:3, h:3 },

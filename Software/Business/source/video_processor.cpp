@@ -1,5 +1,5 @@
 #include "video_processor.hpp"
-#include "video_processor_bgs.hpp"
+#include "video_processor_bgs_gmm.hpp"
 #include "video_processor_optical_flow.hpp"
 #include "video_processor_bgs_selectivity.hpp"
 
@@ -25,9 +25,9 @@ QSharedPointer<VideoProcessor> VideoProcessor::getInstance(const cv::FileNode &s
     {
         ptr.reset(new VideoProcessorBGSSelectivity(settings));
     }
-    else if(type=="bgs")
+    else if(type=="bgs_gmm")
     {
-        ptr.reset(new VideoProcessorBGS(settings));
+        ptr.reset(new VideoProcessorBGSGMM(settings));
     }
     else if(type=="opticalflow")
     {

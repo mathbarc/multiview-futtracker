@@ -9,14 +9,14 @@
 #endif
 
 
-class VideoProcessorBGS : public VideoProcessor
+class VideoProcessorBGSGMM : public VideoProcessor
 {
     Q_OBJECT
     public:
-        VideoProcessorBGS(int history, float threshold, double learningRate,
+        VideoProcessorBGSGMM(int history, float threshold, double learningRate,
                           cv::Size gaussianKernelSize, double gaussianStdDev);
-        VideoProcessorBGS(const cv::FileNode& settings);
-        ~VideoProcessorBGS();
+        VideoProcessorBGSGMM(const cv::FileNode& settings);
+        ~VideoProcessorBGSGMM();
 
     private:
         double learningRate;
