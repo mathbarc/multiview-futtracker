@@ -11,18 +11,17 @@
 
 class VideoProcessorBGSGMM : public VideoProcessor
 {
-    Q_OBJECT
     public:
         VideoProcessorBGSGMM(int history, float threshold, double learningRate,
                           cv::Size gaussianKernelSize, double gaussianStdDev);
         VideoProcessorBGSGMM(const cv::FileNode& settings);
+        cv::Mat1b processFrame(const cv::Mat3b &frame);
         ~VideoProcessorBGSGMM();
 
     private:
         double learningRate;
         cv::Size gaussianKernelSize;
         double gaussianStdDev;
-        void run();
         #if WITH_CUDA
             cv::Ptr<cv::cuda::BackgroundSubtractorMOG2> bgs;
             cv::cuda::GpuMat d_im, d_fgmask;

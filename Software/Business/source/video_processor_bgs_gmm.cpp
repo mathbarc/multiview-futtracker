@@ -88,55 +88,43 @@ VideoProcessorBGSGMM::VideoProcessorBGSGMM(int history, float threshold, double 
     #endif
 }
 
-void VideoProcessorBGSGMM::run()
+cv::Mat1b VideoProcessorBGSGMM::processFrame(const cv::Mat3b &frame)
 {
-    cv::Mat3b img;
+    cv::Mat3b img = frame.clone();
     cv::Mat1b fgmask;
 
-    while(!this->isInterruptionRequested())
-    {
-        mutex.lock();
-        if(!this->queue.empty())
-            img = this->queue.dequeue();
-        else
-            img = cv::Mat();
-        mutex.unlock();
-
-        if(!img.empty())
-        {
-//            std::cout<<this<<" frame"<<std::endl;
-            cv::GaussianBlur(img,img,gaussianKernelSize,gaussianStdDev);
-            #if(OPENCV_VERSION==3)
-                #if(WITH_CUDA)
+    //            std::cout<<this<<" frame"<<std::endl;
+    cv::GaussianBlur(img,img,gaussianKernelSize,gaussianStdDev);
+    #if(OPENCV_VERSION==3)
+        #if(WITH_CUDA)
 //                    std::cout<<"Gaussian applyed"<<std::endl;
-                    d_im.upload(img,this->stream);
+            d_im.upload(img,this->stream);
 //                    std::cout<<"CPU ---> GPU wait"<<std::endl;
-                    this->stream.waitForCompletion();
+            this->stream.waitForCompletion();
 //                    std::cout<<"CPU ---> GPU"<<std::endl;
-                    this->bgs->apply(d_im,d_fgmask,this->learningRate,this->stream);
-                    this->stream.waitForCompletion();
-                    if(!d_fgmask.empty())
-                    {
-                        d_fgmask.download(fgmask,this->stream);
-                        this->stream.waitForCompletion();
-                    }
-                #else
-                    this->bgs->apply(img,fgmask,this->learningRate);
-                #endif
-            #elif(OPENCV_VERSION==2)
-                this->bgs->operator ()(img,fgmask,this->learningRate);
-            #endif
-            cv::threshold(fgmask,fgmask, 250, 255, cv::THRESH_BINARY);
+            this->bgs->apply(d_im,d_fgmask,this->learningRate,this->stream);
+            this->stream.waitForCompletion();
+            if(!d_fgmask.empty())
+            {
+                d_fgmask.download(fgmask,this->stream);
+                this->stream.waitForCompletion();
+            }
+        #else
+            this->bgs->apply(img,fgmask,this->learningRate);
+        #endif
+    #elif(OPENCV_VERSION==2)
+        this->bgs->operator ()(img,fgmask,this->learningRate);
+    #endif
+    cv::threshold(fgmask,fgmask, 250, 255, cv::THRESH_BINARY);
 //            cv::erode(fgmask, fgmask, cv::Mat(), cv::Point(-1,-1), 1);
 //            cv::dilate(fgmask, fgmask, cv::Mat(), cv::Point(-1,-1), 1);
-            emit resultFrame(img,fgmask);
-        }
-    }
-    return;
+
+    return fgmask;
 }
 
 VideoProcessorBGSGMM::~VideoProcessorBGSGMM()
 {
+    std::cout<<"~VideoProcessorBGSGMM"<<std::endl;
     #if(WITH_CUDA)
         this->stream.waitForCompletion();
         if(!this->d_im.empty())
@@ -144,6 +132,6 @@ VideoProcessorBGSGMM::~VideoProcessorBGSGMM()
         if(!this->d_fgmask.empty())
             this->d_fgmask.release();
     #endif
-
+    std::cout<<"~VideoProcessorBGSGMM done"<<std::endl;
 }
 

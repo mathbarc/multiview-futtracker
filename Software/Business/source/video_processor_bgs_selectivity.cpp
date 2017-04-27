@@ -21,47 +21,39 @@ VideoProcessorBGSSelectivity::VideoProcessorBGSSelectivity(const cv::FileNode& s
     std::cout<<"-----------------------------"<<std::endl<<std::endl;
 }
 
-void VideoProcessorBGSSelectivity::run()
+cv::Mat1b VideoProcessorBGSSelectivity::processFrame(const cv::Mat3b& frame)
 {
-    cv::Mat3b img;
+    cv::Mat3b img = frame.clone();
     cv::Mat1b fg, tmp;
     int index;
-    while (!this->isInterruptionRequested()) {
 
-        this->mutex.lock();
-        if(!this->queue.empty())
+    cv::cvtColor(img, tmp, CV_BGR2GRAY);
+    cv::absdiff(tmp, this->backgroundModel, fg);
+    cv::threshold(fg,fg,this->threshold,255,cv::THRESH_BINARY);
+    uchar* tmpPtr = tmp.ptr<uchar>();
+    uchar* fgPtr = fg.ptr<uchar>();
+    uchar* bgPtr = this->backgroundModel.ptr<uchar>();
+    for(int i = 0; i<tmp.rows; i++)
+    {
+        for(int j =0; j<tmp.cols; j++)
         {
-            img = this->queue.dequeue();
-            this->mutex.unlock();
-            cv::cvtColor(img, tmp, CV_BGR2GRAY);
-            cv::absdiff(tmp, this->backgroundModel, fg);
-            cv::threshold(fg,fg,this->threshold,255,cv::THRESH_BINARY);
-            uchar* tmpPtr = tmp.ptr<uchar>();
-            uchar* fgPtr = fg.ptr<uchar>();
-            uchar* bgPtr = this->backgroundModel.ptr<uchar>();
-            for(int i = 0; i<tmp.rows; i++)
+            index = i*tmp.cols+j;
+            if(fgPtr[index])
             {
-                for(int j =0; j<tmp.cols; j++)
-                {
-                    index = i*tmp.cols+j;
-                    if(fgPtr[index])
-                    {
-                        bgPtr[index] = (uchar)((1-this->learningRateFG)*(double)bgPtr[index] +
-                                                               this->learningRateFG*(double)tmpPtr[index]);
-                    }
-                    else
-                    {
-                        bgPtr[index] = (uchar)((1-this->learningRateBG)*(double)bgPtr[index] +
-                                                               this->learningRateBG*(double)tmpPtr[index]);
-                    }
-                }
+                bgPtr[index] = (uchar)((1-this->learningRateFG)*(double)bgPtr[index] +
+                                                       this->learningRateFG*(double)tmpPtr[index]);
             }
-            emit resultFrame(img,fg);
+            else
+            {
+                bgPtr[index] = (uchar)((1-this->learningRateBG)*(double)bgPtr[index] +
+                                                       this->learningRateBG*(double)tmpPtr[index]);
+            }
         }
-        else
-        {
-            this->mutex.unlock();
-        }
-
     }
+    return fg;
+}
+
+VideoProcessorBGSSelectivity::~VideoProcessorBGSSelectivity()
+{
+
 }

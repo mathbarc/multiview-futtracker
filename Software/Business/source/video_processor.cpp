@@ -2,68 +2,46 @@
 #include "video_processor_bgs_gmm.hpp"
 #include "video_processor_optical_flow.hpp"
 #include "video_processor_bgs_selectivity.hpp"
+#include <exception>
 
 VideoProcessor::VideoProcessor()
-    :QThread()
 {}
 
-
-void VideoProcessor::queueFrame(const cv::Mat3b &frame)
+VideoProcessor* VideoProcessor::getInstance(const cv::FileNode &settings)
 {
-    mutex.lock();
 
-    this->queue.enqueue(frame);
-
-    mutex.unlock();
-}
-
-QSharedPointer<VideoProcessor> VideoProcessor::getInstance(const cv::FileNode &settings)
-{
-    QSharedPointer<VideoProcessor> ptr;
-    std::string type = settings["type"];
+    std::string type = (std::string)settings["type"];
     if(type=="bgs_selectivity")
     {
-        ptr.reset(new VideoProcessorBGSSelectivity(settings));
+        return new VideoProcessorBGSSelectivity(settings);
     }
     else if(type=="bgs_gmm")
     {
-        ptr.reset(new VideoProcessorBGSGMM(settings));
+        return new VideoProcessorBGSGMM(settings);
     }
     else if(type=="opticalflow")
     {
-        ptr.reset(new VideoProcessorOpticalFlow(settings));
+        return new VideoProcessorOpticalFlow(settings);
     }
     else if(type == "dummy")
     {
-        ptr.reset(new VideoProcessor());
+        return new VideoProcessor();
     }
     else
     {
-        throw std::string("Invalid segmentation algorithm "+type+".");
+        throw std::logic_error("Invalid segmentation algorithm "+type);
     }
-    return ptr;
 }
 
-void VideoProcessor::run()
+cv::Mat1b VideoProcessor::processFrame(const cv::Mat3b &frame)
 {
-    cv::Mat3b img;
     cv::Mat1b gray;
+    cv::cvtColor(frame, gray,CV_BGR2GRAY);
+    return gray;
+}
 
-    while(!this->isInterruptionRequested())
-    {
-        mutex.lock();
-        if(!this->queue.empty())
-            img = this->queue.dequeue();
-        else
-            img = cv::Mat();
-        mutex.unlock();
 
-        if(!img.empty())
-        {
-            cv::cvtColor(img,gray,CV_BGR2GRAY);
-            emit resultFrame(img, gray);
-        }
-    }
-
+VideoProcessor::~VideoProcessor()
+{
 
 }

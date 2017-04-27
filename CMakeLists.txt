@@ -1,6 +1,6 @@
 project("MultiView FutTracker")
 cmake_minimum_required(VERSION 2.8)
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_INSTALL_PREFIX ${CMAKE_CURRENT_BINARY_DIR}/install)
 IF(WIN32)
 cmake_policy(SET CMP0020 NEW)

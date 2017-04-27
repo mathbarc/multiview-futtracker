@@ -26,53 +26,43 @@ VideoProcessorOpticalFlow::VideoProcessorOpticalFlow(const cv::FileNode& setting
     , poly_sigma((double)settings["poly_sigma"])
 {}
 
-void VideoProcessorOpticalFlow::run()
+cv::Mat1b VideoProcessorOpticalFlow::processFrame(const cv::Mat3b& frame)
 {
-    cv::Mat3b img;
+
     cv::Mat1b result;
     cv::Mat2f interResult;
     cv::Mat1b tmp;
     cv::Mat1b tmpr[2];
     cv::Mat1f r;
 
-    while(!this->isInterruptionRequested())
+    cv::cvtColor(frame,tmp, CV_BGR2GRAY);
+    cv::GaussianBlur(tmp,tmp,cv::Size(3,3),1.2);
+    if(this->before.empty())
     {
-        mutex.lock();
-        if(!this->queue.empty())
-            img = this->queue.dequeue();
-        else
-            img = cv::Mat();
-        mutex.unlock();
-
-        if(!img.empty())
-        {
-            cv::cvtColor(img,tmp, CV_BGR2GRAY);
-            cv::GaussianBlur(tmp,tmp,cv::Size(3,3),1.2);
-            if(this->before.empty())
-            {
-                this->before = tmp;
-            }
-            else
-            {
-                #if WITH_CUDA
-
-
-
-                #else
-                cv::calcOpticalFlowFarneback(this->before, tmp, interResult, this->pyr_scale, this->level, this->winsize,
-                                             this->iterations, this->poly_n, this->poly_sigma, cv::OPTFLOW_FARNEBACK_GAUSSIAN);
-                #endif
-                cv::split(interResult,tmpr);
-                cv::magnitude(tmpr[0], tmpr[1], r);
-                cv::normalize(r, r, 0, 255, cv::NORM_L2);
-                r.convertTo(result,CV_8U);
-
-                emit resultFrame(img,result);
-            }
-            this->before = tmp;
-        }
+        this->before = tmp;
     }
-    return;
+    else
+    {
+        #if WITH_CUDA
 
+
+
+        #else
+        cv::calcOpticalFlowFarneback(this->before, tmp, interResult, this->pyr_scale, this->level, this->winsize,
+                                     this->iterations, this->poly_n, this->poly_sigma, cv::OPTFLOW_FARNEBACK_GAUSSIAN);
+        #endif
+        cv::split(interResult,tmpr);
+        cv::magnitude(tmpr[0], tmpr[1], r);
+        cv::normalize(r, r, 0, 255, cv::NORM_L2);
+        r.convertTo(result,CV_8U);
+    }
+
+    this->before = tmp;
+    return result;
+}
+
+
+VideoProcessorOpticalFlow::~VideoProcessorOpticalFlow()
+{
 
 }

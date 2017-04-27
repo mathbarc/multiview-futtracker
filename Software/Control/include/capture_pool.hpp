@@ -5,8 +5,7 @@
 #include <QList>
 #include <QSharedPointer>
 
-#include "video_grabber.hpp"
-#include "video_processor.hpp"
+#include "view.hpp"
 #include "frame_widget.hpp"
 
 class CapturePool : public QObject
@@ -18,8 +17,7 @@ class CapturePool : public QObject
         QList< QSharedPointer<FrameWidget> > getWidgets() const;
 
     private:
-        QList< QSharedPointer<VideoGrabber> > grabberPool;
-        QList< QSharedPointer<VideoProcessor> > videoProcessorPool;
+        QList< QSharedPointer<View> > grabberPool;
         QList< QSharedPointer<FrameWidget> > widgets;
 
     signals:

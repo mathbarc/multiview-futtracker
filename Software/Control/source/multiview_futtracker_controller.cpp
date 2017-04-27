@@ -23,9 +23,9 @@ MultiViewFuttrackerController::MultiViewFuttrackerController()
         this->w->addSubWindows(this->cappool->getWidgets());
         QObject::connect(this->w,SIGNAL(setViewFlag(bool)),this->cappool,SLOT(showColorBGS(bool)));
     }
-    catch(std::string ex)
+    catch(std::logic_error ex)
     {
-        QMessageBox::warning(NULL,"Erro", tr(ex.c_str()));
+        QMessageBox::warning(NULL,"Erro", tr(ex.what()));
         configFile.release();
         exit(-1);
     }
