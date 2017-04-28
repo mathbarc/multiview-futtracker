@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>MultiView Futtracker</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="../resource.qrc">
+    <normaloff>:/View/resources/logo63.png</normaloff>:/View/resources/logo63.png</iconset>
+  </property>
   <property name="styleSheet">
    <string notr="true"/>
   </property>
@@ -159,7 +163,7 @@
      <x>0</x>
      <y>0</y>
      <width>899</width>
-     <height>30</height>
+     <height>26</height>
     </rect>
    </property>
    <property name="styleSheet">

@@ -7,6 +7,7 @@ struct DetectionResult
 {
     std::vector<cv::Point2d> locations;
     std::vector<cv::Mat1d> histograms;
+    cv::Mat1b foreground;
 
     void clear();
 };

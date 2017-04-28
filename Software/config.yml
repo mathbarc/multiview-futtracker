@@ -51,3 +51,6 @@ captures:
        #gaussian_kernel_size:{ w:3, h:3 },
        #gaussian_stddev:1.2000000000000000e+00 } }
 
+hidden_markov_model:{ occupation_map:{ floor:{w:100, h:100} } }
+
+

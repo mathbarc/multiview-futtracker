@@ -4,7 +4,7 @@ HiddenMarkovModel::HiddenMarkovModel(const cv::FileNode& config, int numberOfCap
     :QThread()
     , numberOfCaptures(numberOfCaptures)
     , captureResults(numberOfCaptures)
-    , occMap(config["occupationMap"])
+    , occMap(config["occupation_map"])
 {
 
 }

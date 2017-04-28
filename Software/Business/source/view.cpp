@@ -100,6 +100,7 @@ void View::run()
                 cv::dilate(result,result,kernel,cv::Point(-1,-1), this->dilateIterations);
             if(this->erodeIterations)
                 cv::erode(result,result,kernel,cv::Point(-1,-1), this->erodeIterations);
+            detections.foreground = result.clone();
             cv::findContours(result, components, CV_RETR_LIST, CV_CHAIN_APPROX_NONE);
             detections.clear();
 
