@@ -11,7 +11,6 @@ public:
     ~FileView();
 
 private:
-    void run();
     cv::VideoCapture capture;
 
 

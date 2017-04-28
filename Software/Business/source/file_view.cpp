@@ -2,7 +2,6 @@
 #include <chrono>
 #include <exception>
 #include <iostream>
-#include <opencv2/imgproc/imgproc.hpp>
 
 FileView::FileView(const cv::FileNode &config)
     : View(config)
@@ -31,6 +30,7 @@ FileView::FileView(const cv::FileNode &config)
     std::cout<<"-----------------------------"<<std::endl;
     std::cout<<"File View"<<std::endl;
     std::cout<<"-----------------------------"<<std::endl;
+    std::cout<<"ID: "<<this->getId()<<std::endl;
     std::cout<<"path: "<<path<<std::endl;
     std::cout<<"fps: "<<fps<<std::endl;
     std::cout<<"period: "<<period<<" ms"<<std::endl;
@@ -39,34 +39,6 @@ FileView::FileView(const cv::FileNode &config)
 
     this->captureTimer.start();
 
-}
-
-void FileView::run()
-{
-
-    cv::Mat3b frame;
-    cv::Mat1b result;
-    std::vector< std::vector<cv::Point> > components;
-
-    bool notEmpty;
-    while(!this->isInterruptionRequested())
-    {
-        this->captureMutex.lock();
-        notEmpty = !this->frameQueue.empty();
-        this->captureMutex.unlock();
-        if(notEmpty)
-        {
-            frame = this->frameQueue.dequeue();
-            result = this->processor->processFrame(frame);
-            cv::findContours(result, components, CV_RETR_LIST, CV_CHAIN_APPROX_NONE);
-            for(int i = 0; i<components.size(); i++)
-            {
-                if(cv::contourArea(components[i])>100)
-                    cv::drawContours(frame, components,i, cv::Scalar(0,0,255),CV_FILLED);
-            }
-            emit showFrame(frame, result);
-        }
-    }
 }
 
 void FileView::requestCapture()

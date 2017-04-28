@@ -11,7 +11,7 @@ CapturePool::CapturePool(const cv::FileNode& config)
         QSharedPointer<View> grabber(View::createView(*it));
         QSharedPointer<FrameWidget> widget(new FrameWidget(QString::fromStdString((std::string)(*it)["path"])));
 
-        QObject::connect(grabber.data(),SIGNAL(showFrame(cv::Mat3b,cv::Mat1b)),widget.data(),SLOT(showFrame(cv::Mat3b,cv::Mat1b)));
+        QObject::connect(grabber.data(),SIGNAL(showFrame(cv::Mat3b,cv::Mat1b)),widget.data(),SLOT(showFrame(cv::Mat3b,cv::Mat1b)), Qt::QueuedConnection);
         QObject::connect(this,SIGNAL(setFlag(bool)),widget.data(),SLOT(setFlag(bool)));
 
         this->grabberPool.push_back(grabber);
