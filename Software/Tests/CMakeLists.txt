@@ -3,6 +3,7 @@ set( CMAKE_INCLUDE_CURRENT_DIR ON )
 
 find_package(Qt5Core REQUIRED)
 find_package(Qt5Widgets REQUIRED)
+find_package(dlib REQUIRED)
 
 if(${WITH_CUDA})
     find_package(OpenCV 3 COMPONENTS core highgui videoio imgcodecs video cudabgsegm imgproc)
@@ -25,7 +26,8 @@ set(TESTS_INCLUDE_DIRS
     ${CONTROL_INCLUDE_DIR}
     ${Qt5Core_INCLUDE_DIRS}
     ${Qt5Widgets_INCLUDE_DIRS}
-    ${OpenCV_INCLUDE_DIRS})
+    ${OpenCV_INCLUDE_DIRS}
+    ${dlib_INCLUDE_DIRS})
 
 #file(GLOB VIDEO_PROCESSOR_TEST_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/sources/main_video_processor.cpp ${CMAKE_CURRENT_SOURCE_DIR}/sources/main_window_video_player.cpp)
 #file(GLOB VIDEO_PROCESSOR_TEST_FORMS ${CMAKE_CURRENT_SOURCE_DIR}/forms/main_window_video_player.ui)
@@ -62,7 +64,7 @@ endif()
 #target_link_libraries(VideoProcessor Qt5::Core Qt5::Widgets Business ${OpenCV_LIBS})
 target_link_libraries(HistComp ${OpenCV_LIBS})
 add_dependencies(CapturePool Control)
-target_link_libraries(CapturePool Qt5::Core Qt5::Widgets ${OpenCV_LIBS} Control Business)
+target_link_libraries(CapturePool Control)
 
 if(WITH_CUDA)
         target_link_libraries(BGS ${OpenCV_LIBS})

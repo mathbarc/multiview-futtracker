@@ -10,6 +10,8 @@ else()
         find_package(OpenCV 2 REQUIRED core highgui)
 endif()
 
+find_package(dlib REQUIRED)
+
 set(CONTROL_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include CACHE PATH "Control include dir")
 
 set(CONTROL_INCLUDE_DIRS 
@@ -18,7 +20,8 @@ set(CONTROL_INCLUDE_DIRS
         ${VIEW_INCLUDE_DIR}
         ${CONTROL_INCLUDE_DIR}
         ${Qt5Widgets_INCLUDE_DIRS}
-        ${OpenCV_INCLUDE_DIRS})
+        ${OpenCV_INCLUDE_DIRS}
+        ${dlib_INCLUDE_DIRS})
 
 file(GLOB CONTROL_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/source/*.cpp)
 file(GLOB CONTROL_HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/include/*.hpp ${CMAKE_CURRENT_SOURCE_DIR}/include/*.h)
@@ -29,5 +32,5 @@ include_directories(${CONTROL_INCLUDE_DIRS})
 #qt5_add_resources(CAMERAMARKER_RESOURCE ${CMAKE_CURRENT_SOURCE_DIR}/resource.qrc)
 add_library(Control STATIC ${CONTROL_SOURCES} ${CONTROL_HEADERS} ${CONTROL_WRAPPED_HEADERS})
 add_dependencies(Control Qt5::Widgets ${OpenCV_LIBS} View Business Communication)
-target_link_libraries(Control Qt5::Widgets ${OpenCV_LIBS} View Business Communication)
+target_link_libraries(Control Qt5::Widgets ${OpenCV_LIBS} ${dlib_LIBS} View Business Communication)
 

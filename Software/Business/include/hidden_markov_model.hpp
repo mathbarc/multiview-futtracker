@@ -7,7 +7,7 @@
 
 #include "common_data_structures.hpp"
 #include "occupation_map.hpp"
-#include <dlib/optimization/optimization.h>
+#include <dlib/optimization.h>
 
 class HiddenMarkovModel : public QThread
 {
