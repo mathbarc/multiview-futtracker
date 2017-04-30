@@ -7,6 +7,7 @@ class OccupationMap
 {
     public:
         OccupationMap(const cv::FileNode& config);
+        ~OccupationMap();
 //        std::vector<cv::Point2i> getPeaks();
 
     private:

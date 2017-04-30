@@ -135,7 +135,7 @@ void View::run()
 
                 }
             }
-            emit showFrame(frame, result);
+            emit showFrame(frame, detections.foreground);
 
             emit sendDetections(detections, this->captureId);
         }

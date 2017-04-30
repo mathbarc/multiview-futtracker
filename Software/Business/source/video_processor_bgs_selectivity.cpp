@@ -55,5 +55,7 @@ cv::Mat1b VideoProcessorBGSSelectivity::processFrame(const cv::Mat3b& frame)
 
 VideoProcessorBGSSelectivity::~VideoProcessorBGSSelectivity()
 {
+    std::cout<<"~VideoProcessorBGSSelectivity"<<std::endl;
 
+    std::cout<<"~VideoProcessorBGSSelectivity done"<<std::endl;
 }

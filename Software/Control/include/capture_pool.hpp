@@ -7,6 +7,7 @@
 
 #include "view.hpp"
 #include "frame_widget.hpp"
+#include "hidden_markov_model.hpp"
 
 class CapturePool : public QObject
 {
@@ -19,6 +20,7 @@ class CapturePool : public QObject
     private:
         QList< QSharedPointer<View> > grabberPool;
         QList< QSharedPointer<FrameWidget> > widgets;
+        QSharedPointer<HiddenMarkovModel> tracker;
 
     signals:
         void setFlag(bool flag);

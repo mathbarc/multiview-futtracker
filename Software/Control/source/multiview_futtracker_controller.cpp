@@ -19,7 +19,7 @@ MultiViewFuttrackerController::MultiViewFuttrackerController()
     {
         this->database = new DAOWrapper(configFile["database"]);
         this->w = new MultiviewFuttrackerMainWindow();
-        this->cappool = new CapturePool(configFile["captures"]);
+        this->cappool = new CapturePool(configFile["model"]);
         this->w->addSubWindows(this->cappool->getWidgets());
         QObject::connect(this->w,SIGNAL(setViewFlag(bool)),this->cappool,SLOT(showColorBGS(bool)));
     }

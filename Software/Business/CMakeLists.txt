@@ -32,7 +32,8 @@ set(BUSINESS_INCLUDE_DIRS
         ${BUSINESS_INCLUDE_DIR}
         ${Qt5Core_INCLUDE_DIRS}
         ${Qt5Widgets_INCLUDE_DIRS}
-        ${OpenCV_INCLUDE_DIRS})
+        ${OpenCV_INCLUDE_DIRS}
+        ${dlib_INCLUDE_DIRS})
 
 
 file(GLOB BUSINESS_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/source/*.cpp)

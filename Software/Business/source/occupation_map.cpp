@@ -1,11 +1,24 @@
 #include "occupation_map.hpp"
+#include <iostream>
 
 OccupationMap::OccupationMap(const cv::FileNode &config)
-    : floor(cv::Mat1d::zeros((int)config["floor.w"],(int)config["floor.h"]))
 {
+    cv::FileNode floorNode = config["floor"];
+    floor = cv::Mat1d::zeros((int)floorNode["w"],(int)floorNode["h"]);
 
+    std::cout<<"------------------------------"<<std::endl;
+    std::cout<<"Occupation Map"<<std::endl;
+    std::cout<<"------------------------------"<<std::endl;
+    std::cout<<"size: "<<this->floor.size()<<std::endl;
+    std::cout<<"------------------------------"<<std::endl;
 }
 
+OccupationMap::~OccupationMap()
+{
+    std::cout<<"~OccupationMap"<<std::endl;
+
+    std::cout<<"~OccupationMap done"<<std::endl;
+}
 
 //std::vector<cv::Point2i> OccupationMap::getPeaks()
 //{

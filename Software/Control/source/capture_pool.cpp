@@ -5,8 +5,8 @@
 CapturePool::CapturePool(const cv::FileNode& config)
     :QObject(0)
 {
-
-    for(cv::FileNodeIterator it = config.begin(); it!=config.end(); ++it)
+    cv::FileNode captures = config["captures"];
+    for(cv::FileNodeIterator it = captures.begin(); it!=captures.end(); ++it)
     {
         QSharedPointer<View> grabber(View::createView(*it));
         QSharedPointer<FrameWidget> widget(new FrameWidget(QString::fromStdString((std::string)(*it)["path"])));
@@ -17,10 +17,17 @@ CapturePool::CapturePool(const cv::FileNode& config)
         this->grabberPool.push_back(grabber);
         this->widgets.push_back(widget);
     }
+    tracker.reset(new HiddenMarkovModel(config["tracker"],this->grabberPool.size()));
+
+    for(int i = 0; i<this->grabberPool.size(); i++)
+    {
+        connect(this->grabberPool[i].data(), SIGNAL(sendDetections(DetectionResult,int)),this->tracker.data(), SLOT(receiveResults(DetectionResult,int)));
+    }
 }
 
 void CapturePool::start()
 {
+    this->tracker->start();
     for(int i = 0; i<this->grabberPool.size(); i++)
     {
         this->grabberPool[i]->start();
@@ -39,6 +46,9 @@ void CapturePool::showColorBGS(bool flag)
 
 void CapturePool::interrupt()
 {
+    this->tracker->requestInterruption();
+    this->tracker->wait();
+
     for(int i = 0; i<this->grabberPool.size(); i++)
     {
         QObject::disconnect(this->grabberPool[i].data(),SIGNAL(showFrame(cv::Mat3b,cv::Mat1b)),
