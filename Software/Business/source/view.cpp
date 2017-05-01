@@ -3,6 +3,7 @@
 #include "view.hpp"
 #include "file_view.hpp"
 #include <opencv2/imgproc/imgproc.hpp>
+#include <iostream>
 
 
 int View::captureCounter = 0;
@@ -65,8 +66,8 @@ cv::Mat1d View::calcHistogram(const cv::Mat3b &region, cv::Mat1d& histogram)
         {
             pixel = regPtr[r+j];
             redPtr[pixel[2]]++;
-            greenPtr[pixel[2]]++;
-            bluePtr[pixel[2]]++;
+            greenPtr[pixel[1]]++;
+            bluePtr[pixel[0]]++;
         }
     }
     histogram *= (1.0/(region.cols*region.rows));
@@ -76,7 +77,6 @@ cv::Mat1d View::calcHistogram(const cv::Mat3b &region, cv::Mat1d& histogram)
 
 void View::run()
 {
-
     cv::Mat3b frame;
     cv::Mat1b result;
     std::vector< std::vector<cv::Point> > components;
@@ -94,15 +94,18 @@ void View::run()
         this->captureMutex.unlock();
         if(notEmpty)
         {
+            this->captureMutex.lock();
             frame = this->frameQueue.dequeue();
+            this->captureMutex.unlock();
             result = this->processor->processFrame(frame);
             if(this->dilateIterations)
                 cv::dilate(result,result,kernel,cv::Point(-1,-1), this->dilateIterations);
             if(this->erodeIterations)
                 cv::erode(result,result,kernel,cv::Point(-1,-1), this->erodeIterations);
-            detections.foreground = result.clone();
-            cv::findContours(result, components, CV_RETR_LIST, CV_CHAIN_APPROX_NONE);
             detections.clear();
+            detections.foreground = result.clone();
+            components.clear();
+            cv::findContours(result, components, CV_RETR_LIST, CV_CHAIN_APPROX_NONE);
 
             for(int i = 0; i<components.size(); i++)
             {
@@ -144,4 +147,7 @@ void View::run()
 
 View::~View()
 {
+    std::cout<<"~View"<<std::endl;
+
+    std::cout<<"~View done"<<std::endl;
 }

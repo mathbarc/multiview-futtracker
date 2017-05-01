@@ -44,10 +44,8 @@ void HiddenMarkovModel::run()
         {
             for(int i = 0; i < this->numberOfCaptures; i++)
             {
-                std::cout<<this->captureResults[i].size()<<std::endl;
                 this->captureResults[i].dequeue();
             }
-            std::cout<<std::endl;
         }
         this->queueMutex.unlock();
 
