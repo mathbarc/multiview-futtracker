@@ -20,6 +20,11 @@ OccupationMap::~OccupationMap()
     std::cout<<"~OccupationMap done"<<std::endl;
 }
 
+void OccupationMap::processDetections(const std::vector<DetectionResult> &detections)
+{
+
+}
+
 //std::vector<cv::Point2i> OccupationMap::getPeaks()
 //{
 //    std::vector<cv::Point2i> result;

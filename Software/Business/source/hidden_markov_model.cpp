@@ -32,6 +32,7 @@ void HiddenMarkovModel::receiveResults(const DetectionResult &detections, const 
 void HiddenMarkovModel::run()
 {
     bool ok;
+    std::vector<DetectionResult> detections(this->numberOfCaptures);
     while(!this->isInterruptionRequested())
     {
         ok = true;
@@ -44,12 +45,10 @@ void HiddenMarkovModel::run()
         {
             for(int i = 0; i < this->numberOfCaptures; i++)
             {
-                this->captureResults[i].dequeue();
+               detections[i] = this->captureResults[i].dequeue();
             }
+            this->queueMutex.unlock();
+            this->occMap.processDetections(detections);
         }
-        this->queueMutex.unlock();
-
-
-
     }
 }
