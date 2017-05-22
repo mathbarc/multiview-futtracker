@@ -14,4 +14,4 @@ target_link_libraries(Tsai3D m)
 endif()
 
 
-install(TARGETS Tsai3D RUNTIME DESTINATION "." COMPONENT tools)
+install(TARGETS Tsai3D RUNTIME DESTINATION "./bin/" COMPONENT tools)

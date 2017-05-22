@@ -20,4 +20,4 @@ include_directories(${BACKGROUND_MODEL_INCLUDE_DIRS})
 add_executable(BackGroundModel ${BACKGROUND_MODEL_SOURCES} ${BACKGROUND_MODEL_HEADERS})
 target_link_libraries(BackGroundModel ${OpenCV_LIBS})
 
-install(TARGETS BackGroundModel RUNTIME DESTINATION "." COMPONENT tools)
+install(TARGETS BackGroundModel RUNTIME DESTINATION "./bin/" COMPONENT tools)

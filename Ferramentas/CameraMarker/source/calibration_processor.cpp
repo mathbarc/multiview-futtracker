@@ -3,13 +3,7 @@
 #include <opencv2/calib3d/calib3d.hpp>
 #include <QMessageBox>
 
-
-const int CalibrationProcessor::HOMOGRAPHY = 0;
-const int CalibrationProcessor::ZHENG = 1;
-
-
-
-CalibrationProcessor::CalibrationProcessor(std::string path, CalibrationData input, cv::Size size, int method)
+CalibrationProcessor::CalibrationProcessor(std::string path, CalibrationData input, cv::Size size, CalibrationType method)
     : path(path)
     , input(input)
     , method(method)
@@ -22,10 +16,11 @@ void CalibrationProcessor::run()
     std::cout<<"Starting Calibration"<<std::endl;
     switch (method)
     {
-        case CalibrationProcessor::ZHENG:
+        case CalibrationType::ZHENG:
                 this->zhengCalibration();
             break;
-        case CalibrationProcessor::HOMOGRAPHY:
+        case CalibrationType::HOMOGRAPHY_DIR:
+        case CalibrationType::HOMOGRAPHY_INV:
                 this->homography();
             break;
         default:
@@ -67,7 +62,16 @@ void CalibrationProcessor::zhengCalibration()
 void CalibrationProcessor::homography()
 {
     cv::Mat mask;
-    cv::Mat homographyMatrix = cv::findHomography(this->input.image,this->input.world, mask);
+    cv::Mat homographyMatrix;
+
+    if(method==CalibrationType::HOMOGRAPHY_DIR)
+    {
+        homographyMatrix = cv::findHomography(this->input.image,this->input.worldToPoint2d(), mask);
+    }
+    else if(method==CalibrationType::HOMOGRAPHY_INV)
+    {
+        homographyMatrix = cv::findHomography(this->input.worldToPoint2d(),this->input.image, mask);
+    }
     cv::FileStorage file(path, cv::FileStorage::WRITE);
     file<<"type"<<"homography";
     file<<"homography"<<homographyMatrix;

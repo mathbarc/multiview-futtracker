@@ -11,14 +11,14 @@ VideoProcessorBGSSelectivity::VideoProcessorBGSSelectivity(const cv::FileNode& s
 {
     std::string bgModel = (std::string)settings["bg_model"];
     this->backgroundModel = cv::imread(bgModel, CV_LOAD_IMAGE_GRAYSCALE);
-    std::cout<<"-----------------------------"<<std::endl;
+    std::cout<<"------------------------------------------"<<std::endl;
     std::cout<<"Algorithm BGS Selectivity"<<std::endl;
-    std::cout<<"-----------------------------"<<std::endl;
+    std::cout<<"------------------------------------------"<<std::endl;
     std::cout<<"learning rate Background: "<<this->learningRateBG<<std::endl;
     std::cout<<"learning rate Foreground: "<<this->learningRateFG<<std::endl;
     std::cout<<"threshold: "<<this->threshold<<std::endl;
     std::cout<<"backgrond model: "<<bgModel<<std::endl;
-    std::cout<<"-----------------------------"<<std::endl<<std::endl;
+    std::cout<<"------------------------------------------"<<std::endl<<std::endl;
 }
 
 cv::Mat1b VideoProcessorBGSSelectivity::processFrame(const cv::Mat3b& frame)

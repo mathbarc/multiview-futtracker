@@ -72,7 +72,7 @@ endif()
 
 
 #install(TARGETS VideoProcessor RUNTIME DESTINATION "." COMPONENT tests)
-install(TARGETS HistComp RUNTIME DESTINATION "." COMPONENT tests)
+install(TARGETS HistComp RUNTIME DESTINATION "./bin/" COMPONENT tests)
 if(WITH_CUDA)
-    install(TARGETS BGS RUNTIME DESTINATION "." COMPONENT tests)
+    install(TARGETS BGS RUNTIME DESTINATION "./bin/" COMPONENT tests)
 endif()

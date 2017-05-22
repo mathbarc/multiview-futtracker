@@ -33,5 +33,5 @@ add_dependencies(FutTracker Control)
 target_link_libraries(FutTracker Control)
 
 
-install(TARGETS FutTracker RUNTIME DESTINATION "." COMPONENT application)
-install(FILES config.yml DESTINATION "." COMPONENT application)
+install(TARGETS FutTracker RUNTIME DESTINATION "./bin/" COMPONENT application)
+install(FILES config.yml DESTINATION "./bin/" COMPONENT application)

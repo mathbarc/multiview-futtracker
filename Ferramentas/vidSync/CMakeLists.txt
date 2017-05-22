@@ -18,4 +18,4 @@ include_directories(${VIDSYNC_INCLUDE_DIRS})
 add_executable(vidSync ${VIDSYNC_SOURCES} ${VIDSYNC_HEADERS})
 target_link_libraries(vidSync ${OpenCV_LIBS})
 
-install(TARGETS vidSync RUNTIME DESTINATION "." COMPONENT tools)
+install(TARGETS vidSync RUNTIME DESTINATION "./bin/" COMPONENT tools)

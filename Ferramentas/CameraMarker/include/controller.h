@@ -25,7 +25,8 @@ class Controller : public QObject
     private slots:
         void openVideo(QString path);
         void genCalibFile(QString path);
-        void genHomoFile(QString path);
+        void genHomoDirFile(QString path);
+        void genHomoInvFile(QString path);
         void addCalibrationMarker(CalibrationMarker cm);
         void close();
         void showImage(cv::Mat img);

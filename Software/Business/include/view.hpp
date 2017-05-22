@@ -14,7 +14,7 @@ class View : public QThread
 {
     Q_OBJECT
     public:
-        enum Type{
+        enum class Type{
             TOP = 0,
             SIDE = 1
         };
@@ -41,11 +41,16 @@ class View : public QThread
         Type type;
 
         static cv::Mat1d calcHistogram(const cv::Mat3b& region, cv::Mat1d& histogram);
+
     private:
+        cv::Mat1b occupationMask;
         static int captureCounter;
         int dilateIterations;
         int erodeIterations;
+
         void run() final;
+
+        void calculateOccupationMask();
 
 
 };

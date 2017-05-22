@@ -12,5 +12,4 @@ struct DetectionResult
     void clear();
 };
 
-
 #endif

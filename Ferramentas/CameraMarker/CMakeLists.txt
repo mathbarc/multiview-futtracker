@@ -28,4 +28,4 @@ add_executable(CameraMarker ${CAMERAMARKER_SOURCES} ${CAMERAMARKER_HEADERS} ${CA
 target_link_libraries(CameraMarker Qt5::Widgets ${OpenCV_LIBS})
 add_dependencies(CameraMarker Qt5::Widgets ${OpenCV_LIBS})
 
-install(TARGETS CameraMarker RUNTIME DESTINATION "." COMPONENT tools)
+install(TARGETS CameraMarker RUNTIME DESTINATION "./bin/" COMPONENT tools)

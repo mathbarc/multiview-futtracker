@@ -128,6 +128,19 @@ void CameraMarker::on_actionGerar_Homo_Arq_triggered()
         std::cout<<file.toStdString()<<std::endl;
 
         if(file!="" && this->ui->tableWidget->rowCount()!=0)
-            emit genHomoFile(file);
+            emit genHomoDirFile(file);
     }
 }
+
+void CameraMarker::on_actionGerar_arquivo_de_homografia_inversa_triggered()
+{
+    if(this->ui->tableWidget->rowCount()!=0)
+    {
+        QString file = QFileDialog::getSaveFileName(0,"Salvar Arquivo", "Homography", "XML (*.xml);;YML (*.yml)");
+        std::cout<<file.toStdString()<<std::endl;
+
+        if(file!="" && this->ui->tableWidget->rowCount()!=0)
+            emit genHomoInvFile(file);
+    }
+}
+

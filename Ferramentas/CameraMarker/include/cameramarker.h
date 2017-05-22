@@ -22,7 +22,8 @@ class CameraMarker : public QMainWindow
     signals:
         void openVideo(QString path);
         void genCalibFile(QString path);
-        void genHomoFile(QString path);
+        void genHomoDirFile(QString path);
+        void genHomoInvFile(QString path);
         void playPauseVideo();
         void addCalibrationMarker(CalibrationMarker cm);
 
@@ -34,6 +35,7 @@ class CameraMarker : public QMainWindow
         void on_actionAbrir_Video_triggered();
         void on_actionGerar_Calib_Arq_triggered();
         void on_actionGerar_Homo_Arq_triggered();
+        void on_actionGerar_arquivo_de_homografia_inversa_triggered();
 
     private:
         Ui::CameraMarker* ui;

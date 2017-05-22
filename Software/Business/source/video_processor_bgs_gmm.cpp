@@ -56,16 +56,16 @@ VideoProcessorBGSGMM::VideoProcessorBGSGMM(const cv::FileNode& settings)
            #endif
     }
 
-    std::cout<<"-----------------------------"<<std::endl;
+    std::cout<<"------------------------------------------"<<std::endl;
     std::cout<<"Algorithm BGS GMM"<<std::endl;
-    std::cout<<"-----------------------------"<<std::endl;
+    std::cout<<"------------------------------------------"<<std::endl;
     std::cout<<"history: "<<history<<std::endl;
     std::cout<<"threshold: "<<threshold<<std::endl;
     std::cout<<"learning rate: "<<this->learningRate<<std::endl;
     std::cout<<"gaussian stddev: "<<this->gaussianStdDev<<std::endl;
     std::cout<<"gaussian kernel size: "<<this->gaussianKernelSize<<std::endl;
     std::cout<<"backgrond model: "<<bgModel<<std::endl;
-    std::cout<<"-----------------------------"<<std::endl<<std::endl;
+    std::cout<<"------------------------------------------"<<std::endl<<std::endl;
 
 }
 

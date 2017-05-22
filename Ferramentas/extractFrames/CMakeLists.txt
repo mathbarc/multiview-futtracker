@@ -15,4 +15,4 @@ include_directories(${EXTRACTFRAMES_INCLUDE_DIRS})
 add_executable(extractFrames ${EXTRACTFRAMES_SOURCES})
 target_link_libraries(extractFrames ${OpenCV_LIBS})
 
-install(TARGETS extractFrames RUNTIME DESTINATION "." COMPONENT tools)
+install(TARGETS extractFrames RUNTIME DESTINATION "./bin/" COMPONENT tools)

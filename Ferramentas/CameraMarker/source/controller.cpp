@@ -14,7 +14,8 @@ Controller::Controller()
     this->window->show();
     connect(this->window,SIGNAL(openVideo(QString)), this, SLOT(openVideo(QString)));
     connect(this->window, SIGNAL(genCalibFile(QString)),this, SLOT(genCalibFile(QString)));
-    connect(this->window, SIGNAL(genHomoFile(QString)),this, SLOT(genHomoFile(QString)));
+    connect(this->window, SIGNAL(genHomoDirFile(QString)),this, SLOT(genHomoDirFile(QString)));
+    connect(this->window, SIGNAL(genHomoInvFile(QString)),this, SLOT(genHomoInvFile(QString)));
     connect(this->window, SIGNAL(destroyed()), this, SLOT(close()));
     connect(this->window, SIGNAL(addCalibrationMarker(CalibrationMarker)),this, SLOT(addCalibrationMarker(CalibrationMarker)));
     connect(this, SIGNAL(insertOnTable(CalibrationMarker)), this->window, SLOT(insertOnTable(CalibrationMarker)));
@@ -120,12 +121,12 @@ void Controller::genCalibFile(QString path)
     }
 
     this->calib = new CalibrationProcessor(path.toStdString(), this->markers, this->recentFrame.size(),
-                                   CalibrationProcessor::ZHENG);
+                                   CalibrationProcessor::CalibrationType::ZHENG);
 
     calib->start();
 }
 
-void Controller::genHomoFile(QString path)
+void Controller::genHomoDirFile(QString path)
 {
     if(this->calib!=NULL)
     {
@@ -134,7 +135,20 @@ void Controller::genHomoFile(QString path)
     }
 
     this->calib = new CalibrationProcessor(path.toStdString(), this->markers, this->recentFrame.size(),
-                               CalibrationProcessor::HOMOGRAPHY);
+                               CalibrationProcessor::CalibrationType::HOMOGRAPHY_DIR);
+    this->calib->start();
+}
+
+void Controller::genHomoInvFile(QString path)
+{
+    if(this->calib!=NULL)
+    {
+        this->calib->wait();
+        delete this->calib;
+    }
+
+    this->calib = new CalibrationProcessor(path.toStdString(), this->markers, this->recentFrame.size(),
+                               CalibrationProcessor::CalibrationType::HOMOGRAPHY_INV);
     this->calib->start();
 }
 

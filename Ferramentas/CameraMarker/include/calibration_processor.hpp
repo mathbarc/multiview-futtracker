@@ -9,14 +9,19 @@ class CalibrationProcessor : public QThread
 {
     Q_OBJECT
     public:
-        CalibrationProcessor(std::string path, CalibrationData input, cv::Size size, int method);
-        static const int HOMOGRAPHY;
-        static const int ZHENG;
+        enum class CalibrationType
+        {
+            HOMOGRAPHY_DIR = 2,
+            HOMOGRAPHY_INV = 1,
+            ZHENG = 0
+        };
+        CalibrationProcessor(std::string path, CalibrationData input, cv::Size size, CalibrationType method);
+
 
     private:
         CalibrationData input;
         std::string path;
-        int method;
+        CalibrationType method;
         cv::Size size;
 
         void zhengCalibration();

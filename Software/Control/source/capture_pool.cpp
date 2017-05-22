@@ -17,7 +17,7 @@ CapturePool::CapturePool(const cv::FileNode& config)
         this->grabberPool.push_back(grabber);
         this->widgets.push_back(widget);
     }
-    tracker.reset(new HiddenMarkovModel(config["tracker"],this->grabberPool.size()));
+    tracker.reset(new DataProcessor(config["tracker"],this->grabberPool.size()));
 
     for(int i = 0; i<this->grabberPool.size(); i++)
     {

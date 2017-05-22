@@ -25,6 +25,26 @@ struct CalibrationData
 {
         std::vector<cv::Point2f> image;
         std::vector<cv::Point3f> world;
+
+        void setHomogeniety()
+        {
+            for(int i = 0; i<this->world.size(); i++)
+            {
+                this->world[i].z=1.0;
+            }
+        }
+
+        std::vector<cv::Point2f> worldToPoint2d()
+        {
+            std::vector<cv::Point2f> vec;
+            cv::Point3f p;
+            for(int i = 0; i<this->world.size(); i++)
+            {
+                p = this->world[i];
+                vec.push_back(cv::Point2f(p.x,p.y));
+            }
+            return vec;
+        }
 };
 
 #endif
