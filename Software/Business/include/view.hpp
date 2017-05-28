@@ -47,6 +47,7 @@ class View : public QThread
         static int captureCounter;
         int dilateIterations;
         int erodeIterations;
+        int minArea;
 
         void run() final;
 

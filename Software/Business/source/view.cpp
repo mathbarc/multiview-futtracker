@@ -14,6 +14,7 @@ View::View(const cv::FileNode &config)
     , dilateIterations((int)config["dilate_iterations"])
     , erodeIterations((int)config["erode_iterations"])
     , type((Type)(int)config["view_type"])
+    , minArea((int)config["min_area"])
 {
     this->processor.reset(VideoProcessor::getInstance(config["video_processor"]));
     if(config["homography"].empty())
@@ -23,7 +24,7 @@ View::View(const cv::FileNode &config)
     else
     {
         cv::FileStorage homographyFile((std::string)config["homography"], cv::FileStorage::READ);
-        homographyFile["calibration"] >> this->homography;
+        homographyFile["homography"] >> this->homography;
     }
     captureCounter++;
 }
@@ -109,7 +110,7 @@ void View::run()
 
             for(int i = 0; i<components.size(); i++)
             {
-                if(cv::contourArea(components[i])>100)
+                if(cv::contourArea(components[i])>this->minArea)
                 {
                     boundRect = cv::boundingRect(components[i]);
                     calcHistogram(frame(boundRect), histogram);
@@ -134,6 +135,7 @@ void View::run()
                     cv::circle(frame, cv::Point(l(0,0),l(1,0)), 3, cv::Scalar(0,255,0), CV_FILLED);
 
                     l = this->homography * l;
+
                     detections.locations.push_back(cv::Point(l(0,0)/l(2,0), l(1,0)/l(2,0)));
 
                 }

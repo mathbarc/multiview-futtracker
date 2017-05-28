@@ -27,14 +27,15 @@ FileView::FileView(const cv::FileNode &config)
     this->captureTimer.setInterval(period);
     connect(&this->captureTimer, SIGNAL(timeout()), this, SLOT(requestCapture()));
 
-    std::cout<<"-----------------------------"<<std::endl;
+    std::cout<<"------------------------------------------"<<std::endl;
     std::cout<<"File View"<<std::endl;
-    std::cout<<"-----------------------------"<<std::endl;
+    std::cout<<"------------------------------------------"<<std::endl;
     std::cout<<"ID: "<<this->getId()<<std::endl;
     std::cout<<"path: "<<path<<std::endl;
     std::cout<<"fps: "<<fps<<std::endl;
     std::cout<<"period: "<<period<<" ms"<<std::endl;
-    std::cout<<"-----------------------------"<<std::endl<<std::endl;
+    std::cout<<"homography: "<<std::endl<<this->homography<<std::endl;
+    std::cout<<"------------------------------------------"<<std::endl<<std::endl;
 
 
     this->captureTimer.start();

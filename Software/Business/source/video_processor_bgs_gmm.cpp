@@ -118,7 +118,8 @@ cv::Mat1b VideoProcessorBGSGMM::processFrame(const cv::Mat3b &frame)
     cv::threshold(fgmask,fgmask, 250, 255, cv::THRESH_BINARY);
 //            cv::erode(fgmask, fgmask, cv::Mat(), cv::Point(-1,-1), 1);
 //            cv::dilate(fgmask, fgmask, cv::Mat(), cv::Point(-1,-1), 1);
-
+    cv::imwrite("frame.png", frame);
+    cv::imwrite("fg.png", fgmask);
     return fgmask;
 }
 

@@ -49,26 +49,29 @@ model:
             #learning_rate_background:3.0000000000000000e-02,learning_rate_foreground:2.5000000000000000e-02, threshold:30,
             #bg_model:"C:/Users/Matheus/Datasets/Futtracker/21-01/Sync/Treino1/4.png"}}
         - { type:file, view_type:1, path:"C:/Users/Matheus/Datasets/Futtracker/21-01/Sync/Treino1/0.avi",
-            dilate_iterations:1, erode_iterations:1,
-            video_processor:{ type:bgs_gmm, history:50,
-            threshold:40, learning_rate:2.5000000000000000e-03,
+            homography:"C:/Users/Matheus/Datasets/Futtracker/21-01/Sync/Treino1/Homography0D.xml",
+            dilate_iterations:1, erode_iterations:1, min_area:42,
+            video_processor:{ type:bgs_gmm, history:320,
+            threshold:50, learning_rate:4.5000000000000000e-03,
             gaussian_kernel_size:{ w:3, h:3 },
-            gaussian_stddev:1.2000000000000000e+00,
+            gaussian_stddev:8.2000000000000000e+00,
             bg_model:"C:/Users/Matheus/Datasets/Futtracker/21-01/Sync/Treino1/0.png"}}
-        - { type:file, view_type:1, path:"C:/Users/Matheus/Datasets/Futtracker/21-01/Sync/Treino1/2.avi",
-            dilate_iterations:1, erode_iterations:1,
-            video_processor:{ type:bgs_gmm, history:50,
-            threshold:40, learning_rate:2.5000000000000000e-03,
-            gaussian_kernel_size:{ w:3, h:3 },
-            gaussian_stddev:1.2000000000000000e+00,
-            bg_model:"C:/Users/Matheus/Datasets/Futtracker/21-01/Sync/Treino1/2.png"}}
-        - { type:file, view_type:0, path:"C:/Users/Matheus/Datasets/Futtracker/21-01/Sync/Treino1/4.avi",
-            dilate_iterations:1, erode_iterations:1,
-            video_processor:{ type:bgs_gmm, history:50,
-            threshold:40, learning_rate:2.5000000000000000e-03,
-            gaussian_kernel_size:{ w:3, h:3 },
-            gaussian_stddev:1.2000000000000000e+00,
-            bg_model:"C:/Users/Matheus/Datasets/Futtracker/21-01/Sync/Treino1/4.png"}}
-    tracker:{ occupation_map:{ floor:{w:100, h:100} } }
+        #- { type:file, view_type:1, path:"C:/Users/Matheus/Datasets/Futtracker/21-01/Sync/Treino1/2.avi",
+            #homography:"C:/Users/Matheus/Datasets/Futtracker/21-01/Sync/Treino1/Homography2D.xml",
+            #dilate_iterations:1, erode_iterations:1,
+            #video_processor:{ type:bgs_gmm, history:320,
+            #threshold:50, learning_rate:4.5000000000000000e-03,
+            #gaussian_kernel_size:{ w:3, h:3 },
+            #gaussian_stddev:1.2000000000000000e+00,
+            #bg_model:"C:/Users/Matheus/Datasets/Futtracker/21-01/Sync/Treino1/2.png"}}
+        #- { type:file, view_type:0, path:"C:/Users/Matheus/Datasets/Futtracker/21-01/Sync/Treino1/4.avi",
+            #homography:"C:/Users/Matheus/Datasets/Futtracker/21-01/Sync/Treino1/Homography4D.xml",
+            #dilate_iterations:1, erode_iterations:1, min_area:42,
+            #video_processor:{ type:bgs_gmm, history:330,
+            #threshold:50, learning_rate:1.5000000000000000e-03,
+            #gaussian_kernel_size:{ w:3, h:3 },
+            #gaussian_stddev:1.2000000000000000e+00,
+            #bg_model:"C:/Users/Matheus/Datasets/Futtracker/21-01/Sync/Treino1/4.png"}}
+    tracker:{ occupation_map:{ floor:{w:38, h:19} } }
 
 

@@ -8,11 +8,11 @@ DataProcessor::DataProcessor(const cv::FileNode& config, int numberOfCaptures)
     , chain(config)
 {
 
-    std::cout<<"-----------------------------"<<std::endl;
+    std::cout<<"------------------------------------------"<<std::endl;
     std::cout<<"DataProcessor"<<std::endl;
-    std::cout<<"-----------------------------"<<std::endl;
+    std::cout<<"------------------------------------------"<<std::endl;
     std::cout<<"Number of captures: "<<this->numberOfCaptures<<std::endl;
-    std::cout<<"-----------------------------"<<std::endl;
+    std::cout<<"------------------------------------------"<<std::endl;
 
 }
 

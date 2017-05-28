@@ -50,8 +50,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>979</width>
-         <height>555</height>
+         <width>951</width>
+         <height>549</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout">
@@ -86,13 +86,13 @@
      <widget class="QTableWidget" name="tableWidget">
       <property name="minimumSize">
        <size>
-        <width>219</width>
+        <width>237</width>
         <height>0</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
-        <width>219</width>
+        <width>237</width>
         <height>16777215</height>
        </size>
       </property>
@@ -167,7 +167,7 @@
      <x>0</x>
      <y>0</y>
      <width>1220</width>
-     <height>30</height>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuArquivos">
