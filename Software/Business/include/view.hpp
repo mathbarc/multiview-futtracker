@@ -23,6 +23,7 @@ class View : public QThread
         static View* createView(const cv::FileNode& config);
         const int getId() const;
         virtual ~View();
+        void pause();
 
     signals:
         void showFrame(const cv::Mat3b& frame, const cv::Mat1b& mask);

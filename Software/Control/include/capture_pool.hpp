@@ -29,6 +29,7 @@ class CapturePool : public QObject
 
     public slots:
         void start();
+        void pause();
         void showColorBGS(bool flag);
         void interrupt();
 };

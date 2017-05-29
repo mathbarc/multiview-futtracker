@@ -20,6 +20,7 @@ class GaussianMixtureDetector : public QThread
     private:
         void run();
         void createDetectionMap(const std::vector<DetectionResult>& detections, cv::Mat1d& floor);
+        void findPeaks(const cv::Mat1d& floor, std::vector<cv::Point>& peaks);
         const int numberOfCaptures;
         QMutex queueMutex;
         cv::Size floorSize;

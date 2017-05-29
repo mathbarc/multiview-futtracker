@@ -78,6 +78,14 @@ void CapturePool::interrupt()
     }
 }
 
+void CapturePool::pause()
+{
+    for(int i = 0; i<this->grabberPool.size(); i++)
+    {
+        this->grabberPool[i]->pause();
+    }
+}
+
 CapturePool::~CapturePool()
 {
     std::cout<<"~CapturePool"<<std::endl;

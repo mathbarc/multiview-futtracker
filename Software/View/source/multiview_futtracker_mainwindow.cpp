@@ -61,3 +61,11 @@ void MultiviewFuttrackerMainWindow::on_pushButton_clicked()
 {
     this->close();
 }
+
+void MultiviewFuttrackerMainWindow::keyPressEvent(QKeyEvent *event)
+{
+    if(event->key() == Qt::Key_P)
+    {
+        emit pause();
+    }
+}

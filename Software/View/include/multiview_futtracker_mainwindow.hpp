@@ -23,6 +23,7 @@ class MultiviewFuttrackerMainWindow : public QMainWindow
 
     signals:
         void setViewFlag(bool flag);
+        void pause(void);
 
     private slots:
         void on_radioButton_color_clicked();
@@ -32,6 +33,9 @@ class MultiviewFuttrackerMainWindow : public QMainWindow
 
     private:
         Ui::MultiviewFuttrackerMainWindow *ui;
+
+    protected:
+        void keyPressEvent(QKeyEvent* event);
 
 
 

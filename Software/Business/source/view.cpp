@@ -171,3 +171,15 @@ View::~View()
 
     std::cout<<"~View done"<<std::endl;
 }
+
+void View::pause()
+{
+    if(this->captureTimer.isActive())
+    {
+        this->captureTimer.stop();
+    }
+    else
+    {
+        this->captureTimer.start();
+    }
+}
