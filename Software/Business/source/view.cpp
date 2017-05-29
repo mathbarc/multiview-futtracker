@@ -4,6 +4,7 @@
 #include "file_view.hpp"
 #include <opencv2/imgproc/imgproc.hpp>
 #include <iostream>
+#include <chrono>
 
 
 int View::captureCounter = 0;
@@ -11,8 +12,7 @@ int View::captureCounter = 0;
 View::View(const cv::FileNode &config)
     : QThread()
     , captureId(captureCounter)
-    , dilateIterations((int)config["dilate_iterations"])
-    , erodeIterations((int)config["erode_iterations"])
+    , closeIterations((int)config["close_iterations"])
     , type((Type)(int)config["view_type"])
     , minArea((int)config["min_area"])
 {
@@ -26,6 +26,17 @@ View::View(const cv::FileNode &config)
         cv::FileStorage homographyFile((std::string)config["homography"], cv::FileStorage::READ);
         homographyFile["homography"] >> this->homography;
     }
+
+    if(config["max_area"].empty())
+    {
+        maxArea = INT_MAX;
+    }
+    else
+    {
+        maxArea = (int)config["max_area"];
+    }
+
+
     captureCounter++;
 }
 
@@ -85,7 +96,8 @@ void View::run()
     cv::Rect boundRect;
     cv::Mat1d histogram;
     cv::Mat1d l(3,1);
-    cv::Mat1b kernel = cv::Mat1b::ones(3,3);
+    cv::Mat morphologyKernel = cv::getStructuringElement( cv::MORPH_ELLIPSE, cv::Size(3,3));
+    int area;
 
     bool notEmpty;
     while(!this->isInterruptionRequested())
@@ -95,14 +107,13 @@ void View::run()
         this->captureMutex.unlock();
         if(notEmpty)
         {
+//            std::chrono::high_resolution_clock::time_point tp1 = std::chrono::high_resolution_clock::now();
             this->captureMutex.lock();
             frame = this->frameQueue.dequeue();
             this->captureMutex.unlock();
             result = this->processor->processFrame(frame);
-            if(this->dilateIterations)
-                cv::dilate(result,result,kernel,cv::Point(-1,-1), this->dilateIterations);
-            if(this->erodeIterations)
-                cv::erode(result,result,kernel,cv::Point(-1,-1), this->erodeIterations);
+            if(this->closeIterations)
+                cv::morphologyEx(result,result,cv::MORPH_CLOSE,morphologyKernel,cv::Point(-1,-1), this->closeIterations);
             detections.clear();
             detections.foreground = result.clone();
             components.clear();
@@ -110,7 +121,8 @@ void View::run()
 
             for(int i = 0; i<components.size(); i++)
             {
-                if(cv::contourArea(components[i])>this->minArea)
+                area = cv::contourArea(components[i]);
+                if(area > this->minArea && area < this->maxArea)
                 {
                     boundRect = cv::boundingRect(components[i]);
                     calcHistogram(frame(boundRect), histogram);
@@ -143,6 +155,12 @@ void View::run()
             emit showFrame(frame, detections.foreground);
 
             emit sendDetections(detections, this->captureId);
+//            std::chrono::high_resolution_clock::time_point tp2 = std::chrono::high_resolution_clock::now();
+//            std::cout<<std::chrono::duration_cast<std::chrono::milliseconds>(tp2-tp1).count()<<" ms"<<std::endl;
+        }
+        else
+        {
+            this->yieldCurrentThread();
         }
     }
 }

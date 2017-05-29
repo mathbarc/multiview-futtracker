@@ -7,7 +7,8 @@
 
 #include "view.hpp"
 #include "frame_widget.hpp"
-#include "data_processor.hpp"
+#include "map_widget.hpp"
+#include "gaussian_mixture_detector.hpp"
 
 class CapturePool : public QObject
 {
@@ -15,12 +16,13 @@ class CapturePool : public QObject
     public:
         CapturePool(const cv::FileNode& config);
         ~CapturePool();
-        QList< QSharedPointer<FrameWidget> > getWidgets() const;
+        QList< QSharedPointer<QWidget> > getWidgets() const;
 
     private:
         QList< QSharedPointer<View> > grabberPool;
         QList< QSharedPointer<FrameWidget> > widgets;
-        QSharedPointer<DataProcessor> tracker;
+        QSharedPointer<GaussianMixtureDetector> detector;
+        QSharedPointer<MapWidget> resultWidget;
 
     signals:
         void setFlag(bool flag);

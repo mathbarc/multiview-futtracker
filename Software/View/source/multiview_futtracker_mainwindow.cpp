@@ -17,7 +17,7 @@ MultiviewFuttrackerMainWindow::~MultiviewFuttrackerMainWindow()
     std::cout<<"~MultiviewFuttrackerMainWindow done"<<std::endl;
 }
 
-void MultiviewFuttrackerMainWindow::addSubWindows(const QList<QSharedPointer<FrameWidget> > &widgets)
+void MultiviewFuttrackerMainWindow::addSubWindows(const QList<QSharedPointer<QWidget> > &widgets)
 {
     int ncols, nrows;
     if(widgets.size()<3)

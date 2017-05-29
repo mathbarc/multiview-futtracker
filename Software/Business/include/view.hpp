@@ -45,9 +45,9 @@ class View : public QThread
     private:
         cv::Mat1b occupationMask;
         static int captureCounter;
-        int dilateIterations;
-        int erodeIterations;
+        int closeIterations;
         int minArea;
+        int maxArea;
 
         void run() final;
 

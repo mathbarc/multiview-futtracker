@@ -18,7 +18,7 @@ class MultiviewFuttrackerMainWindow : public QMainWindow
 
     public:
         explicit MultiviewFuttrackerMainWindow(QWidget *parent = 0);
-        void addSubWindows(const QList< QSharedPointer<FrameWidget> >& widgets);
+        void addSubWindows(const QList<QSharedPointer<QWidget> > &widgets);
         ~MultiviewFuttrackerMainWindow();
 
     signals:

@@ -35,25 +35,26 @@ VideoProcessorBGSGMM::VideoProcessorBGSGMM(const cv::FileNode& settings)
         cv::Mat3b img = cv::imread(bgModel, CV_LOAD_IMAGE_COLOR);
 
        #if(OPENCV_VERSION==3)
-           #if(WITH_CUDA)
+       #if(WITH_CUDA)
 //             std::cout<<"Gaussian applyed"<<std::endl;
-               this->d_im.upload(img,this->stream);
+           this->d_im.upload(img,this->stream);
 //             std::cout<<"CPU ---> GPU wait"<<std::endl;
-               this->stream.waitForCompletion();
+           this->stream.waitForCompletion();
 //             std::cout<<"CPU ---> GPU"<<std::endl;
-               this->bgs->apply(this->d_im, this->d_fgmask,1, this->stream);
+           this->bgs->apply(this->d_im, this->d_fgmask,this->learningRate, this->stream);
+           this->stream.waitForCompletion();
+           if(!d_fgmask.empty())
+           {
+               d_fgmask.download(fgmask,this->stream);
                this->stream.waitForCompletion();
-               if(!d_fgmask.empty())
-               {
-                   d_fgmask.download(fgmask,this->stream);
-                   this->stream.waitForCompletion();
-               }
-           #else
-               this->bgs->apply(img,cv::Mat1b(img.size()),1);
-           #endif
-           #elif(OPENCV_VERSION==2)
-               this->bgs->operator ()(img,cv::Mat1b(img.size()),1);
-           #endif
+           }
+       #else
+           this->bgs->apply(img,cv::Mat1b(img.size()),this->learningRate);
+       #endif
+       #elif(OPENCV_VERSION==2)
+           this->bgs->operator ()(img,cv::Mat1b(img.size()),this->learningRate);
+       #endif
+
     }
 
     std::cout<<"------------------------------------------"<<std::endl;

@@ -20,7 +20,7 @@ int main(int argc, char** argv)
 
     QMainWindow win;
 
-    QList< QSharedPointer<FrameWidget> > wid = pool.getWidgets();
+    QList< QSharedPointer<QWidget> > wid = pool.getWidgets();
     std::cout<<wid.size()<<std::endl;
     for(int i = 0; i < wid.size(); i++ )
     {

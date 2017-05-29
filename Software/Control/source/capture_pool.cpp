@@ -1,4 +1,5 @@
 #include "capture_pool.hpp"
+#include "util.hpp"
 #include <iostream>
 
 
@@ -17,26 +18,39 @@ CapturePool::CapturePool(const cv::FileNode& config)
         this->grabberPool.push_back(grabber);
         this->widgets.push_back(widget);
     }
-    tracker.reset(new DataProcessor(config["tracker"],this->grabberPool.size()));
+    cv::Size floorSize = getSize(config["floor"]);
 
+
+    detector.reset(new GaussianMixtureDetector(config["mixture_of_gaussians_detector"],this->grabberPool.size(),
+                   floorSize));
+    this->resultWidget.reset(new MapWidget("Detector"));
+    connect(this->detector.data(), SIGNAL(sendResult(cv::Mat1d)),this->resultWidget.data(),SLOT(showFrame(cv::Mat1d)));
     for(int i = 0; i<this->grabberPool.size(); i++)
     {
-        connect(this->grabberPool[i].data(), SIGNAL(sendDetections(DetectionResult,int)),this->tracker.data(), SLOT(receiveResults(DetectionResult,int)));
+        connect(this->grabberPool[i].data(), SIGNAL(sendDetections(DetectionResult,int)),this->detector.data(), SLOT(receiveResults(DetectionResult,int)));
     }
+
 }
 
 void CapturePool::start()
 {
-    this->tracker->start();
+    this->detector->start();
     for(int i = 0; i<this->grabberPool.size(); i++)
     {
         this->grabberPool[i]->start();
     }
 }
 
-QList< QSharedPointer<FrameWidget> > CapturePool::getWidgets() const
+QList< QSharedPointer<QWidget> > CapturePool::getWidgets() const
 {
-    return this->widgets;
+    QList< QSharedPointer<QWidget> > widgets;
+    for(int i = 0; i<this->widgets.size(); i++)
+    {
+        widgets.push_back(static_cast< QSharedPointer<QWidget> >(this->widgets[i]));
+    }
+    widgets.push_back(static_cast< QSharedPointer<QWidget> >(this->resultWidget));
+
+    return widgets;
 }
 
 void CapturePool::showColorBGS(bool flag)
@@ -46,8 +60,8 @@ void CapturePool::showColorBGS(bool flag)
 
 void CapturePool::interrupt()
 {
-    this->tracker->requestInterruption();
-    this->tracker->wait();
+    this->detector->requestInterruption();
+    this->detector->wait();
 
     for(int i = 0; i<this->grabberPool.size(); i++)
     {

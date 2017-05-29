@@ -39,8 +39,8 @@ int main(int argc, char* args[]){
 	vector<VideoWriter*> out;
 	stringstream name;
 	for(int i = 0; i<videos.size();i++){
-		name << i << ".avi";
-		out.push_back(new VideoWriter(name.str(),CV_FOURCC('H','2','6','4'),videos[i]->fps,videos[i]->resolucao));
+        name << i << ".avi";
+        out.push_back(new VideoWriter(name.str(),CV_FOURCC('D','I','V','X'),videos[i]->fps,videos[i]->resolucao));
 		name.str("");
 		name.clear();
 	}

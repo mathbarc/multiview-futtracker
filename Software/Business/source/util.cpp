@@ -1,4 +1,6 @@
 #include "util.hpp"
+#include <opencv2/imgproc/imgproc.hpp>
+#include <iostream>
 
 QImage cvMat3bToQImage(const cv::Mat3b& img)
 {
@@ -32,4 +34,29 @@ QImage cvMat1bToQImage(const cv::Mat1b& img)
         }
     }
     return to_show;
+}
+
+cv::Size getSize(const cv::FileNode &node)
+{
+    cv::Size size;
+    size.width = (int)node["width"];
+    size.height = (int)node["height"];
+    return size;
+}
+
+void generateHeatMap(const cv::Mat1d& in, cv::Mat3b& out)
+{
+
+    std::vector<cv::Mat1b> ch(3);
+    ch[2] = cv::Mat1b(in.size()).setTo(255);
+    ch[1] = cv::Mat1b(in.size()).setTo(127);
+
+    in.convertTo(ch[0],CV_8U,-100.0, 100.0);
+//    std::cout<<ch[0]<<std::endl;
+
+    cv::Mat3b img;
+    cv::merge(ch, img);
+    ch.clear();
+
+    cv::cvtColor(img, out, CV_HLS2BGR);
 }
