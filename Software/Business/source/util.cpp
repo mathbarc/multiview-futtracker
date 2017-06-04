@@ -51,7 +51,7 @@ void generateHeatMap(const cv::Mat1d& in, cv::Mat3b& out)
     ch[2] = cv::Mat1b(in.size()).setTo(255);
     ch[1] = cv::Mat1b(in.size()).setTo(127);
 
-    in.convertTo(ch[0],CV_8U,-100.0, 100.0);
+    in.convertTo(ch[0],CV_8U,-120.0, 120.0);
 //    std::cout<<ch[0]<<std::endl;
 
     cv::Mat3b img;

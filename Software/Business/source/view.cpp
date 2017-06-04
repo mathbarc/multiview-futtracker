@@ -116,6 +116,10 @@ void View::run()
                 cv::morphologyEx(result,result,cv::MORPH_CLOSE,morphologyKernel,cv::Point(-1,-1), this->closeIterations);
             detections.clear();
             detections.foreground = result.clone();
+
+            cv::imwrite("img"+std::to_string((long)this->captureId)+".png", frame);
+            cv::imwrite("bg"+std::to_string((long)this->captureId)+".png", detections.foreground);
+
             components.clear();
             cv::findContours(result, components, CV_RETR_LIST, CV_CHAIN_APPROX_NONE);
 
@@ -155,6 +159,7 @@ void View::run()
             emit showFrame(frame, detections.foreground);
 
             emit sendDetections(detections, this->captureId);
+
 //            std::chrono::high_resolution_clock::time_point tp2 = std::chrono::high_resolution_clock::now();
 //            std::cout<<std::chrono::duration_cast<std::chrono::milliseconds>(tp2-tp1).count()<<" ms"<<std::endl;
         }

@@ -25,6 +25,8 @@ void GaussianMixtureDetector::run()
     bool ok;
     std::vector<DetectionResult> detections(this->numberOfCaptures);
     std::vector<cv::Point> peaks;
+//    this->floorSize.width*=2;
+//    this->floorSize.height*=2;
     cv::Mat1d floor(this->floorSize);
     floor.setTo(0);
     cv::Mat1f kernel(3,3);
@@ -49,15 +51,15 @@ void GaussianMixtureDetector::run()
             this->queueMutex.unlock();
 
             this->createDetectionMap(detections, floor);
+            std::cout<<floor<<std::endl<<std::endl;
 //            cv::normalize(floor, floor, 0, 1.0, cv::NORM_MINMAX);
             this->findPeaks(floor, peaks);
             std::cout<<peaks.size()<<std::endl;
             for(int i = 0; i<peaks.size(); i++)
             {
                 floor.at<double>(peaks[i]) = 1;
-                std::cout<<peaks[i]<<std::endl;
+//                std::cout<<peaks[i]<<std::endl;
             }
-            std::cout<<floor<<std::endl<<std::endl;
             emit sendResult(floor);
         }
         else
@@ -104,7 +106,7 @@ void GaussianMixtureDetector::findPeaks(const cv::Mat1d& floor, std::vector<cv::
         for(int j = 1; j < floor.cols-1; j++)
         {
             tmp = floor.at<double>(i,j);
-            if(tmp > floor.at<double>(i-1,j) && tmp > floor.at<double>(i,j-1) &&
+            if(tmp > 0.3 && tmp > floor.at<double>(i-1,j) && tmp > floor.at<double>(i,j-1) &&
                tmp > floor.at<double>(i+1,j) && tmp > floor.at<double>(i,j+1)&&
                tmp > floor.at<double>(i-1,j-1) && tmp > floor.at<double>(i-1,j+1) &&
                tmp > floor.at<double>(i+1,j+1) && tmp > floor.at<double>(i+1,j-1)/*&&
