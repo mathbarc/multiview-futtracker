@@ -53,10 +53,12 @@ int main(int argc, char* args[]){
 			case 's':
 			case 'S':
 				 do{
-					for(int i = 0; (i<out.size())&&continuar ;i++){
+                    for(int i = 0; (i<out.size())&&continuar ;i++)
+                    {
 						m[i] = videos[i]->nextFrame();
 						if(m[i].empty())
 							continuar=false;
+
 					}
 					if(continuar){
 						for(int i = 0; i<out.size();i++){
