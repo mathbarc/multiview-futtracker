@@ -11,6 +11,8 @@ int main(int argc, char *argv[])
     qRegisterMetaType<cv::Mat1b>("cv::Mat1d");
     qRegisterMetaType<cv::Mat>("cv::Mat");
     qRegisterMetaType<DetectionResult>("DetectionResult");
+    qRegisterMetaType<std::vector<cv::Point>>("std::vector<cv::Point>");
+
 
     Q_INIT_RESOURCE(resource);
     MultiViewFuttrackerController c;

@@ -5,7 +5,9 @@
 #include <opencv2/core/core.hpp>
 #include <QQueue>
 #include <QMutex>
+#include <QSharedPointer>
 #include "common_data_structures.hpp"
+#include "ground_truth_verify.hpp"
 
 class GaussianMixtureDetector : public QThread
 {
@@ -26,9 +28,11 @@ class GaussianMixtureDetector : public QThread
         cv::Size floorSize;
         std::vector< QQueue<DetectionResult> > captureResults;
         std::vector< GaussianComponentGenerator > componentGenerator;
+        QSharedPointer<GroundTruthVerify> verifier;
 
     signals:
         void sendResult(const cv::Mat1d& floor);
+        void sendPeaks(const std::vector<cv::Point>& detections);
 };
 
 #endif

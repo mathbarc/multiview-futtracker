@@ -7,7 +7,16 @@ GaussianMixtureDetector::GaussianMixtureDetector(const cv::FileNode& settings, c
       captureResults(numberOfCaptures),
       floorSize(floorSize)
 {
-    for(cv::FileNodeIterator gen = settings.begin(); gen != settings.end(); ++gen)
+    if(!settings["groundtruth"].empty())
+    {
+        this->verifier.reset(new GroundTruthVerify(settings["groundtruth"]));
+        this->connect(this, SIGNAL(sendPeaks(std::vector<cv::Point>)),
+                      this->verifier.data(), SLOT(checkDetections(std::vector<cv::Point>)));
+    }
+
+
+    cv::FileNode generators = settings["generators"];
+    for(cv::FileNodeIterator gen = generators.begin(); gen != generators.end(); ++gen)
     {
         this->componentGenerator.push_back(GaussianComponentGenerator((*gen)["stddev"], (*gen)["limit_distance"]));
     }
@@ -51,16 +60,17 @@ void GaussianMixtureDetector::run()
             this->queueMutex.unlock();
 
             this->createDetectionMap(detections, floor);
-            std::cout<<floor<<std::endl<<std::endl;
+//            std::cout<<floor<<std::endl<<std::endl;
 //            cv::normalize(floor, floor, 0, 1.0, cv::NORM_MINMAX);
             this->findPeaks(floor, peaks);
-            std::cout<<peaks.size()<<std::endl;
+//            std::cout<<peaks.size()<<std::endl;
             for(int i = 0; i<peaks.size(); i++)
             {
                 floor.at<double>(peaks[i]) = 1;
 //                std::cout<<peaks[i]<<std::endl;
             }
             emit sendResult(floor);
+            emit sendPeaks(peaks);
         }
         else
         {
