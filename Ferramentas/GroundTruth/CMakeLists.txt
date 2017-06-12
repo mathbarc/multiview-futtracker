@@ -1,8 +1,8 @@
-find_package(OpenCV 3 COMPONENTS core highgui videoio imgcodecs)
+find_package(OpenCV 3 COMPONENTS core highgui imgproc videoio imgcodecs)
 
 if(${OpenCV_FOUND})
 else()
-        find_package(OpenCV 2 REQUIRED core highgui)
+        find_package(OpenCV 2 REQUIRED core highgui imgproc)
 endif()
 
 set(GROUNDTRUTH_INCLUDE_DIRS 

@@ -1,5 +1,6 @@
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
 #include <iostream>
 #include <fstream>
 std::fstream out;
@@ -76,6 +77,8 @@ int main(int argc, char** argv)
     {
         cap.set(CV_CAP_PROP_POS_FRAMES, position);
         cap >> img;
+        if(img.empty())
+            break;
         cv::imshow("Video", img);
         cv::waitKey(0);
         selections.clear();
